@@ -49,7 +49,6 @@ namespace WebsysServer
                             // 血液净化----要求单线程单元 
                             clientThread.SetApartmentState(ApartmentState.STA); //设置这个参数，指示应用程序的COM线程模型 是 单线程单元
                             clientThread.Start();
-                        
                         //myEvent.WaitOne();
                         //threadList.
                     }

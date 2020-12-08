@@ -55,7 +55,7 @@ namespace WebsysServer.tool
                     RedirectStandardInput = true,//接受来自调用程序的输入信息
                     RedirectStandardOutput = true,//由调用程序获取输出信息
                     RedirectStandardError = true,//重定向标准错误输出
-                    CreateNoWindow = false,//不显示程序窗口
+                    CreateNoWindow = true,//不显示程序窗口
                 }
             };
             p.Start();//启动程序
