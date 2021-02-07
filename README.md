@@ -25,6 +25,13 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 |PrjSetTime|SetTime|设置本地时间|
 
 ## 更新日志 ##
+
+#### 2021-02-07
+
+#### 版本1.0.0.27
+
++ 中间件保护程序与医保客户端冲突问题处理
+
 ### 2019-06-16 ###
 #### 版本1.0.0.0 ####
 * http协议下POST请求本地服务

@@ -124,9 +124,8 @@ namespace WebsysServer
         }
         private void StopWebsys()
         {
-            KillProcess("WebsysServer");
             KillProcess("WebsysServerPro");
-
+            KillProcess("WebsysServer");
         }
         private void StartWebsys()
         {
