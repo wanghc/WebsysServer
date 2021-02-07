@@ -29,29 +29,42 @@ namespace WebsysServerPro
             }
             return count;
         }
-        private void Form1_Load(object sender, EventArgs e)
+        static void ProWebServer()
         {
-            ///  Registry.LocalMachine 不允许访问
             RegistryKey rk = Registry.ClassesRoot;
             string command = rk.OpenSubKey(@"RunWebsysServer\Shell\open\command").GetValue("").ToString();
-            string path = command.Substring(1, command.IndexOf(".exe"))+"exe";
-            //(@"Software\Microsoft\Windows\CurrentVersion\Run",true).GetValue("WebsysServer_init").ToString();
-            while (true)
-            {
+            string path = command.Substring(1, command.IndexOf(".exe")) + "exe";
+            while (true){
                 if (WebsysServerIsRuning() == 0)
                 {
-                    //Process.Start("WebsysServer.exe");
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     process.StartInfo.FileName = path;   //IE浏览器，可以更换
-                    try
-                    {
+                    try{
                         process.Start();
-                    }catch (Exception ex) {
-                        
-                    }
+                    }catch (Exception ex) {}
                 }
                 Thread.Sleep(10000); //10秒
             }
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ///  Registry.LocalMachine 不允许访问
+            //(@"Software\Microsoft\Windows\CurrentVersion\Run",true).GetValue("WebsysServer_init").ToString();
+            /// 不能在form线程中直接死循环监听，与医保组客户端程序冲突。
+            /// 启用了中间件保护程序就不能启动医保客户端，一直卡在启动中。启动了医保客户端程序就不能启动中间件。
+            /// 修改成线程中死循环监听，解决与医保组客户端程序冲突问题。
+            Thread clientThread = new Thread(ProWebServer);
+            //clientThread.SetApartmentState(ApartmentState.STA);
+            clientThread.Start();
+        }
+        /// <summary>
+        /// 不显示窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Shown(object sender,EventArgs e)
+        {
+            this.Visible = false;
         }
     }
 }
