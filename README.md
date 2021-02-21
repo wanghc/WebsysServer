@@ -26,6 +26,14 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+#### 2021-02-21
+
+#### 版本1.0.0.28
+
++ 增加mime管理 :sparkles:
++ 支持静态文件浏览 :sparkles:
++ 响应状态码支持`404`,`500` :bug:
+
 #### 2021-02-07
 
 #### 版本1.0.0.27

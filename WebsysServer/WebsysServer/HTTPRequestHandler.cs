@@ -90,26 +90,59 @@ namespace WebsysServer
             /**业务处理*/
             Msg ="success";
             Rtn = "";
+            byte[] buffer = Encoding.UTF8.GetBytes(Rtn);
             try
             {
-
-
-                if (request.RawUrl.EndsWith("favicon.ico")) {
+                string fileUrl = request.RawUrl.Replace("//", "/");
+                int myind = fileUrl.IndexOf("?", 1);              // /websys/scripts/websys.invoke.js
+                string reqUrl = fileUrl;
+                if (myind>0) reqUrl = fileUrl.Substring(0,myind);
+                String[] urlArr = reqUrl.Split('/');
+                String urlFileName = urlArr[urlArr.Length - 1];
+                if (request.RawUrl.Contains("/websys/"))
+                {
+                    MimeSettings mimeSection = System.Configuration.ConfigurationManager.GetSection("mimeSettings") as MimeSettings;
+                    Dictionary<String, String> mimeDict = mimeSection.mimeMappings;
+                    foreach (var item in mimeDict)
+                    {
+                        if (urlFileName.EndsWith("."+item.Key))
+                        {
+                            IsStaticReq = true;
+                            response.AddHeader("Content-Type", item.Value+"; charset=utf-8");
+                            int ind = fileUrl.IndexOf("/", 1);              // /websys/scripts/websys.invoke.js
+                            fileUrl = fileUrl.Substring(ind + 1);
+                            fileUrl = CGI.Combine(fileUrl);
+                            //Rtn += File.ReadAllText(fileUrl, Encoding.UTF8);
+                            fileUrl = HttpUtility.UrlDecode(fileUrl);
+                            if (File.Exists(fileUrl))
+                            {
+                                Status = 200;
+                                buffer = File.ReadAllBytes(fileUrl);
+                            }
+                            else
+                            {
+                                Status = 404;
+                                buffer = Encoding.UTF8.GetBytes("{" + string.Format(ResponseFormat, Status, "文件不存在", "") + "}");
+                            }
+                        }
+                    }
+                }
+                /*if (request.RawUrl.EndsWith("favicon.ico")) {
                     IsStaticReq = true;
                     Rtn = "";
-                }else if (Regex.IsMatch(request.RawUrl, "(.css)|(.js)|(.html)$"))
+                }else if (Regex.IsMatch(request.RawUrl,"(.css)|(.js)|(.html)$"))
                 {
                     IsStaticReq = true;
                     if (Regex.IsMatch(request.RawUrl, "(.js)$")) response.AddHeader("Content-Type", "application/javascript; charset=utf-8");
                     if (Regex.IsMatch(request.RawUrl, "(.css)$")) response.AddHeader("Content-Type", "text/css; charset=utf-8");
-                    if (Regex.IsMatch(request.RawUrl, "(.html)$")) response.AddHeader("Content-Type", "text/html; charset=utf-8");                    
+                    if (Regex.IsMatch(request.RawUrl, "(.html)$")) response.AddHeader("Content-Type", "text/html; charset=utf-8");
                     string fileUrl = request.RawUrl.Replace("//", "/");
                     int ind = fileUrl.IndexOf("/", 1); // /websys/scripts/websys.invoke.js
                     fileUrl = fileUrl.Substring(ind + 1);
                     fileUrl = CGI.Combine(fileUrl);
                     Rtn += File.ReadAllText(fileUrl, Encoding.UTF8);
-                } else {
-
+                } else {*/
+                if (!IsStaticReq) { 
                     IsStaticReq = false;
                     string reqBodyStr = "";
                     if (request.InputStream != null) { //POST
@@ -163,6 +196,8 @@ namespace WebsysServer
                 }
                 Msg = Msg.Replace("\n", "\\n").Replace("\r","\\r");
                 Logging.LogUsefulException(e);
+                ///静态文件报错
+                buffer = Encoding.UTF8.GetBytes("{" + string.Format(ResponseFormat, Status, Msg, Rtn) + "}");
             }
             finally
             {
@@ -173,13 +208,13 @@ namespace WebsysServer
                     {
                         if (!IsStaticReq)
                         {
-
                             Rtn = JsonHelper.escape(Rtn);
                             Rtn = "{" + string.Format(ResponseFormat, Status, Msg, Rtn) + "}";
+                            buffer = Encoding.UTF8.GetBytes(Rtn);
                         }
-                        byte[] buffer = Encoding.UTF8.GetBytes(Rtn);
+
                         //对客户端输出相应信息.
-                        response.StatusCode = 200;
+                        response.StatusCode = Status; //200;
                         response.ContentLength64 = buffer.Length;
                         Stream output = response.OutputStream;
                         if (null != output)
