@@ -26,6 +26,18 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+#### 2021-04-09
+
+#### 版本1.0.30
+
++ 为解决某些电脑调用WPS时报Automation不能创建错误，提供CurrentUserEvalJs方法（九江中医，北京积水潭）
+
+#### 2021-04-07
+
+#### 版本1.0.29
+
++ CmdShell.EvalJs降低安全且设定在当前窗口弹出的界面  :sparkles:
+
 #### 2021-02-21
 
 #### 版本1.0.0.28

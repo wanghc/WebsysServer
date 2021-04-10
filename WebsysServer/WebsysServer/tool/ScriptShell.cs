@@ -6,11 +6,16 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+
 namespace WebsysServer.tool
 {
     class ScriptShell
     {
-        
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr GetForegroundWindow();
+
         public static string RunAdmin(string cmd)
         {
             Process process = new Process()
@@ -44,7 +49,72 @@ namespace WebsysServer.tool
         {
             return Run(cmd, false);
         }
+        /// <summary>
+        /// 使用操作系统当前用户运行code
+        /// 会把code写到MyCode.txt中,然后调用WebsysScript.exe
+        /// </summary>
+        /// <param name="mycode">jscripts或vbs代码</param>
+        /// <param name="lang">语言类型:vbscript | jscript</param>
+        /// <returns>""</returns>
+        public static string CurrentUserRun(string mycode,String lang)
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            if (principal.IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                //MessageBox.Show("shell="+Application.StartupPath);
+                string curpath = Path.Combine(Application.StartupPath, @"temp");
 
+                string path = Path.Combine(curpath, "MyCode.txt");
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.WriteLine("/*"+lang+"*/");
+                    sw.Write(mycode);
+                    sw.Close();
+                }
+                //var file = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                //var exe = Path.Combine(file.DirectoryName, file.Name.Replace(file.Extension, "") + ".exe");
+                // 检测到当前进程是以管理员权限运行的，于是降权启动自己之后，把自己关掉。
+                //Process.Start("explorer.exe", "cmd.exe");
+                Process p = new Process()
+                {
+                    StartInfo = {
+                        FileName = "explorer.exe",
+                        //D:\workspace_net\WebsysServerSetup\WebsysScript\bin\x86\Debug\
+                        Arguments= Path.Combine(Application.StartupPath, @"WebsysScript.exe") ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
+                        UseShellExecute = false,    //是否使用操作系统shell启动
+                        RedirectStandardInput = true,//接受来自调用程序的输入信息
+                        RedirectStandardOutput = true,//由调用程序获取输出信息
+                        RedirectStandardError = true,//重定向标准错误输出
+                        CreateNoWindow = true,//不显示程序窗口
+                    }
+                };
+                p.Start();
+                //, @"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\""); // Assembly.GetEntryAssembly().Location);
+                //p.StandardInput.WriteLine(cmd);
+                p.StandardInput.AutoFlush = true;
+
+                
+                    /*Process[] processes = null;
+                    processes = System.Diagnostics.Process.GetProcessesByName("cmd");
+                    Process process = default(Process);
+                    foreach (Process tempLoopVar_process in processes)
+                    {
+                        process = tempLoopVar_process;
+                        process.StandardInput.Write("ipconfig");
+                        string cmdRtn = process.StandardOutput.ReadToEnd();
+                        return cmdRtn;
+                    }*/
+                return p.StandardOutput.ReadToEnd();
+                //Environment.Exit(0);
+            }
+            return "";
+        }
+        public static string CurrentUserEvalJs(string str, string lang)
+        {
+            return CurrentUserRun(str,lang);
+
+        }
         public static string Run(string cmd,Boolean isNotReturn)
         {
             Process p = new Process()
@@ -84,14 +154,18 @@ namespace WebsysServer.tool
                 return rtn;
             }
         }
+
         public static string EvalJs(string str,string language) //, string allowUI = "false", string language = "JScript")
         {
+                  
             var a = 1;
             string rtn = "";
             MSScriptControl.ScriptControlClass s = new MSScriptControl.ScriptControlClass();
             s.AllowUI = true;
             s.Timeout =  Properties.Settings.Default.EvalJsTimeout * 60 * 1000; // 导出Excel 1000行*20列的数据 JS花费1分钟左右，VB下2秒左右
-           
+            s.UseSafeSubset = false;  // false表示低安全运行。设置为true时报： "ActiveX 部件不能创建对象: 'Excel.Application'"
+            IntPtr hWndint = GetForegroundWindow();
+            s.SitehWnd = hWndint.ToInt32();   //指定弹出窗口在当前弹出，默认为桌面
             if ("vbscript".Equals(language.ToLower()))
             {
                 s.Language = "VBScript";
@@ -241,6 +315,22 @@ namespace WebsysServer.tool
                                     lang = Arg[1];
                                 }
                                 lastMthRtn = ScriptShell.EvalJs(Arg[0], lang);
+                            }
+                        }
+                    }
+                    else if(key.ToUpper().StartsWith("M_CURRENTUSEREVALJS"))
+                    {
+                        if (deValue.Contains(HTTPRequestHandler.PCOUNT))
+                        {
+                            string[] Arg = HTTPRequestHandler.ParseMthArg(deValue);
+                            if (Arg.Length > 0)
+                            {
+                                string lang = "JScript";
+                                if (Arg.Length > 1)
+                                {
+                                    lang = Arg[1];
+                                }
+                                lastMthRtn = ScriptShell.CurrentUserEvalJs(Arg[0], lang);
                             }
                         }
                     }

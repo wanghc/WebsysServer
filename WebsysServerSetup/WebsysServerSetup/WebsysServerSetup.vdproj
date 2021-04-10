@@ -51,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3782C16C8F694A1889688F24445FBB06"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5AFB0BD18DF9438E8C4B029038644F2E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -65,12 +71,6 @@
         {
         "MsmKey" = "8:_7C2CFA4294D94AE09D99E7E2102BA3A7"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7E1A682F728FDFFCD5BDFFD0A489F203"
-        "OwnerKey" = "8:_D102A200A9F1636920C22A27B21A6CAA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,38 +105,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B3B9C765A10C7465FC5E329D3C7F6F38"
-        "OwnerKey" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3B9C765A10C7465FC5E329D3C7F6F38"
-        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C0BEB8275166484AB6B9C278E8A775D7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D102A200A9F1636920C22A27B21A6CAA"
-        "OwnerKey" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D102A200A9F1636920C22A27B21A6CAA"
-        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DB1E07E29DC448C49621D70F7EEC2EFB"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD8B746E7505BAEF93E1080B6016661D"
+        "OwnerKey" = "8:_3782C16C8F694A1889688F24445FBB06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD8B746E7505BAEF93E1080B6016661D"
+        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -154,6 +142,24 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DD8B746E7505BAEF93E1080B6016661D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3782C16C8F694A1889688F24445FBB06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DD8B746E7505BAEF93E1080B6016661D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -166,13 +172,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D102A200A9F1636920C22A27B21A6CAA"
+        "OwnerKey" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B3B9C765A10C7465FC5E329D3C7F6F38"
+        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -360,13 +372,13 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.28, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.30, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
                     {
                     "Name" = "8:WebsysServer.exe"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:0"
                     }
                 }
             "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\WebsysServer.exe"
@@ -375,7 +387,7 @@
             "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
+            "Vital" = "11:FALSE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
@@ -487,26 +499,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E1A682F728FDFFCD5BDFFD0A489F203"
-            {
-            "SourcePath" = "8:msscript.ocx"
-            "TargetName" = "8:msscript.ocx"
-            "Tag" = "8:"
-            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8551A41D7CAC4929A58248160B294A7A"
             {
             "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\private.crt"
@@ -607,37 +599,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B3B9C765A10C7465FC5E329D3C7F6F38"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B3B9C765A10C7465FC5E329D3C7F6F38"
-                    {
-                    "Name" = "8:ICSharpCode.SharpZipLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ICSharpCode.SharpZipLib.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C0BEB8275166484AB6B9C278E8A775D7"
             {
             "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\mgr\\css\\index.css"
@@ -658,14 +619,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D102A200A9F1636920C22A27B21A6CAA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DD8B746E7505BAEF93E1080B6016661D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Interop.MSScriptControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_D102A200A9F1636920C22A27B21A6CAA"
+                    "_DD8B746E7505BAEF93E1080B6016661D"
                     {
                     "Name" = "8:Interop.MSScriptControl.dll"
                     "Attributes" = "3:512"
@@ -831,15 +792,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{53AAFE96-6418-4841-86BA-1D5A1E6EC1A0}"
-        "PackageCode" = "8:{A862CF3C-B95E-425E-A1B7-CBB37EE97CF7}"
+        "ProductCode" = "8:{2D08CDFE-6BC9-4377-AF99-79BD12099680}"
+        "PackageCode" = "8:{54796F58-9AF6-485F-BB20-4BB07ACCC178}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.28"
+        "ProductVersion" = "8:1.0.30"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1150,9 +1111,9 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3BEBCEF66FF742C8928E94EF95949DCA"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F2227D9312104E8890317FBFF5BC1B6E"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:100"
                     "DisplayName" = "8:安装文件夹"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -1195,7 +1156,7 @@
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C94EB85939554934A18BA7951FCC5915"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_84502345590A4BC1A9EFBC9D0A3D0058"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:已完成"
@@ -1348,7 +1309,7 @@
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3A18A15CA2E64D7DA009B39B165297E4"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_56D921E0E3F2418C825DE12830237F54"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:已完成"
@@ -1403,6 +1364,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3782C16C8F694A1889688F24445FBB06"
+            {
+            "SourcePath" = "8:..\\WebsysScript\\obj\\x86\\Debug\\WebsysScript.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{79E95190-32C6-44F1-9F98-86EB47D1C53D}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5C2DB204EDDF449A8DF60595A37AF310"
             {
             "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\obj\\x86\\Debug\\WebsysServer.exe"
