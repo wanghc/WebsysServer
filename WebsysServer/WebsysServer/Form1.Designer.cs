@@ -161,7 +161,7 @@
             this.ExitToolStripMenuItem,
             this.AboutToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 197);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 164);
             // 
             // MgrToolStripMenuItem
             // 
@@ -169,49 +169,49 @@
             this.hTTPSToolStripMenuItem,
             this.hTTP界面ToolStripMenuItem});
             this.MgrToolStripMenuItem.Name = "MgrToolStripMenuItem";
-            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
             this.MgrToolStripMenuItem.Text = "管理";
             this.MgrToolStripMenuItem.Click += new System.EventHandler(this.MgrToolStripMenuItem_Click);
             // 
             // hTTPSToolStripMenuItem
             // 
             this.hTTPSToolStripMenuItem.Name = "hTTPSToolStripMenuItem";
-            this.hTTPSToolStripMenuItem.Size = new System.Drawing.Size(252, 32);
+            this.hTTPSToolStripMenuItem.Size = new System.Drawing.Size(203, 32);
             this.hTTPSToolStripMenuItem.Text = "HTTPS界面";
             this.hTTPSToolStripMenuItem.Click += new System.EventHandler(this.hTTPSToolStripMenuItem_Click);
             // 
             // hTTP界面ToolStripMenuItem
             // 
             this.hTTP界面ToolStripMenuItem.Name = "hTTP界面ToolStripMenuItem";
-            this.hTTP界面ToolStripMenuItem.Size = new System.Drawing.Size(252, 32);
+            this.hTTP界面ToolStripMenuItem.Size = new System.Drawing.Size(203, 32);
             this.hTTP界面ToolStripMenuItem.Text = "HTTP界面";
             this.hTTP界面ToolStripMenuItem.Click += new System.EventHandler(this.hTTP界面ToolStripMenuItem_Click);
             // 
             // StartupToolStripMenuItem
             // 
             this.StartupToolStripMenuItem.Name = "StartupToolStripMenuItem";
-            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
             this.StartupToolStripMenuItem.Text = "启用";
             this.StartupToolStripMenuItem.Click += new System.EventHandler(this.StartupToolStripMenuItem_Click);
             // 
             // ShutDownToolStripMenuItem
             // 
             this.ShutDownToolStripMenuItem.Name = "ShutDownToolStripMenuItem";
-            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
             this.ShutDownToolStripMenuItem.Text = "停止";
             this.ShutDownToolStripMenuItem.Click += new System.EventHandler(this.ShutDownToolStripMenuItem_Click);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
             this.ExitToolStripMenuItem.Text = "退出";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem1
             // 
             this.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1";
-            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(240, 32);
+            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(126, 32);
             this.AboutToolStripMenuItem1.Text = "关于";
             this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
             // 
@@ -238,6 +238,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimizeBox = false;
             this.Name = "Form1";

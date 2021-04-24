@@ -201,7 +201,8 @@ namespace WebsysServer
                 StartupToolStripMenuItem.Enabled = false;
                 ShutDownToolStripMenuItem.Enabled = true;
                 //notifyIcon1.Icon = Icon.FromHandle(Properties.Resources.ico256.GetHicon());
-                notifyIcon1.Icon = Properties.Resources.ico256;
+                //notifyIcon1.Icon = Properties.Resources.ico256;
+                notifyIcon1.Icon = this.Icon;
             }
         }
 
@@ -211,8 +212,8 @@ namespace WebsysServer
                 ShutDownToolStripMenuItem.Enabled = false;
                 StartupToolStripMenuItem.Enabled = true;
                 System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-                notifyIcon1.Icon = Properties.Resources.ico256gray;//(System.Drawing.Icon)resources.GetObject(Properties.Resources.ico256gray);
-                //notifyIcon1.Icon = Icon.FromHandle(Properties.Resources.ico256gray.GetHicon());
+                //notifyIcon1.Icon = Properties.Resources.ico256gray;// (System.Drawing.Icon)resources.GetObject(Properties.Resources.ico256gray);
+                notifyIcon1.Icon = this.Icon; // Icon.FromHandle(Properties.Resources.ico256gray.GetHicon());
             }
             Logging.ColseLogFile();
         }
@@ -251,15 +252,15 @@ namespace WebsysServer
             //scl = null;
             //var t = new trakWebEdit3.TrakWebClass();
             //t.ShowLayout("","","","");
+            String osStr = Environment.OSVersion.ToString();
+            String netStr = Environment.Version.ToString();
+            String content = "插件管理版本 : " + version+ "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n ";
             System.Security.Principal.WindowsIdentity current =  System.Security.Principal.WindowsIdentity.GetCurrent();
             if (new System.Security.Principal.WindowsPrincipal(current).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
-                MessageBox.Show("版本" + version + " (管理员) ", "iMedical插件管理");
+                content = string.Format(content, "(管理员)");
             }
-            else
-            {
-                MessageBox.Show("版本" + version, "iMedical插件管理");
-            }
+            MessageBox.Show(content, "iMedical插件管理", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)

@@ -212,7 +212,8 @@ namespace WebsysServer
                                     //new MyInstaller().Install(new BackgroundWorker(), startupPath+string.Concat(LocalDllPath, otherFile).Replace("/", "\\"));
                                 }else if(otherFile.ToLower().EndsWith(".exe")){
                                     //string cmdrtn = ScriptShell.Run("msiexec.exe /i \"" + regFile + "\" /qb");
-                                    ScriptShell.Msiexec(regFile);
+                                    //ScriptShell.Msiexec(regFile);
+                                    ScriptShell.Run(regFile,true);
                                     //if (otherFile.Contains(".dll")) new tool.COMTypeLibConverter().Com2Ass(otherFile);
                                 }else if (otherFile.ToLower().EndsWith(".dll")){
                                     //注册相关依赖dll
