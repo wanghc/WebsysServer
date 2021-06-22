@@ -15,7 +15,7 @@ namespace WebsysServerPro
         {
             if (IsRunning())
             {
-                MessageBox.Show("保护程序已经在运行!", "医为客户端保护", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //MessageBox.Show("保护程序已经在运行!", "医为客户端保护", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 Application.Exit();
                 return;
             }

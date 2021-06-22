@@ -20,23 +20,24 @@ namespace WebsysServer
             Logging.OpenLogFile();
             if (IsRunning())
             {
-                MessageBox.Show("监听程序已经在运行!","医为客户端管理",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //MessageBox.Show("监听程序已经在运行!","医为客户端管理",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Logging.Error("监听程序已经在运行!");
                 Application.Exit();
                 return;
             }
             
-            Logging.Error("开始检查证书---");
+            Logging.Info("开始检查证书---");
             //b1eb8df9b91cf3080fb30f41e959def25952376a
             string privatecerthash = "b1eb8df9b91cf3080fb30f41e959def25952376a";
             if (!CheckCertByHash(privatecerthash,true,"root")) //if (!CheckCert("CN=MediWayCA",true,"root")) 
             {   // 安装受信任的颁发机构证书
                 InstallMedWayCACert();
-                Logging.Error("安装受信任的颁发机构证书-MediWayCA");
+                Logging.Info("安装受信任的颁发机构证书-MediWayCA");
             }
             if (!CheckCertByHash(privatecerthash,true,"my")) //if (!CheckCert("E=wanghuicai@mediway.cn, CN=127.0.0.1, OU=MediWay", true,"my"))
             {
                 string certhash = InstallServerCertToMY(); //"dd8652db5c07076d154827273642604ca8405332";
-                Logging.Error("安装个人证书"+certhash);
+                Logging.Info("安装个人证书"+certhash);
                 string ipport = "0.0.0.0:" + Properties.Settings.Default.HttpsServerPort;
                 OperatingSystem os = Environment.OSVersion as OperatingSystem;
                 int gosv = os.Version.Major;
@@ -46,13 +47,13 @@ namespace WebsysServer
                     string d = string.Format("netsh http delete sslcert ipport={0}",ipport);
                     tool.ScriptShell.Run(d, false);
                     string c = string.Format("netsh http add sslcert ipport={0} certhash={1} appid={{9e977cef-28ef-4d4f-968a-bff2514384c4}}", ipport, certhash);
-                    Logging.Error("绑定服务器证书" + c);
+                    Logging.Info("绑定服务器证书" + c);
                     tool.ScriptShell.Run(c,false);
                 }
                 else
                 {
                     string xpStr = string.Format("httpcfg set ssl -i {0} -h {1}", ipport, certhash);
-                    Logging.Error("绑定服务器证书" + xpStr);
+                    Logging.Info("绑定服务器证书" + xpStr);
                     tool.ScriptShell.Run(xpStr);
                 }
             }
@@ -113,7 +114,7 @@ namespace WebsysServer
         /// <returns></returns>
         static bool CheckCert(String CN,Boolean IsContent,string myOrRoot)
         {
-            Logging.Error("在"+myOrRoot+"中，检查"+CN+"证书，是否包含查询"+IsContent);
+            Logging.Info("在"+myOrRoot+"中，检查"+CN+"证书，是否包含查询"+IsContent);
             bool result = false;
             X509Store store = null;
             if (myOrRoot.Equals("my"))
@@ -147,12 +148,12 @@ namespace WebsysServer
             {
                 store.Close();
             }
-            Logging.Error("检查" + CN + "证书结果:" + result);
+            Logging.Info("检查" + CN + "证书结果:" + result);
             return result;
         }
         static bool CheckCertByHash(String Hash, Boolean IsContent, string myOrRoot)
         {
-            Logging.Error("在" + myOrRoot + "中，检查" + Hash + "证书，是否包含查询" + IsContent);
+            Logging.Info("在" + myOrRoot + "中，检查" + Hash + "证书，是否包含查询" + IsContent);
             bool result = false;
             X509Store store = null;
             if (myOrRoot.Equals("my"))
@@ -187,7 +188,7 @@ namespace WebsysServer
             {
                 store.Close();
             }
-            Logging.Error("检查" + Hash + "证书结果:" + result);
+            Logging.Info("检查" + Hash + "证书结果:" + result);
             return result;
         }
         static bool InstallMedWayCACert()
@@ -195,7 +196,7 @@ namespace WebsysServer
             // 安装到 本地计算机-受信任的根证书颁发机构
             string contentPath = System.AppDomain.CurrentDomain.BaseDirectory;   //..bin/x86/Debug    //Application.StartupPath
             string certPath = System.IO.Path.Combine(contentPath, "private.crt"); // "MediWayCA.crt");
-            Logging.Error(certPath);
+            Logging.Info(certPath);
             X509Certificate2 certificate1 = new X509Certificate2(certPath);
             X509Store store1 = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
             store1.Open(OpenFlags.MaxAllowed);
@@ -208,7 +209,7 @@ namespace WebsysServer
         {
             string contentPath = System.AppDomain.CurrentDomain.BaseDirectory;              //..bin/x86/Debug    //Application.StartupPath          
             string pfxPath = System.IO.Path.Combine(contentPath, "private.pfx"); // "server127.pfx");
-            Logging.Error(pfxPath);
+            Logging.Info(pfxPath);
             X509KeyStorageFlags x509KeyStorageFlags = X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet; //X509KeyStorageFlags.MachineKeySet;
             X509Certificate2 certificate = new X509Certificate2(pfxPath, "12345678",x509KeyStorageFlags);
             X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
