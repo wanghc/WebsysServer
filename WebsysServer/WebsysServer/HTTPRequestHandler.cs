@@ -167,7 +167,7 @@ namespace WebsysServer
                             String[] valuesArray = collection.GetValues(key);
                             foreach (string myvalue in valuesArray)
                             {
-                                reqBodyStr += key + "=" + myvalue;
+                                reqBodyStr += "&"+key + "=" + myvalue;
                             }
                         }
                         //reqBodyStr = string.Join(",", request.QueryString); //GET

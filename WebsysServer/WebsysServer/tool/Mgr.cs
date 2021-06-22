@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace WebsysServer.tool
 {
@@ -120,6 +122,118 @@ namespace WebsysServer.tool
             return lastMthRtn;
             
         }
+
+        public string ScreensList()
+        {
+            String rtn = "{\"screens\":[";
+            Screen[] screens = Screen.AllScreens;
+            int upperBound = screens.GetUpperBound(0);
+            int index;
+            for (index = 0; index <= upperBound; index++){
+                if (index > 0) { rtn += ","; }
+                // For each screen, add the screen properties to a list box.
+                //"{\"DeviceName\":\"" + screens[index].DeviceName+'"'
+                //+ ",\"Type\":\"+screens[index].Type.toStirng()+\""
+                
+                rtn += "{\"Bounds\":" 
+                + "{\"X\":" + screens[index].Bounds.X + ",\"Y\":" + screens[index].Bounds.Y + ",\"Width\":" + screens[index].Bounds.Width + ",\"Height\":" + screens[index].Bounds.Height + "}"
+                + ",\"WorkingArea\":"
+                + "{\"X\":" + screens[index].WorkingArea.X + ",\"Y\":" + screens[index].WorkingArea.Y + ",\"Width\":" + screens[index].WorkingArea.Width + ",\"Height\":" + screens[index].WorkingArea.Height + "}"
+                + ",\"PrimaryScreen\":" + (screens[index].Primary ? "true":"false") + "}";
+            }
+            rtn += "]}";
+            return rtn;
+        }
+       
+
+        
+        
+        public Dictionary<string, string> getDicByReqParam(string query)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            String[] dataArry = query.Split('&');
+            for (int i = 0; i < dataArry.Length; i++)
+            {
+                string dataParm = dataArry[i];
+                if (!String.IsNullOrEmpty(dataParm))
+                {
+                    int dIndex = dataParm.IndexOf("=");
+                    String key = dataParm.Substring(0, dIndex);
+                    String value = dataParm.Substring(dIndex + 1, dataParm.Length - dIndex - 1);
+                    String deValue = HTTPRequestHandler.decodeURIComponent(value, Encoding.GetEncoding("utf-8"));
+                    dic.Add(key, deValue);
+                }
+            }
+            return dic;
+        }
+        [DllImport("user32.dll", EntryPoint = "FindWindow", CharSet = CharSet.Auto)]
+        public static extern IntPtr FindWindow(string IpClassName, string IpWindowName);
+
+        [DllImport("user32.dll", EntryPoint = "MoveWindow", CharSet = CharSet.Auto)]
+        public static extern int MoveWindow(System.IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport("user32.dll", EntryPoint = "GetForegroundWindow")]
+        private static extern IntPtr GetForegroundWindow();
+        /***
+         * 1-恢复，2最小化，3最大化, 8以窗口原来的状态显示窗口
+         */
+        [DllImport("user32.dll", EntryPoint = "ShowWindow", CharSet = CharSet.Auto)]
+        public static extern int ShowWindow(IntPtr hWnd, int nCmdShow);
+        /**
+         bvk为键值，例如回车13，bScan设置为0，dwFlags设置0表示按下，2表示抬起；dwExtraInfo也设置为0即可。
+            */
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+
+        public int GetInt(string value, int _default)
+        {
+            if (int.TryParse(value, out _default))
+                return Convert.ToInt32(value);
+            else
+                return _default;
+        }
+        public string MoveWindow(Dictionary<string,string> dic)
+        {
+            var param = dic["M_moveWindow"];
+            Dictionary<string, string> moveDic = getDicByReqParam(param);
+            //if (!moveDic.ContainsKey("P_0")) { return "{\"error\":\"title is required param\"}"; }
+            if (!moveDic.ContainsKey("P_1")) { return "{\"error\":\"x is required param\"}"; }
+            if (!moveDic.ContainsKey("P_2")) { return "{\"error\":\"y is required param\"}"; }
+            if (!moveDic.ContainsKey("P_3")) { return "{\"error\":\"width is required param\"}"; }
+            if (!moveDic.ContainsKey("P_4")) { return "{\"error\":\"height is required param\"}"; }
+            var title = moveDic["P_0"];
+            var x = this.GetInt(moveDic["P_1"],0);
+            var y = this.GetInt(moveDic["P_2"],0);
+            var width = this.GetInt(moveDic["P_3"],400);
+            var height = this.GetInt(moveDic["P_4"],400);
+            var ex = "";
+            if (moveDic.ContainsKey("P_5")) ex = moveDic["P_5"];
+            IntPtr hWnd = new IntPtr(0);
+            if (title.Equals("")) {
+                hWnd = GetForegroundWindow();
+                if (hWnd == IntPtr.Zero)
+                {
+                    return "{\"error\":\"not Find Foreground Window\"}";
+                }
+            }
+            else{
+                hWnd = FindWindow(null, title);
+                if (hWnd == IntPtr.Zero)
+                {
+                    return "{\"error\":\"not Find " + title + "\"}";
+                }
+            }
+            MoveWindow(hWnd, x, y, width, height, true);
+            if (ex.Equals("ScreenF11"))
+            {
+                keybd_event((byte)Keys.F11, 0, 0, 0);
+                keybd_event((byte)Keys.F11, 0, 2, 0);
+            }else if (ex.Equals("ScreenMax"))
+            {
+                ShowWindow(hWnd, 3);
+            }
+            return "{\"error\":\"\",\"success\":\"true\"}";
+        }
         public string MgrRun(string url, string query)
         {
             string[] arr = url.Split('?')[0].Split(new char[] { '/' });
@@ -141,7 +255,22 @@ namespace WebsysServer.tool
             }
             else if (op.ToLower().Equals("mgr"))
             {
-                lastMthRtn = MgrVersion(query);
+                var dic = getDicByReqParam(query);
+
+                if (dic.ContainsKey("M_getScreens"))
+                {
+                    lastMthRtn = ScreensList();
+                }
+                else if (dic.ContainsKey("M_moveWindow"))
+                {
+                    // ?P_0=winTitle&P_1=x&P_2=y&P_3=width&P_4=height&P_5=ScreenF11
+                    // ?P_0=winTitle&P_1=x&P_2=y&P_3=width&P_4=height&P_5=ScreenMax
+                    lastMthRtn = MoveWindow(dic);
+                }
+                else
+                {
+                    lastMthRtn = MgrVersion(query);
+                }
             }
             return lastMthRtn;
         }
