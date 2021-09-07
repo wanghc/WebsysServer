@@ -49,6 +49,11 @@ namespace WebsysServer
 
         public Dictionary<string, string> Props { get; set; }
 
+        public string focusWindowName { get; set; } = "";
+
+        public string focusClassName { get; set; } = "";
+
+        public string focusLazyTime { get; set; } = "";
         /// <summary>
         /// 表示当前是要打开某个exe   .    Qise.cmd("qise.exe")  可以管理好版本
         /// 此时不去反射出对象，直接运行exe

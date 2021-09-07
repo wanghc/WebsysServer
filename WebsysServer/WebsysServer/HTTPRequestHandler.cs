@@ -321,6 +321,9 @@ namespace WebsysServer
                     if (key.Equals("_dllDir")) AObj.DllPath = deValue;
                     if (key.Equals("_version")) AObj.Version = deValue;
                     if (key.Equals("_cmd")) AObj.CmdRun = deValue;
+                    if (key.Equals("_focusClassName")) AObj.focusClassName = deValue;
+                    if (key.Equals("_focusWindowName")) AObj.focusWindowName = deValue;
+                    if (key.Equals("_focusLazyTime")) AObj.focusLazyTime = deValue;
                 }
                 if (!AObj.Version.Equals("") && !AObj.DllPath.Equals("") && !("".Equals(AObj.CmdRun)))
                 {
@@ -353,9 +356,16 @@ namespace WebsysServer
                             //new trakWebEdit3.TrakWebClass().ShowLayout(Arg[0],Arg[1],Arg[2],Arg[3]);
                             try
                             {
+                                if (!("".Equals(AObj.focusClassName)) || !("".Equals(AObj.focusWindowName)))
+                                {
+                                    System.Threading.Thread focusThread = new System.Threading.Thread(new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime).FocusWindow);
+                                    focusThread.Start();
+                                }
                                 //new DHCOPPrint.ClsBillPrintClass().ToPrintHDLPStr(Arg[0],Arg[1],Arg[2]);
                                 lastMthRtn = AObj.Invoke(key.Substring(2), Arg);
-                            }catch (Exception e)
+                                
+                            }
+                            catch (Exception e)
                             {
                                 throw new Exception("调用"+key.Substring(2)+"方法发生异常,"+e.InnerException+", p="+String.Join(",",Arg));
                             }

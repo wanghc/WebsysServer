@@ -26,6 +26,33 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+#### 2021-09-07
+
+#### 版本1.0.33
+
+- 增加[Ctrl+`]定位鼠标
+
+```xml
+<setting name="CursorShowHotKey" serializeAs="String">
+    <value>192</value> <!-- 配置热键[Ctrl+`]定位光标，192为`的键盘代码 -->
+</setting>
+```
+
+- 增加异步focus窗口功能，可以解决线程弹出窗口不置顶问题
+- - 增加*focusWindowName*，*focusClassName*，*focusLazyTime*三个配置项解决focus窗口问题
+
+调用示例代码：
+
+```js
+trakWebEdit3.clear(); /*清除上次调用数据*/
+trakWebEdit3.notReturn = 1;
+// trakWebEdit3.focusLazyTime = 1000;  /*延迟多长时间focus窗口。没有此行代码时默认:1000毫秒*/
+// trakWebEdit3.focusWindowName = "lpWindowName";  /*使用窗口标题定位*/
+trakWebEdit3.focusClassName = "lpClassName";  /*使用类名定位，例：微信窗口WeChatMainWndForPC*/
+trakWebEdit3.ShowLayout("1^1^^1","54429","","cn_iptcp:127.0.0.1[1972]:DHC-APP",function(rtn){});
+/*注：ShowLayout方法配置时不勾【调用清除】*/
+```
+
 #### 2021-06-22
 
 #### 版本1.0.32
