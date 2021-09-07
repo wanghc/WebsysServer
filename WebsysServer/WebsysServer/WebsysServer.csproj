@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="tool\CGI.cs" />
+    <Compile Include="tool\KeyboardHook.cs" />
     <Compile Include="tool\HTTPFile.cs" />
     <Compile Include="tool\JsonHelper.cs" />
     <Compile Include="tool\Logging.cs" />

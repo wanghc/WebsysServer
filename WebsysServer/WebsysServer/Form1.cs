@@ -12,6 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace WebsysServer
 {
@@ -204,6 +205,7 @@ namespace WebsysServer
                 //notifyIcon1.Icon = Properties.Resources.ico256;
                 notifyIcon1.Icon = this.Icon;
             }
+            startKeyListen();
         }
 
         private void ShutDownToolStripMenuItem_Click(object sender, EventArgs e)
@@ -215,9 +217,82 @@ namespace WebsysServer
                 //notifyIcon1.Icon = Properties.Resources.ico256gray;// (System.Drawing.Icon)resources.GetObject(Properties.Resources.ico256gray);
                 notifyIcon1.Icon = this.Icon; // Icon.FromHandle(Properties.Resources.ico256gray.GetHicon());
             }
+            stopKeyListen();
             Logging.ColseLogFile();
         }
 
+        private KeyEventHandler myKeyEventHandeler = null;//按键钩子
+        private KeyboardHook k_hook = new KeyboardHook();
+
+        [DllImport("user32")]
+        private static extern IntPtr LoadCursorFromFile(string fileName);
+  
+        [DllImport("User32.DLL")]
+        public static extern bool SetSystemCursor(IntPtr hcur, uint id);
+        public const uint OCR_NORMAL = 32512;
+        public const uint SPI_SETCURSORS = 87;
+        public const uint SPIF_SENDWININICHANGE = 2;
+        [DllImport("User32.DLL")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
+        [DllImport("user32.dll")]
+        private static extern int SetCursorPos(int x, int y);
+        private void hook_KeyDown(object sender, KeyEventArgs e)
+        {
+            /// (int)Control.ModifierKeys == (int)Keys.Alt
+            if ((int)Control.ModifierKeys == (int)Keys.Control && e.KeyCode == (Keys)Properties.Settings.Default.CursorShowHotKey) //Keys.Oemtilde)
+            {
+                // 安装到 本地计算机-受信任的根证书颁发机构
+                string contentPath = System.AppDomain.CurrentDomain.BaseDirectory;   //..bin/x86/Debug    //Application.StartupPath
+                string certPath = System.IO.Path.Combine(contentPath, "LinkPixelatedRed.ani"); // "MediWayCA.crt");
+                //设置样式
+                IntPtr iP = LoadCursorFromFile(certPath); //hellblazer.cur");
+                int winHeight = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
+                int winWidth = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width;
+                Point centerP = new Point(winWidth/2, 10);
+                SetCursorPos(centerP.X, centerP.Y);
+                SetSystemCursor(iP, OCR_NORMAL);
+                SetTimeout(3000, () =>
+                {
+                    Action action = delegate ()
+                    {
+                        // 还原样式
+                        SystemParametersInfo(SPI_SETCURSORS, 0, IntPtr.Zero, SPIF_SENDWININICHANGE);
+                    };
+                    this.Invoke(action);
+                });
+            }
+        }
+        public static void SetTimeout(double interval, Action action)
+        {
+            System.Timers.Timer timer = new System.Timers.Timer(interval);
+            timer.Elapsed += delegate (object sender, System.Timers.ElapsedEventArgs e)
+            {
+                timer.Enabled = false;
+                action();
+            };
+            timer.Enabled = true;
+        }
+        /// <summary>
+        /// 开始监听
+        /// </summary>
+        public void startKeyListen()
+        {
+            myKeyEventHandeler = new KeyEventHandler(hook_KeyDown);
+            k_hook.KeyDownEvent += myKeyEventHandeler;//钩住键按下
+            k_hook.Start();//安装键盘钩子
+        }
+        /// <summary>
+        /// 结束监听
+        /// </summary>
+        public void stopKeyListen()
+        {
+            if (myKeyEventHandeler != null)
+            {
+                k_hook.KeyDownEvent -= myKeyEventHandeler;//取消按键事件
+                myKeyEventHandeler = null;
+                k_hook.Stop();//关闭键盘钩子
+            }
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             notifyIcon1.Visible = false;
