@@ -97,5 +97,14 @@ namespace WebsysServer.Properties {
                 this["HttpsServerPort"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192")]
+        public int CursorShowHotKey {
+            get {
+                return ((int)(this["CursorShowHotKey"]));
+            }
+        }
     }
 }

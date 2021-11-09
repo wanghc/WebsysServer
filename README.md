@@ -31,7 +31,7 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 ### 版本1.0.34
 
 - 当操作系统没有默认浏览器时，点击管理报错处理。
-- 
+- 增加定位鼠标功能配置`CursorShowHotKey`
 
 #### 2021-09-07
 
