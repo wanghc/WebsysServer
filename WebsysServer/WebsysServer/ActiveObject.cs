@@ -48,9 +48,10 @@ namespace WebsysServer
         public object[] Param { get; set; }
 
         public Dictionary<string, string> Props { get; set; }
-
+        [DataMember(Name = "clientIPExp")]
+        public string ClientIPExp { get; set; } = "";
         public string focusWindowName { get; set; } = "";
-
+        
         public string focusClassName { get; set; } = "";
 
         public string focusLazyTime { get; set; } = "";
@@ -158,6 +159,7 @@ namespace WebsysServer
         public string CreateXObject() {
             try
             {
+                bool downloadSucc = false;
                 // 把服务器中DLL文件路径中DLL下到   /plugin/服务器Dll路径（不包含dll名）/版本/.dll
                 // DllPath=http://127.0.0.1/dthealth/web/addins/plugin/DHCOPPrint/DHCOPPrint.dll,DhtmlEd.msi
                 Logging.Debug("开始CreateXObject");
@@ -178,114 +180,140 @@ namespace WebsysServer
                 string RemoteDllPath = firstDllPathFiles.Substring(0, firstDllPathFiles.LastIndexOf("/"));
                 string RemoteDllFileAllName = firstDllPathFiles.Substring(firstDllPathFiles.LastIndexOf("/"));  // DHCOPPrint.dll
                 string RemoteDllSubPath = RemoteDllPath.Substring(RemoteDllPath.IndexOf("plugin"));             // /DHCOPPrint
-                string RemotePluginPath = RemoteDllPath.Substring(0,RemoteDllPath.IndexOf("plugin"))+"plugin";  //http://127.../plugin
-                bool downloadSucc = false;
+                string RemotePluginPath = RemoteDllPath.Substring(0, RemoteDllPath.IndexOf("plugin")) + "plugin";  //http://127.../plugin
+
                 string LocalDllPath = CGI.Combine(RemoteDllSubPath + "/" + Version + "/");
                 string LocalDllStoreFile = LocalDllPath + RemoteDllFileAllName;
-                Logging.Debug("isSameVersion "+ LocalDllStoreFile);
-                if (HTTPFile.IsSameVersion(LocalDllStoreFile)){
-                    downloadSucc = true; //本地已是最新dll
-                }else if ("".Equals(DllPath)) {
-                    downloadSucc = true; //不要求下载
-                }else{
-                    // 自动下载dll,从最后一个文件开始下载，最后下载首文件即入口
-                    if (DllPathAllFiles.Length>=1) //2020-03-05 从 >1 修改成>=1
-                    {
-                        for (int i=DllPathAllFiles.Length-1; i>=0;  i--)
-                        {
-                            string otherFile = DllPathAllFiles[i];
-                            Logging.Debug("开始下载："+otherFile);
-                            Boolean dllDownloadSuccess = true;
-                            if (i==0){
-                                dllDownloadSuccess = HTTPFile.DownloadFile(firstDllPathFiles, LocalDllStoreFile);
-                                string[] firstDllArr = firstDllPathFiles.Split('/');
-                                otherFile = firstDllArr[firstDllArr.Length - 1];
-                            }else if (otherFile.Contains("/")){
-                                dllDownloadSuccess = HTTPFile.DownloadFile(RemotePluginPath + "/" + otherFile, LocalDllPath + otherFile);
-                            }else{ // 只有文件名
-                                dllDownloadSuccess = HTTPFile.DownloadFile(RemoteDllPath + "/" + otherFile, LocalDllPath + otherFile);
-                            }
-                            if (dllDownloadSuccess) //HTTPFile.DownloadFile(RemoteDllPath + "/" + otherFile, LocalDllPath + otherFile))
-                            {
-                                string regFile = string.Concat(LocalDllPath, otherFile).Replace("/", "\\");
-                                Logging.Debug("安装或注册: "+regFile);
-                                if (otherFile.ToLower().EndsWith(".msi")){
-                                    ScriptShell.Msiexec(regFile);
-                                    //string cmdrtn = ScriptShell.Run("msiexec.exe /i \"" + regFile + "\" /qb");
-                                    //NativeMethods.MsiInstallProduct(LocalDllPath + otherFile, "ACTION=INSTALL");
-                                    //string startupPath = System.Windows.Forms.Application.StartupPath;
-                                    //new MyInstaller().Install(new BackgroundWorker(), startupPath+string.Concat(LocalDllPath, otherFile).Replace("/", "\\"));
-                                }else if(otherFile.ToLower().EndsWith(".exe")){
-                                    //string cmdrtn = ScriptShell.Run("msiexec.exe /i \"" + regFile + "\" /qb");
-                                    //ScriptShell.Msiexec(regFile);
-                                    ScriptShell.Run(regFile,true);
-                                    //if (otherFile.Contains(".dll")) new tool.COMTypeLibConverter().Com2Ass(otherFile);
-                                }else if (otherFile.ToLower().EndsWith(".dll")){
-                                    //注册相关依赖dll
-                                    //ScriptShell.Run("regsvr32.exe /s \"" + regFile + "\"");
-                                    ScriptShell.Regsvr32(regFile);
-                                }else if (otherFile.ToLower().EndsWith(".ocx")){
-                                    //注册相关依赖ocx
-                                    //ScriptShell.Run("regsvr32.exe /s \"" + regFile + "\"");
-                                    ScriptShell.Regsvr32(regFile);
-                                }
-                                else if (otherFile.ToLower().EndsWith(".zip")){
-                                    string unZipMsg = "";
-                                    string contentPath = System.AppDomain.CurrentDomain.BaseDirectory; // "D:\\workspace_net\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\";
-
-                                    Logging.Debug("解压Zip: " + contentPath + regFile+" 到 "+ contentPath + LocalDllPath);
-                                    new UnZipFile().unZipFile(regFile, LocalDllPath, ref unZipMsg);
-                                }else if (otherFile.ToLower().EndsWith(".cab")){
-                                    // pkgmgr /ip /m:D:\trakWebEdit3.CAB
-                                    // dism /online /add-package /PackagePath:D:\trakWebEdit3.CAB
-                                    //EXPAND -F:*.* E:\dthealth\app\dthis\web\addins\client\BarCode.CAB D:\xml\
-                                    //extract /a f:\win98\precopy1.cab shell.dll /l c:\windows\system
-                                    //-------------------------------
-                                    Logging.Info("开始：EXPAND - F:*.* \"" + regFile + "\" \"" + LocalDllPath + "\"");
-                                    //ScriptShell.Run("EXPAND -F:*.* \""+regFile+"\" \""+LocalDllPath+"\"");
-                                    ScriptShell.Expand(regFile, LocalDllPath);
-                                    string contentPath = System.AppDomain.CurrentDomain.BaseDirectory; //..bin/x86/Debug
-                                    //-------------------------
-                                    //Logging.Info("开始：RegInfDll "+"\"" + contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
-                                    //ScriptShell.RegInfDll(contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF"); // RegInfDll
-                                    //------------------------------------------------
-                                    //Logging.Info("开始：InfDefaultInstall \"" + contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
-                                    //Regex.Replace(regFile, ".cab", ".INF", RegexOptions.IgnoreCase) + "\"");
-                                    //ScriptShell.InfDefaultInstall(contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF");
-                                    //ScriptShell.Run("InfDefaultInstall.exe \""+ contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
-                                }
-                            }
-                        }
-                    }
+                Logging.Debug("isSameVersion " + LocalDllStoreFile);
+                if (CGI.IsValidIP(this.ClientIPExp))
+                {
                     if (HTTPFile.IsSameVersion(LocalDllStoreFile))
                     {
-                        downloadSucc = true;
+                        downloadSucc = true; //本地已是最新dll
                     }
-                    // 再下载运行库
-                    // downloadSucc = HTTPFile.DownloadFile(firstDllPathFiles,LocalDllStoreFile); //RemoteDllPath+"/"+RemoteDllFileAllName, LocalDllStoreFile);
-                    // 如果有inf文件，按inf内的要求注册dll，一般用于zip包
-                    if (downloadSucc ) //&& File.Exists(LocalDllPath+"/chrome.inf"))
+                    else if ("".Equals(DllPath))
                     {
-                        string curpath = CGI.Combine(LocalDllPath); //Path.Combine(System.Windows.Forms.Application.StartupPath, LocalDllPath);
-                        DirectoryInfo dirInfo = new DirectoryInfo(LocalDllPath);
-                        FileInfo[] fileInfos = dirInfo.GetFiles();
-                        for (int my = 0; my < fileInfos.Length; my++)
+                        downloadSucc = true; //不要求下载
+                    }
+                    else
+                    {
+                        // 自动下载dll,从最后一个文件开始下载，最后下载首文件即入口
+                        if (DllPathAllFiles.Length >= 1) //2020-03-05 从 >1 修改成>=1
                         {
-                            FileInfo fileInfo = fileInfos[my];
-                            if (".inf".Equals(fileInfo.Extension.ToLower()))
+                            for (int i = DllPathAllFiles.Length - 1; i >= 0; i--)
                             {
-                                ScriptShell.RegInfDll(curpath + "\\" + fileInfo.Name); // "\\chrome.inf");
-                            }
+                                string otherFile = DllPathAllFiles[i];
+                                Logging.Debug("开始下载：" + otherFile);
+                                Boolean dllDownloadSuccess = true;
+                                if (i == 0)
+                                {
+                                    dllDownloadSuccess = HTTPFile.DownloadFile(firstDllPathFiles, LocalDllStoreFile);
+                                    string[] firstDllArr = firstDllPathFiles.Split('/');
+                                    otherFile = firstDllArr[firstDllArr.Length - 1];
+                                }
+                                else if (otherFile.Contains("/"))
+                                {
+                                    dllDownloadSuccess = HTTPFile.DownloadFile(RemotePluginPath + "/" + otherFile, LocalDllPath + otherFile);
+                                }
+                                else
+                                { // 只有文件名
+                                    dllDownloadSuccess = HTTPFile.DownloadFile(RemoteDllPath + "/" + otherFile, LocalDllPath + otherFile);
+                                }
+                                if (dllDownloadSuccess) //HTTPFile.DownloadFile(RemoteDllPath + "/" + otherFile, LocalDllPath + otherFile))
+                                {
+                                    string regFile = string.Concat(LocalDllPath, otherFile).Replace("/", "\\");
+                                    Logging.Debug("安装或注册: " + regFile);
+                                    if (otherFile.ToLower().EndsWith(".msi"))
+                                    {
+                                        ScriptShell.Msiexec(regFile);
+                                        //string cmdrtn = ScriptShell.Run("msiexec.exe /i \"" + regFile + "\" /qb");
+                                        //NativeMethods.MsiInstallProduct(LocalDllPath + otherFile, "ACTION=INSTALL");
+                                        //string startupPath = System.Windows.Forms.Application.StartupPath;
+                                        //new MyInstaller().Install(new BackgroundWorker(), startupPath+string.Concat(LocalDllPath, otherFile).Replace("/", "\\"));
+                                    }
+                                    else if (otherFile.ToLower().EndsWith(".exe"))
+                                    {
+                                        //string cmdrtn = ScriptShell.Run("msiexec.exe /i \"" + regFile + "\" /qb");
+                                        //ScriptShell.Msiexec(regFile);
+                                        ScriptShell.Run(regFile, true);
+                                        //if (otherFile.Contains(".dll")) new tool.COMTypeLibConverter().Com2Ass(otherFile);
+                                    }
+                                    else if (otherFile.ToLower().EndsWith(".dll"))
+                                    {
+                                        //注册相关依赖dll
+                                        //ScriptShell.Run("regsvr32.exe /s \"" + regFile + "\"");
+                                        ScriptShell.Regsvr32(regFile);
+                                    }
+                                    else if (otherFile.ToLower().EndsWith(".ocx"))
+                                    {
+                                        //注册相关依赖ocx
+                                        //ScriptShell.Run("regsvr32.exe /s \"" + regFile + "\"");
+                                        ScriptShell.Regsvr32(regFile);
+                                    }
+                                    else if (otherFile.ToLower().EndsWith(".zip"))
+                                    {
+                                        string unZipMsg = "";
+                                        string contentPath = System.AppDomain.CurrentDomain.BaseDirectory; // "D:\\workspace_net\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\";
 
+                                        Logging.Debug("解压Zip: " + contentPath + regFile + " 到 " + contentPath + LocalDllPath);
+                                        new UnZipFile().unZipFile(regFile, LocalDllPath, ref unZipMsg);
+                                    }
+                                    else if (otherFile.ToLower().EndsWith(".cab"))
+                                    {
+                                        // pkgmgr /ip /m:D:\trakWebEdit3.CAB
+                                        // dism /online /add-package /PackagePath:D:\trakWebEdit3.CAB
+                                        //EXPAND -F:*.* E:\dthealth\app\dthis\web\addins\client\BarCode.CAB D:\xml\
+                                        //extract /a f:\win98\precopy1.cab shell.dll /l c:\windows\system
+                                        //-------------------------------
+                                        Logging.Info("开始：EXPAND - F:*.* \"" + regFile + "\" \"" + LocalDllPath + "\"");
+                                        //ScriptShell.Run("EXPAND -F:*.* \""+regFile+"\" \""+LocalDllPath+"\"");
+                                        ScriptShell.Expand(regFile, LocalDllPath);
+                                        string contentPath = System.AppDomain.CurrentDomain.BaseDirectory; //..bin/x86/Debug
+                                                                                                           //-------------------------
+                                                                                                           //Logging.Info("开始：RegInfDll "+"\"" + contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
+                                                                                                           //ScriptShell.RegInfDll(contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF"); // RegInfDll
+                                                                                                           //------------------------------------------------
+                                                                                                           //Logging.Info("开始：InfDefaultInstall \"" + contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
+                                                                                                           //Regex.Replace(regFile, ".cab", ".INF", RegexOptions.IgnoreCase) + "\"");
+                                                                                                           //ScriptShell.InfDefaultInstall(contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF");
+                                                                                                           //ScriptShell.Run("InfDefaultInstall.exe \""+ contentPath + regFile.Substring(0, regFile.Length - 4) + ".INF \"");
+                                    }
+                                }
+                            }
+                        }
+                        if (HTTPFile.IsSameVersion(LocalDllStoreFile))
+                        {
+                            downloadSucc = true;
+                        }
+                        // 再下载运行库
+                        // downloadSucc = HTTPFile.DownloadFile(firstDllPathFiles,LocalDllStoreFile); //RemoteDllPath+"/"+RemoteDllFileAllName, LocalDllStoreFile);
+                        // 如果有inf文件，按inf内的要求注册dll，一般用于zip包
+                        if (downloadSucc) //&& File.Exists(LocalDllPath+"/chrome.inf"))
+                        {
+                            string curpath = CGI.Combine(LocalDllPath); //Path.Combine(System.Windows.Forms.Application.StartupPath, LocalDllPath);
+                            DirectoryInfo dirInfo = new DirectoryInfo(LocalDllPath);
+                            FileInfo[] fileInfos = dirInfo.GetFiles();
+                            for (int my = 0; my < fileInfos.Length; my++)
+                            {
+                                FileInfo fileInfo = fileInfos[my];
+                                if (".inf".Equals(fileInfo.Extension.ToLower()))
+                                {
+                                    ScriptShell.RegInfDll(curpath + "\\" + fileInfo.Name); // "\\chrome.inf");
+                                }
+
+                            }
+                        }
+                        if (!(RemoteDllFileAllName.Equals("/" + Ass + ".dll")) && (RemoteDllFileAllName.Contains(".dll")))
+                        {
+                            // /s
+                            // 把com转成asm, 且动态调用asm.dll
                         }
                     }
-                    if (!(RemoteDllFileAllName.Equals("/"+Ass+".dll")) && (RemoteDllFileAllName.Contains(".dll")))
-                    {
-                        // /s
-                        // 把com转成asm, 且动态调用asm.dll
-                    }
+
                 }
-                
+                else {
+                    downloadSucc = true;
+                }
                 if (downloadSucc)
                 {
                     if (!("".Equals(this.CmdRun)))

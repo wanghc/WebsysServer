@@ -105,6 +105,47 @@ namespace WebsysServer.tool
             this.GetIp();
             this.GetMac();
         }
-
+        public static Boolean IsValidIP(string ClientIPExp="")
+        {
+            if (ClientIPExp.Equals("")) return true;
+            try
+            {
+                CGI cgi = new CGI();
+                for (var k = 0; k < cgi.IPList.Count; k++)
+                {
+                    String inIP = cgi.IPList[k]; //"127.1.1.1";
+                    String[] inIPList = inIP.Split('.');
+                    String[] IPExpStrList = ClientIPExp.Split(',');
+                    for (var i = 0; i < IPExpStrList.Length; i++)
+                    {
+                        // 每一个数字满足与否
+                        Boolean[] Rtn = { false, false, false, false };
+                        var IPItmList = IPExpStrList[i].Split('.');
+                        for (var j = 0; j < 4; j++)
+                        {
+                            if (IPItmList[j].Equals(inIPList[j]) || IPItmList[j].Equals("*"))
+                            {
+                                Rtn[j] = true;
+                            }
+                            else
+                            {
+                                if (IPItmList[j].IndexOf("-") > -1)
+                                {
+                                    var myArr = IPItmList[j].Replace("[", "").Replace("]", "").Split('-');
+                                    var myArr1 = Int16.Parse(myArr[0]);
+                                    var myArr2 = Int16.Parse(myArr[1]);
+                                    if (myArr1 <= Int16.Parse(inIPList[j]) && myArr2 >= Int16.Parse(inIPList[j]))
+                                    {
+                                        Rtn[j] = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (Rtn[0] && Rtn[1] && Rtn[2] && Rtn[3]) return true;
+                    }
+                }
+            }catch (Exception ex) {}
+            return false;
+        }
     }
 }

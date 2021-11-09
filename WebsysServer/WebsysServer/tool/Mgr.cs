@@ -10,6 +10,28 @@ namespace WebsysServer.tool
 {
     class Mgr
     {
+        private string lpClassName = "";
+        private string lpWindowName = "";
+        private Int16 focusLazyTime = 1000; /*延时1000ms*/
+        public Mgr()
+        {
+            lpClassName = "";
+            lpWindowName = "";
+            focusLazyTime = 1000;
+        }
+        public Mgr(string lpClassName, string lpWindowName,string focusLazyTime)
+        {
+            this.lpClassName = lpClassName ;
+            this.lpWindowName = lpWindowName;
+            if(Int16.TryParse(focusLazyTime, out short time))
+            {
+                this.focusLazyTime = time;
+            }
+            else
+            {
+                this.focusLazyTime = 1000;
+            }
+        }
         /*
          * 查询插件目录
          */
@@ -185,6 +207,11 @@ namespace WebsysServer.tool
         [DllImport("user32.dll")]
         public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
 
+        [DllImport("user32.dll", EntryPoint = "SetFocus", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetFocus(IntPtr hWnd);//设定焦点
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos", CharSet = CharSet.Auto)]
+        public static extern int SetWindowPos(IntPtr hwnd, int hWndInsertAfter, int x, int y, int cx, int cy, int wFlags);
+
         public int GetInt(string value, int _default)
         {
             if (int.TryParse(value, out _default))
@@ -233,6 +260,23 @@ namespace WebsysServer.tool
                 ShowWindow(hWnd, 3);
             }
             return "{\"error\":\"\",\"success\":\"true\"}";
+        }
+        /*线程方式必须无返回值*/
+        public void FocusWindow()
+        {
+            if ("".Equals(lpClassName)) lpClassName = null;
+            if ("".Equals(lpWindowName)) lpWindowName = null;
+            System.Threading.Thread.Sleep(this.focusLazyTime);
+            IntPtr maindHwnd = FindWindow(lpClassName, lpWindowName);
+            if (maindHwnd != IntPtr.Zero)
+            {
+                int focusPtr = ShowWindow(maindHwnd, 1);
+                const int HWND_TOPMOST  = -1;// 将窗口置于列表顶部，并位于任何最顶部窗口的前面
+                const int SWP_NOSIZE = 1; // 保持窗口大小
+                const int SWP_NOMOVE = 2; //保持窗口位置
+                int focusPtr2 = SetWindowPos(maindHwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE); // '将窗口设为总在最前
+                //IntPtr focusPtr2 = SetFocus(maindHwnd);
+            }
         }
         public string MgrRun(string url, string query)
         {

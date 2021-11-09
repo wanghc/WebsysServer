@@ -318,6 +318,8 @@ namespace WebsysServer
                     String key = dataParm.Substring(0, dIndex);
                     String value = dataParm.Substring(dIndex + 1, dataParm.Length - dIndex - 1);
                     String deValue = decodeURIComponent(value, Encoding.GetEncoding("utf-8"));
+                    //_192.168.1.[18-200] , 192.168.[2-4].*, 10.*.10.1
+                    if (key.Equals("_clientIPExp")) AObj.ClientIPExp = deValue;
                     if (key.Equals("_dllDir")) AObj.DllPath = deValue;
                     if (key.Equals("_version")) AObj.Version = deValue;
                     if (key.Equals("_cmd")) AObj.CmdRun = deValue;
@@ -348,6 +350,11 @@ namespace WebsysServer
                     String deValue = decodeURIComponent(value, Encoding.GetEncoding("utf-8"));
                     if (key.StartsWith("_dllDir")) continue;
                     if (key.StartsWith("_version")) continue;
+                    /*跳出系统参数 20211001*/
+                    if (key.StartsWith("_clientIPExp")) continue;
+                    if (key.StartsWith("_focusClassName")) continue;
+                    if (key.StartsWith("_focusWindowName")) continue;
+                    if (key.StartsWith("_focusLazyTime")) continue;
                     if (key.StartsWith("M_"))
                     {
                         if (deValue.Contains(PCOUNT))
