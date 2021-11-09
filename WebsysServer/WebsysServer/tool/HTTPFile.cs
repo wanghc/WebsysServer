@@ -35,7 +35,8 @@ namespace WebsysServer.tool
                     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
                     Myrq.ProtocolVersion = HttpVersion.Version11;
                     // 这里设置了协议类型。
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)192 | (SecurityProtocolType)768 | (SecurityProtocolType)3072;
+                    //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
                     Myrq.KeepAlive = false;
                     ServicePointManager.CheckCertificateRevocationList = true;
                     ServicePointManager.DefaultConnectionLimit = 100;
