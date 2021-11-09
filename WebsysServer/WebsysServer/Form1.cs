@@ -40,7 +40,7 @@ namespace WebsysServer
             cbLogLevel.SelectedIndex = LogLevel;
             tbPort.Text = urlPort.ToString();
             lbUrl.Text = "监听服务路径 http://" + urlServer + ":" + urlPort + urlApplication;
-            CGI.LocalInstall = Path.Combine(System.Windows.Forms.Application.StartupPath,"");
+            CGI.LocalInstall = Path.Combine(System.Windows.Forms.Application.StartupPath, "");
             /*var conf = JinianNet.JNTemplate.Configuration.EngineConfig.CreateDefault();
             conf.StripWhiteSpace = false;
             conf.ResourceDirectories = new string[] { Path.Combine(System.Windows.Forms.Application.StartupPath, @"tmpl\scripts") };
@@ -67,7 +67,7 @@ namespace WebsysServer
                     sthread.Abort();
                     sthread = null;
                 }
-            }catch(Exception e)
+            } catch (Exception e)
             {
                 MessageBox.Show("提示", "启用服务监听程序出错：" + e.Message);
                 return "-1";
@@ -85,9 +85,9 @@ namespace WebsysServer
                 sthread.Name = "S" + sthread.ManagedThreadId; ;
                 sthread.Start();
                 Logging.Warn("启动服务器线程" + sthread.ManagedThreadId.ToString("00"));
-            }catch(Exception e)
+            } catch (Exception e)
             {
-                MessageBox.Show("提示","启用服务监听程序出错："+e.Message);
+                MessageBox.Show("提示", "启用服务监听程序出错：" + e.Message);
                 return "-1";
             }
             return "";
@@ -99,14 +99,14 @@ namespace WebsysServer
             Logging.CurLogLevel = logLevel;
 
             Properties.Settings.Default.LogLevel = logLevel;
-            if ("".Equals(StartUpHttpServer())) { 
+            if ("".Equals(StartUpHttpServer())) {
                 msg.Text = "启动成功";
                 btnStart.Enabled = false;
                 btnStart.Text = "已启动";
                 btnStop.Enabled = true;
                 btnStop.Text = "停止";
                 cbLogLevel.Enabled = false;
-            }            
+            }
         }
         List<ManualResetEvent> manualResetEvents = new List<ManualResetEvent>();
         private void btnStop_Click(object sender, EventArgs e)
@@ -133,12 +133,12 @@ namespace WebsysServer
         private void Form1_Load(object sender, EventArgs e)
         {
             notifyIcon1.Visible = true;
-            
+
             //notifyIcon1.Icon = Icon.FromHandle( Properties.Resources.icon_info.GetHbitmap());
             this.Hide();
             //btnStart_Click(sender, e);
             //this.WindowState = FormWindowState.Minimized;
-            StartupToolStripMenuItem_Click(sender,e);
+            StartupToolStripMenuItem_Click(sender, e);
             Boolean isProStoped = true;
             foreach (var process in Process.GetProcessesByName("WebsysServerPro"))
             {
@@ -147,7 +147,7 @@ namespace WebsysServer
             if (isProStoped)
             {
                 RegistryKey rk = Registry.ClassesRoot;
-                if (rk.OpenSubKey(@"RunWebsysServer\Shell\open\command")!=null)
+                if (rk.OpenSubKey(@"RunWebsysServer\Shell\open\command") != null)
                 {
                     string command = rk.OpenSubKey(@"RunWebsysServer\Shell\open\command").GetValue("").ToString();
                     string path = command.Substring(1, command.IndexOf(".exe") - 1) + "Pro.exe";
@@ -156,14 +156,14 @@ namespace WebsysServer
             }
         }
 
-      
+
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             //this.WindowState = FormWindowState.Normal;
             //this.Show();
             //this.notifyIcon1.Visible = false;
         }
-        
+
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (httpServer != null && httpServer.IsAlive)
@@ -180,7 +180,7 @@ namespace WebsysServer
                 }
                 catch (Win32Exception ex)
                 {
-                    Logging.Error(ex,"结束 保护程序Pro");
+                    Logging.Error(ex, "结束 保护程序Pro");
                 }
                 catch (InvalidOperationException ex2)
                 {
@@ -226,7 +226,7 @@ namespace WebsysServer
 
         [DllImport("user32")]
         private static extern IntPtr LoadCursorFromFile(string fileName);
-  
+
         [DllImport("User32.DLL")]
         public static extern bool SetSystemCursor(IntPtr hcur, uint id);
         public const uint OCR_NORMAL = 32512;
@@ -248,7 +248,7 @@ namespace WebsysServer
                 IntPtr iP = LoadCursorFromFile(certPath); //hellblazer.cur");
                 int winHeight = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
                 int winWidth = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width;
-                Point centerP = new Point(winWidth/2, 10);
+                Point centerP = new Point(winWidth / 2, 10);
                 SetCursorPos(centerP.X, centerP.Y);
                 SetSystemCursor(iP, OCR_NORMAL);
                 SetTimeout(3000, () =>
@@ -329,20 +329,20 @@ namespace WebsysServer
             //t.ShowLayout("","","","");
             String osStr = Environment.OSVersion.ToString();
             String netStr = Environment.Version.ToString();
-            String content = "插件管理版本 : " + version+ "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n ";
-            System.Security.Principal.WindowsIdentity current =  System.Security.Principal.WindowsIdentity.GetCurrent();
+            String content = "插件管理版本 : " + version + "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n ";
+            System.Security.Principal.WindowsIdentity current = System.Security.Principal.WindowsIdentity.GetCurrent();
             if (new System.Security.Principal.WindowsPrincipal(current).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
                 content = string.Format(content, "(管理员)");
             }
             MessageBox.Show(content, "iMedical插件管理", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        
+
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                contextMenuStrip1.Show(MousePosition.X,MousePosition.Y);
+                contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
             }
         }
 
@@ -356,18 +356,39 @@ namespace WebsysServer
             //"D:\Program Files (x86)\Google\Chrome\Application\chrome.exe" -- "%1" 
             System.Diagnostics.Process.Start(s.Substring(0, s.Length - 8), "http://blog.csdn.net/testcs_dn");
             */
-            Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort+Properties.Settings.Default.HttpServerApplication+"mgr/index.html");
+            try
+            {
+                Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+            }
         }
 
         private void hTTPSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("https://127.0.0.1:" + Properties.Settings.Default.HttpsServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+            try
+            {
+                Process.Start("https://127.0.0.1:" + Properties.Settings.Default.HttpsServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+            }
         }
 
         private void hTTP界面ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
-        }
+            try
+            {
+                Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+            }
+        } 
         
     }
 }
