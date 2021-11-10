@@ -69,6 +69,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_61EA2D1A193842F3A0902E23E9C4FB93"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7C2CFA4294D94AE09D99E7E2102BA3A7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -390,7 +396,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.31, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.34, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -483,6 +489,26 @@
             "TargetName" = "8:32.ico"
             "Tag" = "8:"
             "Folder" = "8:_D54521CACFD34CFD97E267F4F426125D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_61EA2D1A193842F3A0902E23E9C4FB93"
+            {
+            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\LinkPixelatedRed.ani"
+            "TargetName" = "8:LinkPixelatedRed.ani"
+            "Tag" = "8:"
+            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -892,15 +918,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{4E44B054-D0E3-4AB5-8675-E1AF48ABE2AB}"
-        "PackageCode" = "8:{C5233B07-3D7E-455F-A09A-56ADAA8C6A5E}"
+        "ProductCode" = "8:{0832ACFE-93A0-44D5-9E3A-405D09A7321A}"
+        "PackageCode" = "8:{08AA5728-2CF6-4F64-8804-804D10853883}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.32"
+        "ProductVersion" = "8:1.0.34"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
