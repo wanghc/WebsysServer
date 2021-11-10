@@ -32,7 +32,8 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 - 当操作系统没有默认浏览器时，点击管理报错处理。
 - 增加定位鼠标功能配置`CursorShowHotKey`
-- 增加对TLS1.2的支持 :sparkles:
+- 增加对TLS1.2的支持（测试未通过） :sparkles:
+- 增加按客户端IP升级
 
 #### 2021-09-07
 
