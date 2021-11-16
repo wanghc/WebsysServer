@@ -26,6 +26,14 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+#### 2021-11-16
+
+### 版本1.0.35
+
+- 使用CurrentUserEvalJs调用代码未完成时，又发出CurrentUserEvalJs命令报错处理
+
+  ```MyCode.txt正由另一进程使用，因此该进程无法访问此文件```
+
 #### 2021-11-08
 
 ### 版本1.0.34
