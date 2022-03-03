@@ -21,7 +21,7 @@ namespace WebsysServer
     {
         Thread sthread;
         HTTPServer httpServer;
-
+        public String RestartApplicationNote = "";
         public static string version = Application.ProductVersion; // 1.0.0.10
         public Form1()
         {
@@ -329,12 +329,20 @@ namespace WebsysServer
             //t.ShowLayout("","","","");
             String osStr = Environment.OSVersion.ToString();
             String netStr = Environment.Version.ToString();
-            String content = "插件管理版本 : " + version + "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n ";
+            String installPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            String content = "插件管理版本 : " + version + "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n " + "应用安装路径 : " + installPath + "\r\n";
+            if ("".Equals(RestartApplicationNote) ){
+                content += "正常重启\r\n";
+            }else{
+                content += RestartApplicationNote+ "\r\n";
+            }
             System.Security.Principal.WindowsIdentity current = System.Security.Principal.WindowsIdentity.GetCurrent();
             if (new System.Security.Principal.WindowsPrincipal(current).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
                 content = string.Format(content, "(管理员)");
             }
+            content = string.Format(content, "(管理员)");
+          
             MessageBox.Show(content, "iMedical插件管理", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

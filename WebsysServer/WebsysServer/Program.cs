@@ -12,13 +12,45 @@ namespace WebsysServer
     {
         /// <summary>
         /// 应用程序的主入口点。
+        /// args参数说明,当发现有动态库升级时，会通过命令重启应用
+        /// | 命令             |      模块动态库   |    版本    |
+        /// | RestartByUpgrade |    SleepMin.Dll   |   1.0.0.5  |
+        /// 
+        /// RestartByUpgrade 表示因为更新而重启
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(String[] args)
         {
+            int ArgsCount = args.Length;
+            String ArgsStr = "";
+            String RestartApplicationNote = "";
+            if (ArgsCount > 0)
+            {
+                ArgsStr =string.Join(" ",args);
+                if ("RestartByUpgrade".Equals(args[0]))
+                {
+                    if (ArgsCount>2) RestartApplicationNote = "因"+args[1]+"模块升级至"+args[2]+"版而重新启动";
+                    KillWebsysServer();
+                }
+            }
+            int OpenLogFileTotal = 0;
             Logging.CurLogLevel = Properties.Settings.Default.LogLevel;
-            Logging.OpenLogFile();
-            if (IsRunning())
+            while (!Logging.OpenLogFile())  //进程不能马上结束 ，文件占用着，等待一段时间，100ms*20
+            {
+                System.Threading.Thread.Sleep(100);
+                OpenLogFileTotal++;
+                Console.Write("open log file "+OpenLogFileTotal);
+                if (OpenLogFileTotal>20) break ;
+            }
+            if (OpenLogFileTotal > 20) {
+                MessageBox.Show("请检查《医为客户端管理》是否启动!", "医为客户端管理", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Application.Exit();
+                return;
+            }
+            Logging.Warn("Main Arguments Count : " + ArgsCount);
+            Logging.Warn("Main Arguments : "+ArgsStr);
+            Logging.Warn("RestartByUpgrade KillWebsysServer ");
+            if (IsRunning(false))
             {
                 //MessageBox.Show("监听程序已经在运行!","医为客户端管理",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 Logging.Error("监听程序已经在运行!");
@@ -80,9 +112,11 @@ namespace WebsysServer
             //---end 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 frm1 = new Form1();
+            frm1.RestartApplicationNote = RestartApplicationNote;
+            Application.Run(frm1);
         }
-        public static bool IsRunning()
+        public static bool IsRunning(Boolean killflag)
         {
             Process current = default(Process);
             current = System.Diagnostics.Process.GetCurrentProcess();
@@ -99,12 +133,20 @@ namespace WebsysServer
                     {
                         if (System.Reflection.Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
                         {
-                            return true;
+                            if (killflag){
+                                process.Kill();
+                            }else {
+                                return true;
+                            }
                         }
                     }
                 //}
             }
             return false;
+        }
+        public static void KillWebsysServer()
+        {
+            IsRunning(true);
         }
         /// <summary>
         ///  CheckCert("CN=MediWayCA",true)

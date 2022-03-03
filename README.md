@@ -40,7 +40,15 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+#### 2022-03-03
+
+### 版本1.0.37
+
+- 支持动态升级插件模块 :sparkles:
+
 #### 2022-01-18
+
+### 版本1.0.36
 
 - 使用HTTP协议下载Linux服务器上dll，当dll不存在时，不会像window服务器那样报错，而是返回0KB大小内容，导致检验报告打印DLL为0KB大小 :bug:
 - - 修改成如果返回0KB大小，则不重写DLL

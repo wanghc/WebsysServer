@@ -308,8 +308,19 @@ namespace WebsysServer
                             // /s
                             // 把com转成asm, 且动态调用asm.dll
                         }
+                        if ("".Equals(this.CmdRun) && LocalDllStoreFile.ToLower().EndsWith(".dll")) // 调用dll才 要重启
+                        {
+                            /// FIX: 实现应该判断当前进程中是否加载过dll，如果加载过才重启应用
+                            /// 现在逻辑是下载新的DLL就会重启应用
+                            if(true) //(System.Windows.Forms.MessageBox.Show("要重新启动嘛？", "提示", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                            {
+                                Logging.Warn("----RestartByUpgrade---");
+                                Logging.Warn("重启路径："+System.Reflection.Assembly.GetExecutingAssembly().Location);
+                                ScriptShell.Run(System.Reflection.Assembly.GetExecutingAssembly().Location + " RestartByUpgrade"+" "+RemoteDllFileAllName.Replace("/","") + " "+Version);
+                                return "-6^升级模块插件并重启医为客户端管理应用";
+                            }
+                        }
                     }
-
                 }
                 else {
                     downloadSucc = true;
@@ -336,8 +347,7 @@ namespace WebsysServer
                             //会占用文件
                             Logging.Debug("LoadFrom 开始 {0}", LocalDllStoreFile);
                             Assembly ass = Assembly.LoadFrom(LocalDllStoreFile);
-                            //byte[] fileData = File.ReadAllBytes(dllPath);
-                            //Assembly asm = Assembly.Load(fileData);
+                            //Assembly ass = Assembly.Load(File.ReadAllBytes(LocalDllStoreFile));  // 护理医嘱单DoctorSheet使用Load方法调用不能加载依赖项；组件layout可以
                             Logging.Debug("LoadFrom 结束 {0}", LocalDllStoreFile);
                             Logging.Debug("ass.GetType 开始 {0}", LocalDllStoreFile);
                             _type = ass.GetType(Cls);
