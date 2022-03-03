@@ -44,10 +44,18 @@ namespace WebsysServer.tool
                 }
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 Stream st = myrp.GetResponseStream();
-                Directory.CreateDirectory(filename.Substring(0,filename.LastIndexOf("/")));
-                Stream so = new FileStream(filename, System.IO.FileMode.Create);
+                Directory.CreateDirectory(filename.Substring(0, filename.LastIndexOf("/")));
                 byte[] by = new byte[1024];
                 int osize = st.Read(by, 0, (int)by.Length);
+                if (osize==0) //linux服务器上没有的文件，不一定会报错404，大小为0KB。 window-IIS服务器时会进入catch
+                {
+                    Logging.Error("{0}大小为0，跳过", URL);
+                    st.Close();
+                    myrp.Close();
+                    Myrq.Abort();
+                    return false;
+                }
+                Stream so = new FileStream(filename, System.IO.FileMode.Create);
                 while (osize > 0)
                 {
                     so.Write(by, 0, osize);

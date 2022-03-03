@@ -8,7 +8,7 @@ Chrome调用动态库中间件，提供HTTP服务接口来调用本地服务，�
 ## 引用方式 ##
 ### 1. `csp`中引用中间件环境 ###
 ```html
-<ADDINS/>
+<ADDINS></ADDINS>
 ```
 ### 2.`组件`中引用中间件环境
 ```vb
@@ -24,7 +24,26 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 |TrakWebEdit3|ShowLayout|调用组件|
 |PrjSetTime|SetTime|设置本地时间|
 
+### 常见问题处理
+
+- 调用对象都有notReturn属性，`DoctorSheet.notReturn=0`即有返回值调用，同步调用。默认为1异步调用
+
+- 调用客户端方法报错，检查桌面快捷方法-插件管理-右键属性-兼容性以管理员身份运行此程序是否勾选
+
+- 在只安装了WPS的客户端，使用Excel导出或打印时报错，可以把`CmdShell.EvalJs(mycode)`修改成`CmdShell.CurrentUserEvalJs(mycode)`再测试
+
+- 安装成功后,HTTP管理界面可用但HTTPS管理界面不可用，可手动安装证书
+  1. private.pfx安装---本地计算机---到【个人】中，密码为12345678
+  2. private.crt安装---本地计算机---到【受信任的根证书颁发机构】中
+  3. netsh http add sslcert ipport=0.0.0.0:21996 certhash=dd8652db5c07076d154827273642604ca8405332 appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
+  4. netsh http add sslcert ipport=0.0.0.0:21996 certhash=b1eb8df9b91cf3080fb30f41e959def25952376a appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
+
 ## 更新日志 ##
+
+#### 2022-01-18
+
+- 使用HTTP协议下载Linux服务器上dll，当dll不存在时，不会像window服务器那样报错，而是返回0KB大小内容，导致检验报告打印DLL为0KB大小 :bug:
+- - 修改成如果返回0KB大小，则不重写DLL
 
 #### 2021-11-16
 
