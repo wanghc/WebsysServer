@@ -222,7 +222,7 @@ namespace WebsysServer
         }
 
         private KeyEventHandler myKeyEventHandeler = null;//按键钩子
-        private KeyboardHook k_hook = new KeyboardHook();
+        private KeyboardHook k_hook = null;
 
         [DllImport("user32")]
         private static extern IntPtr LoadCursorFromFile(string fileName);
@@ -277,20 +277,30 @@ namespace WebsysServer
         /// </summary>
         public void startKeyListen()
         {
-            myKeyEventHandeler = new KeyEventHandler(hook_KeyDown);
-            k_hook.KeyDownEvent += myKeyEventHandeler;//钩住键按下
-            k_hook.Start();//安装键盘钩子
+            Screen[] screens = Screen.AllScreens;
+            if (screens.Length > 1)
+            {
+                k_hook = new KeyboardHook();
+                myKeyEventHandeler = new KeyEventHandler(hook_KeyDown);
+                k_hook.KeyDownEvent += myKeyEventHandeler;//钩住键按下
+                k_hook.Start();//安装键盘钩子
+            }
         }
         /// <summary>
         /// 结束监听
         /// </summary>
         public void stopKeyListen()
         {
-            if (myKeyEventHandeler != null)
+            Screen[] screens = Screen.AllScreens;
+            if (screens.Length > 1)
             {
-                k_hook.KeyDownEvent -= myKeyEventHandeler;//取消按键事件
-                myKeyEventHandeler = null;
-                k_hook.Stop();//关闭键盘钩子
+                if (myKeyEventHandeler != null)
+                {
+                    k_hook.KeyDownEvent -= myKeyEventHandeler;//取消按键事件
+                    myKeyEventHandeler = null;
+                    k_hook.Stop();//关闭键盘钩子
+                    k_hook = null;
+                }
             }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

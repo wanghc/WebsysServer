@@ -45,6 +45,7 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 ### 版本1.0.37
 
 - 支持动态升级插件模块 :sparkles:
+- 多屏下才启用快捷键[Ctrl+`]定位鼠标
 
 #### 2022-01-18
 
