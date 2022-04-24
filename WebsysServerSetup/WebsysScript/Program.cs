@@ -63,10 +63,9 @@ namespace WebsysScript
                 }
                 try
                 {
-                    Thread.Sleep(2000);
                     MSScriptControl.ScriptControlClass s = new MSScriptControl.ScriptControlClass();
                     s.AllowUI = true;
-                    s.Timeout = 1 * 60 * 1000; // 导出Excel 1000行*20列的数据 JS花费1分钟左右，VB下2秒左右
+                    s.Timeout = 5 * 60 * 1000; // 导出Excel 1000行*20列的数据 JS花费1分钟左右，VB下2秒左右
                     s.UseSafeSubset = false;   // false表示低安全运行。设置为true时报： "ActiveX 部件不能创建对象: 'Excel.Application'"
                     IntPtr hWndint = GetForegroundWindow();
                     s.SitehWnd = hWndint.ToInt32();   //指定弹出窗口在当前弹出，默认为桌面

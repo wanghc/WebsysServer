@@ -48,6 +48,8 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 - 使用CurrentUserEvalJs得不到真实返回值，报错会在\temp\目录下对应代码文件中显示
 
+- 使用CurrentUserEvalJs运行脚本时，默认5分钟，超过5分钟提示。
+
 #### 2022-03-03
 
 ### 版本1.0.37
