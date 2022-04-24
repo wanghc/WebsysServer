@@ -64,8 +64,12 @@ namespace WebsysServer.tool
             {
                 //MessageBox.Show("shell="+Application.StartupPath);
                 string curpath = Path.Combine(Application.StartupPath, @"temp");
-
-                string path = Path.Combine(curpath, "MyCode.txt");
+                string oldCodePath = Path.Combine(curpath, "MyCode.txt");
+                if (File.Exists(oldCodePath))
+                {
+                    File.Delete(oldCodePath);
+                }
+                string path = Path.Combine(curpath, "MyCode"+ DateTime.Now.ToFileTimeUtc().ToString()+".txt");
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     sw.WriteLine("/*"+lang+"*/");
@@ -81,6 +85,7 @@ namespace WebsysServer.tool
                     StartInfo = {
                         FileName = "explorer.exe",
                         //D:\workspace_net\WebsysServerSetup\WebsysScript\bin\x86\Debug\
+                        // explorer.exe调用 exe 无法为exe传递参数
                         Arguments= Path.Combine(Application.StartupPath, @"WebsysScript.exe") ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
                         UseShellExecute = false,    //是否使用操作系统shell启动
                         RedirectStandardInput = true,//接受来自调用程序的输入信息
@@ -93,7 +98,7 @@ namespace WebsysServer.tool
                 //, @"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\""); // Assembly.GetEntryAssembly().Location);
                 //p.StandardInput.WriteLine(cmd);
                 p.StandardInput.AutoFlush = true;
-
+                //p.WaitForExit(); // 等待的是explorer.exe结束，而不是WebsysScript.exe的运行结束
                 
                     /*Process[] processes = null;
                     processes = System.Diagnostics.Process.GetProcessesByName("cmd");
@@ -154,7 +159,7 @@ namespace WebsysServer.tool
                 return rtn;
             }
         }
-
+        // 对应前台的EvalJs, 主要用于导出/打印Excel
         public static string EvalJs(string str,string language) //, string allowUI = "false", string language = "JScript")
         {
                   
