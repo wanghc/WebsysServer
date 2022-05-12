@@ -150,13 +150,13 @@ namespace WebsysServer.tool
                 //获取cmd窗口的输出信息
                 string cmdRtn = p.StandardOutput.ReadToEnd();
                 string[] arr = cmdRtn.Split('\n');
-                string rtn = ""; Boolean startResult = false;
+                StringBuilder rtn = new StringBuilder(); Boolean startResult = false;
                 for (var i = 0; i < arr.Length - 1; i++)
                 {
-                    if (startResult) rtn += arr[i] + "\n";
+                    if (startResult) rtn.Append(arr[i] + "\n");
                     if (arr[i].Contains("exit")) startResult = true;
                 }
-                return rtn;
+                return rtn.ToString();
             }
         }
         // 对应前台的EvalJs, 主要用于导出/打印Excel

@@ -11,24 +11,24 @@ namespace WebsysServer.tool
         {
             if (text == null) return null;
             if (text.Equals("")) return text;
-            string rtn = "";
+            // 优化速度 
+            // 100K数据 foreach修改成for 快5秒
+            // 100K数据 把string修改成StringBuilder， 从 10秒 到 500毫秒
+            StringBuilder rtn = new StringBuilder();
             char[] arr = text.ToCharArray();
-            foreach (char letter in arr)
+            char letter;
+            for (int i=0;i<arr.Length;  i++ )
             {
+                letter = arr[i];
                 int a = Convert.ToInt32(letter);
-                if (a>32 && a!=34 && a != 92)
+                if (a>32 && a!=34 && a != 92) // 把双引号"与反斜杠\
                 {
-                    rtn +=  (char)a;
+                    rtn.Append((char)a);
+                }  else {
+                    rtn.Append( @"\u00" + String.Format("{0:X2}", a)); //String.Format("{0:00}", a.ToString("X"));
                 }
-                else
-                {
-                    //
-
-                    rtn += @"\u00" + String.Format("{0:X2}", a); //String.Format("{0:00}", a.ToString("X"));
-                }
-
             }
-            return rtn;
+            return rtn.ToString();
         }
         //JSON字符串转对象
         public static T JsonToT<T>(string json)

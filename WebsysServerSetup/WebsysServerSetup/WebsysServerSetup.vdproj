@@ -396,7 +396,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.37, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.0.0.39, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -670,6 +670,11 @@
             "AssemblyAsmDisplayName" = "8:Interop.MSScriptControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
+                    "_B2BFCEF72A5F6140B875767ECAD0DCAA"
+                    {
+                    "Name" = "8:Interop.MSScriptControl.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Interop.MSScriptControl.dll"
             "TargetName" = "8:"
@@ -736,6 +741,11 @@
             "AssemblyAsmDisplayName" = "8:Interop.MSScriptControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
+                    "_F8CA8B344AB12C2E66A4E382C8060D30"
+                    {
+                    "Name" = "8:Interop.MSScriptControl.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Interop.MSScriptControl.dll"
             "TargetName" = "8:"
@@ -762,6 +772,11 @@
             "AssemblyAsmDisplayName" = "8:ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_FC2CB3610437D19FB7F75733AE3FC9FE"
+                    {
+                    "Name" = "8:ICSharpCode.SharpZipLib.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ICSharpCode.SharpZipLib.dll"
             "TargetName" = "8:"
@@ -903,15 +918,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{437C55DD-F0A0-45E8-A300-AA3D1609F062}"
-        "PackageCode" = "8:{408FDE91-ADEC-430B-A13A-F7760F107807}"
+        "ProductCode" = "8:{7174E694-C6A4-4E50-9113-4FFE81A52ECD}"
+        "PackageCode" = "8:{3FA6BC7B-F99B-4385-A6A5-F218E9DE9CBC}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.38"
+        "ProductVersion" = "8:1.0.39"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -919,7 +934,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:东华医为科技"
         "Keywords" = "8:插件 chrome"
-        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V37"
+        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V39"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -1174,7 +1189,7 @@
             {
             "Name" = "8:iMedical插件管理"
             "Arguments" = "8:"
-            "Description" = "8:"
+            "Description" = "8:iMedical插件管理V39"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
@@ -1182,20 +1197,6 @@
             "Folder" = "8:_A1A83618C76A4C53AB04DB569E052264"
             "WorkingFolder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
             "Icon" = "8:_5AFB0BD18DF9438E8C4B029038644F2E"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9CBF11C29C2F417DBFBCCF1FC1CD9687"
-            {
-            "Name" = "8:卸载iMedical插件"
-            "Arguments" = "8:/x {3391EB2B-0D83-414D-9774-10310DB88BCD} /qr"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_21AAC818EA164431B2DF4B960E09AF6C"
-            "Folder" = "8:_B631F20346354FBA8290539B87D26255"
-            "WorkingFolder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
-            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A1B3EC106FC44CE19FD788E9EF9BA211"

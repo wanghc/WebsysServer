@@ -40,6 +40,12 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2022-04-28
+### 版本1.0.39
+- 优化返回值的eacape速度 :bug: 
+- - 当返回字符长度100kb时，eacape速度要花13秒问题处理
+
+
 #### 2022-04-24
 ### 版本1.0.38
 - 使用CurrentUserEvalJs调用代码未完成时，又发出CurrentUserEvalJs命令报错处理，修改成多个代码文件处理。
