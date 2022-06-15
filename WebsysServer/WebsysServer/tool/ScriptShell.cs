@@ -347,5 +347,41 @@ namespace WebsysServer.tool
             }
             return lastMthRtn;
         }
+        /// <summary>
+        /// 调用WebsysScript.exe来运行myCode[xxx].txt
+        /// </summary>
+        /// <param name="myTxtFileName"></param>
+        /// <returns></returns>
+        public static string InvokeProcessWebsysScript(string myTxtFileName) {
+            Process p = new Process() {
+                StartInfo = {
+                        FileName = Path.Combine(Application.StartupPath, @"WebsysScript.exe"),
+                        Arguments= myTxtFileName ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
+                        UseShellExecute = false,    //是否使用操作系统shell启动
+                        RedirectStandardInput = true,//接受来自调用程序的输入信息
+                        RedirectStandardOutput = true,//由调用程序获取输出信息
+                        RedirectStandardError = true,//重定向标准错误输出
+                        CreateNoWindow = true,//不显示程序窗口
+                    }
+            };
+            p.Start();
+            //, @"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\""); // Assembly.GetEntryAssembly().Location);
+            //p.StandardInput.WriteLine(cmd);
+            p.StandardInput.AutoFlush = true;
+            p.WaitForExit(); // 等待的是explorer.exe结束，而不是WebsysScript.exe的运行结束
+            
+            //string rtn  = p.StandardOutput.ReadToEnd(); // 读到的结果有回车符
+            StreamReader sr = p.StandardOutput;
+            //string tempFirstLine = sr.ReadLine();
+            StringBuilder sb = new StringBuilder();
+            while (!sr.EndOfStream) {
+                sb.Append(sr.ReadLine());
+            }
+            string rtn = sb.ToString(); // sr.ReadToEnd();-> 会得到每行最后面的【回车换行符】\r\n
+            rtn = System.Web.HttpUtility.UrlDecode(rtn, System.Text.Encoding.GetEncoding("utf-8"));
+            sr.Close();
+            p.Close();
+            return rtn;
+        }
     }
 }

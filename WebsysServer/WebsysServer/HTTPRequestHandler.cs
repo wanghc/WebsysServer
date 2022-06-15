@@ -308,6 +308,7 @@ namespace WebsysServer
             //AObj.Mode = int.Parse(arr[2]);
             AObj.Ass = arr[2];
             AObj.Cls = arr[3];
+            AObj.Url = url + "?" + query;
             String[] dataArry = query.Split('&');
             for (int i = 0; i < dataArry.Length; i++)
             {
@@ -333,6 +334,12 @@ namespace WebsysServer
                 }
             }
             string x = AObj.CreateXObject();
+            if ("101^".Equals(x.Substring(0,4))) {
+                Logging.Debug("使用WebsysScript运行", x.Split('^')[1]);
+                string rtn = ScriptShell.InvokeProcessWebsysScript(x.Split('^')[1]);
+                if (rtn.IndexOf("ERROR^") == 0) throw new Exception(rtn.Substring(6)); // 抛出异常,外层调用才知道不成功
+                return rtn;
+            }
             if (!"0".Equals(x))
             {
                 Msg = x;

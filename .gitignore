@@ -395,3 +395,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/WebsysServerSetup/WebsysScript/Form1.cs
+/WebsysServerSetup/WebsysScript/Form1.Designer.cs
+/WebsysServerSetup/WebsysScript/Form1.resx
