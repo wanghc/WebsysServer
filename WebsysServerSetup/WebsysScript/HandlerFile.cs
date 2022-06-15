@@ -91,10 +91,11 @@ namespace WebsysScript
                 using (StreamReader sr = File.OpenText(MyCodeFile))
                 {
                     txtlang = sr.ReadLine();
-                    while (!sr.EndOfStream) {
-                        sb.Append(sr.ReadLine());
-                    }
-                    code = sb.ToString(); // sr.ReadToEnd();-> 会得到每行最后面的【回车换行符】\r\n
+                    //while (!sr.EndOfStream) {
+                    //    sb.Append(sr.ReadLine());
+                    //}
+                    // 每行后的回车不能删除，excel导出时，vbs是要回车的
+                    code = sr.ReadToEnd(); //;-> 会得到每行最后面的【回车换行符】\r\n
                     sr.Close();
                 }
             } else {

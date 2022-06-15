@@ -28,7 +28,7 @@ namespace WebsysServer.tool
                     RedirectStandardOutput =true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
-                    CreateNoWindow = false,//不显示程序窗口
+                    CreateNoWindow = true,//不显示程序窗口
                     Verb = "runas"
                 }
             };
@@ -84,6 +84,7 @@ namespace WebsysServer.tool
                 {
                     StartInfo = {
                         FileName = "explorer.exe",
+                        WindowStyle = ProcessWindowStyle.Hidden,
                         //D:\workspace_net\WebsysServerSetup\WebsysScript\bin\x86\Debug\
                         // explorer.exe调用 exe 无法为exe传递参数
                         Arguments= Path.Combine(Application.StartupPath, @"WebsysScript.exe") ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
