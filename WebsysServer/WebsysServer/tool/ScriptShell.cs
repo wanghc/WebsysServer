@@ -351,12 +351,13 @@ namespace WebsysServer.tool
         /// <summary>
         /// 调用WebsysScript.exe来运行myCode[xxx].txt
         /// </summary>
-        /// <param name="myTxtFileName"></param>
-        /// <returns></returns>
-        public static string InvokeProcessWebsysScript(string myTxtFileName) {
+        /// <param name="myTxtFileName">运行文件的全路径</param>
+        /// <param name="LocalDllStoreFile">本地动态库目录</param>
+         /// <returns></returns>
+        public static string InvokeProcessWebsysScript(string myTxtFileName,string LocalDllStoreFile) {
             Process p = new Process() {
                 StartInfo = {
-                        FileName = Path.Combine(Application.StartupPath, @"WebsysScript.exe"),
+                        FileName =Path.Combine(Application.StartupPath, @"WebsysScript.exe"),
                         Arguments= myTxtFileName ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
                         UseShellExecute = false,    //是否使用操作系统shell启动
                         RedirectStandardInput = true,//接受来自调用程序的输入信息

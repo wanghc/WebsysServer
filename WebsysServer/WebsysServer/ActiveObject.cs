@@ -187,6 +187,10 @@ namespace WebsysServer
                 string LocalDllPath = CGI.Combine(RemoteDllSubPath + "/" + Version + "/");
                 string LocalDllStoreFile = LocalDllPath + RemoteDllFileAllName;
                 Logging.Debug("isSameVersion " + LocalDllStoreFile);
+                Boolean InvokeProcessWebsysScript = false; /*默认使用老方式运行dll, 如果想使用WebsysScript.exe运行dll，配置中加上,WebsysScript.exe*/
+                if (DllPath.ToLower().IndexOf("websysscript.exe")>-1) {
+                    InvokeProcessWebsysScript = true;
+                }
                 if (CGI.IsValidIP(this.ClientIPExp))
                 {
                     if (HTTPFile.IsSameVersion(LocalDllStoreFile))
@@ -315,13 +319,14 @@ namespace WebsysServer
                             /// FIX: 实现应该判断当前进程中是否加载过dll，如果加载过才重启应用
                             /// 现在逻辑是下载新的DLL就会重启应用
                             /// 20220602 不再重启，使用websysScript.exe运行dll
-                            /*if (true) //(System.Windows.Forms.MessageBox.Show("要重新启动嘛？", "提示", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                            /// 20220617 非exe运行dll方式下，重启中间件
+                            if (!InvokeProcessWebsysScript) //(System.Windows.Forms.MessageBox.Show("要重新启动嘛？", "提示", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                             {
                                 Logging.Warn("----RestartByUpgrade---");
                                 Logging.Warn("重启路径："+System.Reflection.Assembly.GetExecutingAssembly().Location);
                                 ScriptShell.Run(System.Reflection.Assembly.GetExecutingAssembly().Location + " RestartByUpgrade"+" "+RemoteDllFileAllName.Replace("/","") + " "+Version);
                                 return "-6^升级模块插件并重启医为客户端管理应用";
-                            }*/
+                            }
                         }
                     }
                 }
@@ -346,7 +351,8 @@ namespace WebsysServer
                     {
                         if (LocalDllStoreFile.ToLower().EndsWith(".dll"))
                         {
-                            if (true) { // 修改成写文本 ， 使用WebsysScript来运行文本
+                            // 20220617 配置了才使用exe来运行dll   
+                            if (InvokeProcessWebsysScript) { // 修改成写文本 ， 使用WebsysScript来运行文本
 
                                 string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
                                 Logging.Debug("生成", path);
@@ -357,7 +363,7 @@ namespace WebsysServer
                                     sw.Close();
                                 }
                                 Logging.Debug("生成", path+"完成");
-                                return "101^" + path;
+                                return "101^" + path+"^"+ LocalDllStoreFile;
                             }
                             // 测试发现 在其它目录注册trakWebEdit3.dll后，只要interop.trakWebEdit3.dll在就可以反射
                             //会占用文件
