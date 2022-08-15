@@ -11,8 +11,15 @@ namespace WebsysScript
         public static void AfterRun(Boolean flag ,String error,String MyCodeFile)
         {
             if (flag)
-            {  //成功运行后删除文件
-                File.Delete(MyCodeFile);
+            {
+                //成功运行后删除文件 20220809不再删除
+                // File.Delete(MyCodeFile);
+                // 把运行result写入--MyCode[xxxxxx].txt中
+                using (StreamWriter sw = File.AppendText(MyCodeFile)) {
+                    sw.WriteLine(error);
+                    sw.Flush();
+                    sw.Close();
+                }
             }
             else
             {   // 把运行报错写入MyCode[xxxxxx].txt中
@@ -117,7 +124,8 @@ namespace WebsysScript
                 rtn = ex.Message;
                 errorMessage = "\n\n/*\n "+ex.Source+"：\n"  + ex.Message + "\n" + ex.StackTrace + "\n*/";
             }
-            AfterRun(success, errorMessage, MyCodeFile);
+            if (success) errorMessage = "\n\nWebsysScriptRESULT=" + rtn;
+            AfterRun(success, errorMessage, MyCodeFile);            
             if (success) return rtn;
             return "ERROR^"+rtn;
 

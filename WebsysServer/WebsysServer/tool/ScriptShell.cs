@@ -354,16 +354,18 @@ namespace WebsysServer.tool
         /// <param name="myTxtFileName">运行文件的全路径</param>
         /// <param name="LocalDllStoreFile">本地动态库目录</param>
          /// <returns></returns>
-        public static string InvokeProcessWebsysScript(string myTxtFileName,string LocalDllStoreFile) {
+        public static string InvokeProcessWebsysScript_Old(string myTxtFileName,string LocalDllStoreFile) {
+
             Process p = new Process() {
                 StartInfo = {
                         FileName =Path.Combine(Application.StartupPath, @"WebsysScript.exe"),
-                        Arguments= myTxtFileName ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
+                        WorkingDirectory = Path.GetDirectoryName(LocalDllStoreFile),
+                        Arguments = myTxtFileName ,  //"C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe", // "C:\\Windows\\system32\\cmd.exe", //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\"",
                         UseShellExecute = false,    //是否使用操作系统shell启动
                         RedirectStandardInput = true,//接受来自调用程序的输入信息
                         RedirectStandardOutput = true,//由调用程序获取输出信息
                         RedirectStandardError = true,//重定向标准错误输出
-                        CreateNoWindow = true,//不显示程序窗口
+                        CreateNoWindow = true,//获取或设置指示是否在新窗口中启动该进程的值。
                     }
             };
             p.Start();
@@ -384,6 +386,72 @@ namespace WebsysServer.tool
             sr.Close();
             p.Close();
             return rtn;
+        }
+        /// 先WaitForExit会卡住父进程，也会等待子进程运行，有些此时子进程（mispos,读卡）会等待父进程的StandarOutput流，所以应先读取标准Output流，然后再WaitForExit
+        /// https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process.standardoutput?redirectedfrom=MSDN&view=net-6.0#System_Diagnostics_Process_StandardOutput
+        /// 
+        /// <summary>
+        /// 20220809因为mispos与读卡会卡死问题修改，WaitForExit在读Output流前,会导致父子进程死锁。优化逻辑如下：
+        /// 调用WebsysScript.exe来运行myCode[xxx].txt,然后把结果写入--myCode[xxx].txt的最后一行
+        /// 在进程结束后,再次读取--myCode[xxx].txt文件的最后一行结果，然后再删除--myCode[xxx].txt文件
+        /// 
+        /// </summary>
+        /// <param name="myTxtFileName">运行文件的全路径</param>
+        /// <param name="LocalDllStoreFile">本地动态库目录</param>
+        /// <returns></returns>
+        public static string InvokeProcessWebsysScript(string myTxtFileName, string LocalDllStoreFile) {
+
+            Process p = new Process() {
+                StartInfo = {
+                        FileName =Path.Combine(Application.StartupPath, @"WebsysScript.exe"),
+                        WorkingDirectory = Path.GetDirectoryName(LocalDllStoreFile),
+                        Arguments = myTxtFileName+" 0",  //@"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe" 0表示使用debug模式运行，发现不传0调用mispos时，取消支付时，会崩亏，和WebsysScript写有关
+                        UseShellExecute = false,    //是否使用操作系统shell启动
+                        //RedirectStandardInput = false,//接受来自调用程序的输入信息
+                        //RedirectStandardOutput = true,//由调用程序获取输出信息
+                        //RedirectStandardError = true,//重定向标准错误输出
+                        CreateNoWindow = true,//获取或设置指示是否在新窗口中启动该进程的值。
+                    }
+            };
+            p.Start();
+            
+            /*
+             * 例如 Read， ReadLine对 ReadToEnd 进程的输出流执行同步读取操作等方法。 
+             * 在关联 Process 写入流 StandardOutput 或关闭流之前，这些同步读取操作不会完成。
+             * 一定要先读流再WaitForExit，不然会导致死锁
+             */
+            /*StreamReader sr = p.StandardOutput;
+            string rtn  = sr.ReadToEnd(); // 读到的结果有回车符
+            */
+            p.WaitForExit();  // 等待WebsysScript.exe的运行结束
+            string rtn = null;
+            Boolean foundResult = false;
+            string myHandlerTxtFileName = RenameToRuningFile(myTxtFileName);
+            try {
+                using (StreamReader txtsr = File.OpenText(myHandlerTxtFileName)) {
+                    while (!foundResult && !txtsr.EndOfStream) {
+                        string txt = txtsr.ReadLine();
+                        if (txt.IndexOf("WebsysScriptRESULT") == 0) {
+                            foundResult = true;
+                            rtn = txt.Substring("WebsysScriptRESULT".Length + 1);
+                        }
+                    }
+                    txtsr.Close();
+                }
+                File.Delete(myHandlerTxtFileName);
+            } catch (Exception ex) {
+                rtn = "ERRORWebsysScriptRESULT^" + myHandlerTxtFileName +",Error:"+ ex.Message;
+            }
+            rtn = System.Web.HttpUtility.UrlDecode(rtn, System.Text.Encoding.GetEncoding("utf-8"));
+            //sr.Close();
+            p.Close();
+            return rtn;
+        }
+        public static string RenameToRuningFile(string path) {
+            string file_path = Path.GetDirectoryName(path);
+            string file_name = Path.GetFileName(path);
+            string newPath = Path.Combine(file_path, "--" + file_name);
+            return newPath;
         }
     }
 }

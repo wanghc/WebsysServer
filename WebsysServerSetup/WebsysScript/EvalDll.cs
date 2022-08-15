@@ -60,6 +60,9 @@ namespace WebsysScript {
         /// <param name="m"></param>
         /// <param name="Arg"></param>
         /// <returns></returns>
+        /// 发现mispos取消刷卡时，method.Invoke(_obj, newArg);会报错但不能捕获到，如加上下面代码
+        /// 加上此句可以捕获c/c++抛出的异常
+        [System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptions]
         public object Invoke(string m, params object[] Arg) {
             object mthRtnValue = null;
             success = false;
@@ -86,6 +89,12 @@ namespace WebsysScript {
                 }
                 try {
                     mthRtnValue = method.Invoke(_obj, newArg);
+                } catch (System.Reflection.TargetInvocationException ex) {
+                    // mispos出现异常时，是有返回值的，即mthRtnValue不为空，为“P000XX交易失败”
+                    if (mthRtnValue == null && ex.InnerException != null) {
+                        Exception exception = ex.InnerException;
+                        throw exception;  //抛出异常才能保证txt文件不会删除;
+                    }
                 } catch (Exception e2) {
                     errorMsg = "-6^调用"+m+"方法失败。" + e2.Message;
                     if (null != e2.InnerException) errorMsg += e2.InnerException.Message + ":" + e2.InnerException.Source;
