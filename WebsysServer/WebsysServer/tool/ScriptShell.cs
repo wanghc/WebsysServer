@@ -49,6 +49,7 @@ namespace WebsysServer.tool
         {
             return Run(cmd, false);
         }
+
         /// <summary>
         /// 使用操作系统当前用户运行code
         /// 会把code写到MyCode.txt中,然后调用WebsysScript.exe
@@ -69,7 +70,8 @@ namespace WebsysServer.tool
                 {
                     File.Delete(oldCodePath);
                 }
-                string path = Path.Combine(curpath, "MyCode"+ DateTime.Now.ToFileTimeUtc().ToString()+".txt");
+                String myTxtFileName = "MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt";
+                string path = Path.Combine(curpath, myTxtFileName);
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     sw.WriteLine("/*"+lang+"*/");
@@ -92,7 +94,7 @@ namespace WebsysServer.tool
                         RedirectStandardInput = true,//接受来自调用程序的输入信息
                         RedirectStandardOutput = true,//由调用程序获取输出信息
                         RedirectStandardError = true,//重定向标准错误输出
-                        CreateNoWindow = true,//不显示程序窗口
+                        CreateNoWindow = true,       //不显示程序窗口
                     }
                 };
                 p.Start();
@@ -100,22 +102,58 @@ namespace WebsysServer.tool
                 //p.StandardInput.WriteLine(cmd);
                 p.StandardInput.AutoFlush = true;
                 //p.WaitForExit(); // 等待的是explorer.exe结束，而不是WebsysScript.exe的运行结束
-                
-                    /*Process[] processes = null;
-                    processes = System.Diagnostics.Process.GetProcessesByName("cmd");
-                    Process process = default(Process);
-                    foreach (Process tempLoopVar_process in processes)
-                    {
-                        process = tempLoopVar_process;
-                        process.StandardInput.Write("ipconfig");
-                        string cmdRtn = process.StandardOutput.ReadToEnd();
-                        return cmdRtn;
-                    }*/
-                return p.StandardOutput.ReadToEnd();
+
+                /*Process[] processes = null;
+                processes = System.Diagnostics.Process.GetProcessesByName("cmd");
+                Process process = default(Process);
+                foreach (Process tempLoopVar_process in processes)
+                {
+                    process = tempLoopVar_process;
+                    process.StandardInput.Write("ipconfig");
+                    string cmdRtn = process.StandardOutput.ReadToEnd();
+                    return cmdRtn;
+                }*/
+                // String outPutStr = p.StandardOutput.ReadToEnd(); // 20221104  这个返回值是explorer.exe进程的，不是WebsysScript.exe的返回值
+                string rtn = null;
+
+                //System.Threading.Timer timer = new System.Threading.Timer(onTimedEventInCurrentUserRun, path, 1000, 1000);
+                int loopMax = 600; // 600次即 600秒 = 10分钟
+                while (loopMax-->0) {
+                    System.Threading.Thread.Sleep(2000);
+                    Boolean foundResult = false;
+                    string myHandlerTxtFileName = RenameToRuningFile(path);
+                    try {
+                        using (StreamReader txtsr = File.OpenText(myHandlerTxtFileName)) {
+                            while (!foundResult && !txtsr.EndOfStream) {
+                                string txt = txtsr.ReadLine();
+                                if (txt.IndexOf("WebsysScriptRESULT") == 0) {
+                                    foundResult = true;
+                                    rtn = txt.Substring("WebsysScriptRESULT".Length + 1);
+                                }
+                            }
+                            txtsr.Close();
+                        }
+                        File.Delete(myHandlerTxtFileName);
+                    } catch (Exception ex) {
+                        rtn = "ERRORWebsysScriptRESULT^" + myHandlerTxtFileName + ",Error:" + ex.Message;
+                    }
+                    if (rtn==null || rtn.StartsWith("ERRORWebsysScriptRESULT^")) continue;  // 没找到文件 或 没有运行完成 则继续循环
+                    rtn = System.Web.HttpUtility.UrlDecode(rtn, System.Text.Encoding.GetEncoding("utf-8"));
+                    break;
+                }
+                //sr.Close();
+                p.Close();
+                return rtn;
                 //Environment.Exit(0);
             }
             return "";
         }
+
+        private static void onTimedEventInCurrentUserRun(object state) {
+            Console.WriteLine(state as string);
+            throw new NotImplementedException();
+        }
+
         public static string CurrentUserEvalJs(string str, string lang)
         {
             return CurrentUserRun(str,lang);

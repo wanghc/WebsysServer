@@ -40,6 +40,12 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2022-11-04
+
+### 版本1.1.4
+
+- 使用CurrentUserEvalJs导出excel时，弹出黑窗口问题 [2953530]
+
 ### 2022-08-15
 
 ### 版本1.1.3
