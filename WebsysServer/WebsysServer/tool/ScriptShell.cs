@@ -118,26 +118,46 @@ namespace WebsysServer.tool
 
                 //System.Threading.Timer timer = new System.Threading.Timer(onTimedEventInCurrentUserRun, path, 1000, 1000);
                 int loopMax = 600; // 600次即 600秒 = 10分钟
+                Boolean foundResult = false;
                 while (loopMax-->0) {
-                    System.Threading.Thread.Sleep(2000);
-                    Boolean foundResult = false;
+                    System.Threading.Thread.Sleep(1500);
                     string myHandlerTxtFileName = RenameToRuningFile(path);
+                    if (!File.Exists(myHandlerTxtFileName)) continue;
                     try {
+                        String line = "";
                         using (StreamReader txtsr = File.OpenText(myHandlerTxtFileName)) {
                             while (!foundResult && !txtsr.EndOfStream) {
-                                string txt = txtsr.ReadLine();
-                                if (txt.IndexOf("WebsysScriptRESULT") == 0) {
+                                line = txtsr.ReadLine();
+                                if (line.IndexOf("WebsysScriptRESULT") == 0) {
                                     foundResult = true;
-                                    rtn = txt.Substring("WebsysScriptRESULT".Length + 1);
+                                    rtn = line.Substring("WebsysScriptRESULT".Length + 1);
                                 }
                             }
                             txtsr.Close();
                         }
+                        if ("*/".Equals(line)) { //最后一行是注释 , 说明运行报错了
+                            using (StreamReader txtsr = File.OpenText(myHandlerTxtFileName)) {
+                                while (!foundResult && !txtsr.EndOfStream) {
+                                    line = txtsr.ReadLine();
+                                    /*把报错信息放到rtn中*/
+                                    if (line.IndexOf("WebsysScript：")>-1) {
+                                        foundResult = true;
+                                        while (!txtsr.EndOfStream) {
+                                            line = txtsr.ReadLine ();
+                                            if ("*/".Equals(line)) break;
+                                            rtn += line;
+                                        }
+                                    }
+                                }
+                                txtsr.Close();
+                            }
+                        }
                         File.Delete(myHandlerTxtFileName);
                     } catch (Exception ex) {
                         rtn = "ERRORWebsysScriptRESULT^" + myHandlerTxtFileName + ",Error:" + ex.Message;
+                        foundResult = true;
                     }
-                    if (rtn==null || rtn.StartsWith("ERRORWebsysScriptRESULT^")) continue;  // 没找到文件 或 没有运行完成 则继续循环
+                    if (!foundResult) continue;  // 没找到文件 或 没有运行完成 则继续循环
                     rtn = System.Web.HttpUtility.UrlDecode(rtn, System.Text.Encoding.GetEncoding("utf-8"));
                     break;
                 }

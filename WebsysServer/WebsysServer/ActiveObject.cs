@@ -342,7 +342,7 @@ namespace WebsysServer
                         /// CmdRun = qise.exe  ===>转成客户端路径==》
                         Logging.Debug("CmdRun 开始 {0}", this.CmdRun);
                         Logging.Debug("CmdRun 客户端 {0}开始", LocalDllPath+this.CmdRun);
-                        ScriptShell.Run(LocalDllPath+this.CmdRun,true);
+                        ScriptShell.Run("\""+LocalDllPath+this.CmdRun+"\"",true);  // 需求号3078733 ；20221115 如果路径包含空格,则会运行失败 
                         //new ScriptShell().CmdRun(this.CmdRun);
                         _obj = null;
                         return "100^成功运行命令";
