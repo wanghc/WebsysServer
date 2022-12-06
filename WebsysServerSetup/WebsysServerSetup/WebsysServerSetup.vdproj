@@ -178,25 +178,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F8CA8B344AB12C2E66A4E382C8060D30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3782C16C8F694A1889688F24445FBB06"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FC2CB3610437D19FB7F75733AE3FC9FE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B2BFCEF72A5F6140B875767ECAD0DCAA"
+        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -208,7 +190,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
+        "OwnerKey" = "8:_B2BFCEF72A5F6140B875767ECAD0DCAA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FC2CB3610437D19FB7F75733AE3FC9FE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3782C16C8F694A1889688F24445FBB06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F8CA8B344AB12C2E66A4E382C8060D30"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -396,7 +396,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.0.5, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.0.7, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -903,15 +903,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{5EC7FBBA-8A0E-4DF0-BDEB-7084879C4EA0}"
-        "PackageCode" = "8:{49C793F3-2449-46EB-8D0B-F9A04BF5C669}"
+        "ProductCode" = "8:{8F131576-9CB7-4106-8FFC-663AAF2517DB}"
+        "PackageCode" = "8:{4F67B3F4-ACC8-417E-9453-3E4679A72839}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.6"
+        "ProductVersion" = "8:1.1.7"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -919,7 +919,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:东华医为科技"
         "Keywords" = "8:插件 chrome"
-        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V1.1.6"
+        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V1.1.7"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"

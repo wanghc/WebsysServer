@@ -342,7 +342,33 @@ namespace WebsysServer
                         /// CmdRun = qise.exe  ===>转成客户端路径==》
                         Logging.Debug("CmdRun 开始 {0}", this.CmdRun);
                         Logging.Debug("CmdRun 客户端 {0}开始", LocalDllPath+this.CmdRun);
-                        ScriptShell.Run("\""+LocalDllPath+this.CmdRun+"\"",true);  // 需求号3078733 ；20221115 如果路径包含空格,则会运行失败 
+                        /*
+                         * this.CmdRun的值可能是：
+                         * eg: WebsysScript.exe 
+                         * eg: /BP/3.4.3.0/DHCClinic.BP.Main.exe 18912,170,197,cn_iptcp:114.242.246.235[51773]:DHC-APP 需求号 ： 3129682 
+                         * eg: /APB/my file/WebsysScript.exe
+                         * */
+                        // ScriptShell.Run(LocalDllPath + this.CmdRun, true);
+                        string pathParam = LocalDllPath + this.CmdRun;
+                        if (pathParam.Contains(" ")) {
+                            int spaceIndex = pathParam.IndexOf(" ");
+                            int nameIndex = pathParam.IndexOf(".exe");
+                            if (pathParam.Contains(".dll")) nameIndex = pathParam.IndexOf(".dll");
+                            if (pathParam.Contains(".msi")) nameIndex = pathParam.IndexOf(".msi");
+                            if (nameIndex>spaceIndex) { // 说明路径中包含空格    
+                                string exePath = pathParam.Substring(0, nameIndex + 4);
+                                if (File.Exists(exePath)){
+                                    string paramStr = pathParam.Substring(nameIndex + 4);
+                                    // 路径二边补双引号                       // 需求号 ： 3129682 ,基础平台-插件更新升级后，插件调用的产品，重症血透界面无法打开
+                                    Logging.Debug("为客户端程序增加双引号得到：{0}，且运行", "\"" + exePath + "\"" + paramStr);
+                                    ScriptShell.Run("\"" + exePath + "\"" + paramStr, true);
+                                    _obj = null;
+                                    return "100^成功运行命令";
+                                }
+                                // ScriptShell.Run("\"" + LocalDllPath + this.CmdRun + "\"", true);  // 需求号3078733 ；20221115 如果路径包含空格,则会运行失败 
+                            }
+                        }
+                        ScriptShell.Run(LocalDllPath + this.CmdRun, true);
                         //new ScriptShell().CmdRun(this.CmdRun);
                         _obj = null;
                         return "100^成功运行命令";
