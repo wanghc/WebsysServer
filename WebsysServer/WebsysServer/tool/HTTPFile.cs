@@ -28,20 +28,34 @@ namespace WebsysServer.tool
         {
             try
             {
-                HttpWebRequest Myrq = WebRequest.Create(URL) as HttpWebRequest;
+                
                 if (URL.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-                { 
+                {
                     //增加https支持 2020-03-06 
                     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-                    Myrq.ProtocolVersion = HttpVersion.Version11;
                     // 这里设置了协议类型。
-                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)192 | (SecurityProtocolType)768 | (SecurityProtocolType)3072;
                     //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-                    Myrq.KeepAlive = false;
-                    ServicePointManager.CheckCertificateRevocationList = true;
+                    //ServicePointManager.SecurityProtocol = (SecurityProtocolType)192 | (SecurityProtocolType)768 | (SecurityProtocolType)3072;
+                    try {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | (SecurityProtocolType)768 | (SecurityProtocolType)3072;
+
+                    } catch (Exception e) {
+                        // 部分电脑的错误
+                        //System.NotSupportedException: The requested security protocol is not supported.
+                        //
+                        //LogInfo.Error("https协议错误：hisURI" + HisURI, e);
+                        Logging.Error("https协议错误：{0}", URL);
+                        Logging.LogUsefulException(e);
+                    }
+                    //ServicePointManager.CheckCertificateRevocationList = true;
                     ServicePointManager.DefaultConnectionLimit = 100;
                     ServicePointManager.Expect100Continue = false;
+                    
                 }
+				HttpWebRequest Myrq = WebRequest.Create(URL) as HttpWebRequest;
+				Myrq.ProtocolVersion = HttpVersion.Version11;
+                Myrq.KeepAlive = false;
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 Stream st = myrp.GetResponseStream();
                 Directory.CreateDirectory(filename.Substring(0, filename.LastIndexOf("/")));
