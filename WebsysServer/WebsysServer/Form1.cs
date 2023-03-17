@@ -41,12 +41,33 @@ namespace WebsysServer
             tbPort.Text = urlPort.ToString();
             lbUrl.Text = "监听服务路径 http://" + urlServer + ":" + urlPort + urlApplication;
             CGI.LocalInstall = Path.Combine(System.Windows.Forms.Application.StartupPath, "");
+            moveScriptTxt(Path.Combine(CGI.LocalInstall));
             /*var conf = JinianNet.JNTemplate.Configuration.EngineConfig.CreateDefault();
             conf.StripWhiteSpace = false;
             conf.ResourceDirectories = new string[] { Path.Combine(System.Windows.Forms.Application.StartupPath, @"tmpl\scripts") };
             JinianNet.JNTemplate.Engine.Configure(conf);
             */
             //var verInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(Application.ProductVersion);
+        }
+        public string moveScriptTxt(string path) {
+            var now = DateTime.Now;
+            var day = now.Day; //Convert.ToInt32(now.DayOfWeek.ToString("d")); // 只备份7天的日志
+            string newPath = Path.Combine(path, "bak_temp", day.ToString());
+            if (Directory.Exists(newPath)) {
+                DirectoryInfo newDi = new DirectoryInfo(newPath);
+                if (0 != newDi.CreationTime.Date.CompareTo(now.Date)) {
+                    Directory.Delete(newPath);
+                }
+            }
+            Directory.CreateDirectory(newPath);
+            DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path,"temp"));
+            FileInfo[] fis = tempDir.GetFiles();
+            foreach (FileInfo fi in fis) {
+                if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
+                    fi.MoveTo(Path.Combine(newPath ,fi.Name));
+                }
+            }
+            return "";
         }
         public string ShutDownHttpServer()
         {
