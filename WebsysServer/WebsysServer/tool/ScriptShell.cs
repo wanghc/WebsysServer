@@ -78,13 +78,14 @@ namespace WebsysServer.tool
                     sw.Write(mycode);
                     sw.Close();
                 }
+                string rtn = null;
                 //var file = new FileInfo(Assembly.GetExecutingAssembly().Location);
                 //var exe = Path.Combine(file.DirectoryName, file.Name.Replace(file.Extension, "") + ".exe");
                 // 检测到当前进程是以管理员权限运行的，于是降权启动自己之后，把自己关掉。
                 //Process.Start("explorer.exe", "cmd.exe");
-                Process p = new Process()
-                {
-                    StartInfo = {
+                try {
+                    Process p = new Process() {
+                        StartInfo = {
                         FileName = "explorer.exe",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         //D:\workspace_net\WebsysServerSetup\WebsysScript\bin\x86\Debug\
@@ -96,11 +97,19 @@ namespace WebsysServer.tool
                         RedirectStandardError = true,//重定向标准错误输出
                         CreateNoWindow = true,       //不显示程序窗口
                     }
-                };
-                p.Start();
-                //, @"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\""); // Assembly.GetEntryAssembly().Location);
-                //p.StandardInput.WriteLine(cmd);
-                p.StandardInput.AutoFlush = true;
+                    };
+                    p.Start();
+                    //, @"D:\workspace_net\WebsysServerSetup\WebsysScript\bin\Debug\WebsysScript.exe " + lang+" \""+mycode+"\""); // Assembly.GetEntryAssembly().Location);
+                    //p.StandardInput.WriteLine(cmd);
+                    p.StandardInput.AutoFlush = true;
+                    p.Close();
+                } catch(Exception processExp) {
+                    File.Delete(path); // 360会阻止运行,导到生成了txt后，不运行，影响下次运行时，txt运行错乱，程序一直在下面while卡死
+                    rtn = "启动新process运行脚本出错,删除脚本。可能是杀毒软件影响，或权限问题";
+                    Logging.Error(rtn);
+                    Logging.Error(processExp);
+                    return rtn;
+                }
                 //p.WaitForExit(); // 等待的是explorer.exe结束，而不是WebsysScript.exe的运行结束
 
                 /*Process[] processes = null;
@@ -114,7 +123,7 @@ namespace WebsysServer.tool
                     return cmdRtn;
                 }*/
                 // String outPutStr = p.StandardOutput.ReadToEnd(); // 20221104  这个返回值是explorer.exe进程的，不是WebsysScript.exe的返回值
-                string rtn = null;
+                
 
                 //System.Threading.Timer timer = new System.Threading.Timer(onTimedEventInCurrentUserRun, path, 1000, 1000);
                 int loopMax = 600; // 600次即 600秒 = 10分钟
@@ -162,7 +171,6 @@ namespace WebsysServer.tool
                     break;
                 }
                 //sr.Close();
-                p.Close();
                 return rtn;
                 //Environment.Exit(0);
             }
