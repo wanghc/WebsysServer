@@ -20,7 +20,13 @@ namespace WebsysServer.tool
         public string[] GetIp()
         {
             string hn = Dns.GetHostName();
-            System.Net.IPAddress[] addressList = Dns.GetHostEntry(hn).AddressList;//IP获取一个LIST里面有一个是IP
+            /// 中间件返回：“不知道这样的主机”
+            /// 网络DNS问题，DNS服务器没有打开反向解析，而GetHostEntry是通DNS反向解析得到主机名的。我遇到了这个问题，重新配置了局域网内的DNS服务器，解决了从IP至主机名的转换问题。
+            /// 另外，配置好DNS反向解析后，要重新注册主机ipconfig / registerdns，并清空dns缓存ipconfig / flushdns。
+            /// Dns.GetHostEntry(hn) 修改成 Dns.GetHostAddresses，不再通过DNS解析得到IP。
+            /// 解决某些云桌面电脑不能拿到IP与mac登录界面不能登录
+
+            System.Net.IPAddress[] addressList = Dns.GetHostAddresses(hn); //Dns.GetHostEntry(hn).AddressList;//IP获取一个LIST里面有一个是IP
             foreach (IPAddress _IP in addressList)
             {
                 if (_IP.AddressFamily.ToString() ==  "InterNetwork")
