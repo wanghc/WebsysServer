@@ -40,11 +40,21 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+## 2023-04-07
+
+### 版本1.2.1
+
+- Win7下支持HTTP2.0协议下载资源  :sparkles: [3408462]
+
+- 依赖升级到framework4.5.2 ，以便使用CurlSharp
+
+  
+
 ## 2023-03-22
 
 ### 版本1.2.0
 
-- 在某些云桌面不能获得IP与MAC :sparkles:
+- 在某些云桌面不能获得IP与MAC :sparkles: [3362661]
 
 - ```
   Dns.GetHostEntry 修改成 Dns.GetHostAddresses
