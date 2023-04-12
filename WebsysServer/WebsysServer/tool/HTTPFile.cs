@@ -85,7 +85,8 @@ namespace WebsysServer.tool
         /// <param name="Filename">下载后另存为（全路径）</param>
         public static bool DownloadFile(string URL, string filename)
         {
-            if (System.Environment.OSVersion.Version.Equals(windows7)) {
+            Logging.Info("System.Environment.OSVersion.Version : ", System.Environment.OSVersion.Version.ToString());
+            if (System.Environment.OSVersion.Version.ToString().StartsWith(windows7)) { // 6.1.7601.65536
                 return DownloadFileByCurl(URL,filename);
             }
             try

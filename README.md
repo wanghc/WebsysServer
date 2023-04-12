@@ -40,6 +40,12 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+## 2023-04-12
+
+### 版本1.2.2
+
+- Win7-32bit与Win7-64bit都使用CurlSharp32动态库，去掉64的包依赖  [3408462]
+
 ## 2023-04-07
 
 ### 版本1.2.1
