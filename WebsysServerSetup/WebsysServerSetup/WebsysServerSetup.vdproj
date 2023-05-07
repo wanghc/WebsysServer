@@ -75,18 +75,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_70410952DAB14598B29378D6CCDCEFBF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_75D948962F314082AA64E5C211620127"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7C2CFA4294D94AE09D99E7E2102BA3A7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -101,12 +89,6 @@
         {
         "MsmKey" = "8:_7E1A682F728FDFFCD5BDFFD0A489F203"
         "OwnerKey" = "8:_B2BFCEF72A5F6140B875767ECAD0DCAA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_82014D3D382643E6B5DCE0965852AC87"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -135,30 +117,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_98DBF17C499443478B05821DC726D5DE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A42299010495A654EC80950AAFA3BC32"
-        "OwnerKey" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A42299010495A654EC80950AAFA3BC32"
-        "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A53AA6CAEE634D1DBB37962FB51D9F00"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_ADDB2D49A48B4D6290ADC9FCE2A580E6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -178,12 +136,6 @@
         "Entry"
         {
         "MsmKey" = "8:_DB1E07E29DC448C49621D70F7EEC2EFB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DBC4C87BF6C0476B9423FC373D1A9CA1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -239,12 +191,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B2BFCEF72A5F6140B875767ECAD0DCAA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A42299010495A654EC80950AAFA3BC32"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -450,7 +396,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.2.1, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.2.2, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -577,46 +523,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70410952DAB14598B29378D6CCDCEFBF"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\libssh2.dll"
-            "TargetName" = "8:libssh2.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75D948962F314082AA64E5C211620127"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\libcrypto-1_1.dll"
-            "TargetName" = "8:libcrypto-1_1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C2CFA4294D94AE09D99E7E2102BA3A7"
             {
             "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\mgr\\favicon.ico"
@@ -655,26 +561,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_82014D3D382643E6B5DCE0965852AC87"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\libcurlshim.dll"
-            "TargetName" = "8:libcurlshim.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8551A41D7CAC4929A58248160B294A7A"
@@ -757,77 +643,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_98DBF17C499443478B05821DC726D5DE"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\libcurl.dll"
-            "TargetName" = "8:libcurl.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A42299010495A654EC80950AAFA3BC32"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CurlSharpZF, Version=1.0.0.1, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_A42299010495A654EC80950AAFA3BC32"
-                    {
-                    "Name" = "8:CurlSharpZF.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:CurlSharpZF.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A53AA6CAEE634D1DBB37962FB51D9F00"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\curl-ca-bundle.crt"
-            "TargetName" = "8:curl-ca-bundle.crt"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ADDB2D49A48B4D6290ADC9FCE2A580E6"
             {
             "SourcePath" = "8:64.ico"
@@ -885,26 +700,6 @@
             "TargetName" = "8:index.css"
             "Tag" = "8:"
             "Folder" = "8:_EE44597665CB467C970C3D7525BEC907"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DBC4C87BF6C0476B9423FC373D1A9CA1"
-            {
-            "SourcePath" = "8:..\\..\\WebsysServer\\WebsysServer\\bin\\x86\\Debug\\libcurl86\\libssl-1_1.dll"
-            "TargetName" = "8:libssl-1_1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3FCD9D0DA19144499B9B3373F9B9B538"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1050,17 +845,6 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3FCD9D0DA19144499B9B3373F9B9B538"
-                    {
-                    "Name" = "8:libcurl86"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_FEB0EEC399FF4427A90BCFFA4BCD3DEB"
-                        "Folders"
-                        {
-                        }
-                    }
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_CE31B96766C246EC9A9089218D2FAA61"
                     {
                     "Name" = "8:mgr"
@@ -1134,15 +918,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{ECB3FB8F-6748-4970-807F-DB1AEDFEE991}"
-        "PackageCode" = "8:{112AFC7B-8342-43E2-A8C6-283376FFA486}"
+        "ProductCode" = "8:{6FA3A2D4-0011-4623-A655-F78DC5CE6CCD}"
+        "PackageCode" = "8:{47BB064B-C1A2-4C81-9A7D-D7F5FA281CBA}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.2"
+        "ProductVersion" = "8:1.2.3"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1150,7 +934,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:东华医为科技"
         "Keywords" = "8:插件 chrome"
-        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V1.2.1"
+        "ARPCOMMENTS" = "8:浏览器无插件运行本地程序的中间件程序-V1.2.3"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"

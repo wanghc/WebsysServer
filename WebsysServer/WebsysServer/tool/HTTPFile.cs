@@ -6,7 +6,7 @@ using System.Net;
 using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using CurlSharpZF;
+
 namespace WebsysServer.tool
 {
     class HTTPFile
@@ -27,50 +27,50 @@ namespace WebsysServer.tool
         }
         private static readonly Dictionary<string, BinaryWriter> Writers = new Dictionary<string, BinaryWriter>();
 
-        public static bool DownloadFileByCurl(string URL, string filename) {
+        //public static bool DownloadFileByCurl(string URL, string filename) {
             
-            try {
-                Logging.Info("windows7 download file by curl {0}", URL);
-                Curl.GlobalInit(CurlInitFlag.All);
-                string filedir = filename.Substring(0, filename.LastIndexOf("/"));
-                if (!Directory.Exists(filedir)) {
-                    Directory.CreateDirectory(filedir);
-                }
-                if (!File.Exists(filename)) {
-                    Writers.Add(URL, new BinaryWriter(new FileStream(filename, FileMode.Create)));
-                } else {
-                    return true;
-                }
-                CurlEasy easy = new CurlEasy();
-                easy.AutoReferer = true; //是否自动重定向
-                easy.FollowLocation = true;//是否本地
-                easy.Url = URL;
-                easy.WriteFunction = OnWriteData;
-                easy.WriteData = URL;
-                if (URL.StartsWith("https", StringComparison.OrdinalIgnoreCase)) {
-                    easy.HttpVersion = CurlHttpVersion.Http2_0;
-                    // easy.CaInfo = "curl-ca-bundle.crt";
-                    easy.SslVerifyPeer = false;
-                    easy.SslVerifyhost = false;
+        //    try {
+        //        Logging.Info("windows7 download file by curl {0}", URL);
+        //        Curl.GlobalInit(CurlInitFlag.All);
+        //        string filedir = filename.Substring(0, filename.LastIndexOf("/"));
+        //        if (!Directory.Exists(filedir)) {
+        //            Directory.CreateDirectory(filedir);
+        //        }
+        //        if (!File.Exists(filename)) {
+        //            Writers.Add(URL, new BinaryWriter(new FileStream(filename, FileMode.Create)));
+        //        } else {
+        //            return true;
+        //        }
+        //        CurlEasy easy = new CurlEasy();
+        //        easy.AutoReferer = true; //是否自动重定向
+        //        easy.FollowLocation = true;//是否本地
+        //        easy.Url = URL;
+        //        easy.WriteFunction = OnWriteData;
+        //        easy.WriteData = URL;
+        //        if (URL.StartsWith("https", StringComparison.OrdinalIgnoreCase)) {
+        //            easy.HttpVersion = CurlHttpVersion.Http2_0;
+        //            // easy.CaInfo = "curl-ca-bundle.crt";
+        //            easy.SslVerifyPeer = false;
+        //            easy.SslVerifyhost = false;
 
-                }
-                //https end判断结束
-                easy.Perform();
-                easy.Dispose();
-                if (Writers.Count > 0) {
-                    foreach (var w in Writers.Values) {
-                        w.Dispose();
-                    }
-                    Writers.Remove(URL);
-                }
-                Curl.GlobalCleanup();
-                return true;
-            } catch (Exception ex) {
-                Logging.Error("{0}下载失败{1}", URL, "行号：" + ex.StackTrace.ToString() + "错误消息：" + ex.Message.ToString());
-                Curl.GlobalCleanup();
-                return false;
-            }
-        }
+        //        }
+        //        //https end判断结束
+        //        easy.Perform();
+        //        easy.Dispose();
+        //        if (Writers.Count > 0) {
+        //            foreach (var w in Writers.Values) {
+        //                w.Dispose();
+        //            }
+        //            Writers.Remove(URL);
+        //        }
+        //        Curl.GlobalCleanup();
+        //        return true;
+        //    } catch (Exception ex) {
+        //        Logging.Error("{0}下载失败{1}", URL, "行号：" + ex.StackTrace.ToString() + "错误消息：" + ex.Message.ToString());
+        //        Curl.GlobalCleanup();
+        //        return false;
+        //    }
+        //}
         private const string windows2000 = "5.0";
         private const string windowsxp = "5.1";
         private const string windows2003 = "5.2";
@@ -86,9 +86,10 @@ namespace WebsysServer.tool
         public static bool DownloadFile(string URL, string filename)
         {
             Logging.Info("System.Environment.OSVersion.Version : ", System.Environment.OSVersion.Version.ToString());
-            if (System.Environment.OSVersion.Version.ToString().StartsWith(windows7)) { // 6.1.7601.65536
-                return DownloadFileByCurl(URL,filename);
-            }
+            // 依赖framework4.5,很多项目的win7电脑不能安装
+            //if (System.Environment.OSVersion.Version.ToString().StartsWith(windows7)) { // 6.1.7601.65536
+            //    return DownloadFileByCurl(URL,filename);
+            //}
             try
             {
                 
