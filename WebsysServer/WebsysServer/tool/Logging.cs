@@ -48,9 +48,11 @@ namespace WebsysServer.tool
         {
             try
             {
-                sw.Close();
-                sw.Dispose();
-                fs.Close();
+                if (null!=sw) {
+                    sw.Close();
+                    sw.Dispose();
+                }
+                if(null!=fs) fs.Close();
             }
             catch (IOException e )
             {
