@@ -60,12 +60,17 @@ namespace WebsysServer
                 }
             }
             Directory.CreateDirectory(newPath);
-            DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path,"temp"));
-            FileInfo[] fis = tempDir.GetFiles();
-            foreach (FileInfo fi in fis) {
-                if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
-                    fi.MoveTo(Path.Combine(newPath ,fi.Name));
+            String myTemp = Path.Combine(path, "temp");
+            if (Directory.Exists(myTemp)) {   // 增加判断，不然会因为目录不存在导致中间件无法重新启动 [3530041]
+                DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path, "temp"));
+                FileInfo[] fis = tempDir.GetFiles();
+                foreach (FileInfo fi in fis) {
+                    if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
+                        fi.MoveTo(Path.Combine(newPath, fi.Name));
+                    }
                 }
+            } else {
+                Directory.CreateDirectory(myTemp);
             }
             return "";
         }

@@ -40,6 +40,13 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2023-05-19
+
+### 版本1.2.5
+
+- 新电脑安装中间件后，反复启动中间件问题
+- - 缺少websysServer/temp目录导致
+
 ### 2023-05-08
 
 ### 版本1.2.4
