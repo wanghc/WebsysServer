@@ -40,6 +40,13 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2023-08-18
+
+### 版本1.2.7
+
+- 修复某些客户端不允许删除非空目录，导致中间件反复启动问题
+- - 如`\MediWay\WebsysServer\bak_temp\18`目录下有多个txt目录时，会出现问题
+
 ### 2023-05-19
 
 ### 版本1.2.5

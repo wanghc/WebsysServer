@@ -31,22 +31,21 @@ namespace WebsysServer
                 {
                     if (ArgsCount>2) RestartApplicationNote = "因"+args[1]+"模块升级至"+args[2]+"版而重新启动";
                     KillWebsysServer();
-                    int OpenLogFileTotal = 0;
-                    Logging.CurLogLevel = Properties.Settings.Default.LogLevel;
-                    while (!Logging.OpenLogFile())  //进程不能马上结束 ，文件占用着，等待一段时间，100ms*20
-                    {
-                        System.Threading.Thread.Sleep(100);
-                        OpenLogFileTotal++;
-                        Console.Write("open log file " + OpenLogFileTotal);
-                        if (OpenLogFileTotal > 20) break;
-                    }
-                    if (OpenLogFileTotal > 20) {
-                        MessageBox.Show("请检查《医为客户端管理》是否启动!", "医为客户端管理", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        //Logging.Error("不能打开日志文件,请检查《医为客户端管理》是否已经启动!");
-                        Application.Exit();
-                        return;
-                    }
                 }
+            }
+            int OpenLogFileTotal = 0;
+            Logging.CurLogLevel = Properties.Settings.Default.LogLevel;
+            while (!Logging.OpenLogFile())  //进程不能马上结束 ，文件占用着，等待一段时间，100ms*20
+            {
+                System.Threading.Thread.Sleep(100);
+                OpenLogFileTotal++;
+                Console.Write("open log file " + OpenLogFileTotal);
+                if (OpenLogFileTotal > 20) break;
+            }
+            if (OpenLogFileTotal > 20) {
+                //MessageBox.Show("请检查《医为客户端管理》是否启动!", "医为客户端管理", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Application.Exit();
+                return;
             }
             Logging.Warn("Main Arguments Count : " + ArgsCount);
             Logging.Warn("Main Arguments : "+ArgsStr);

@@ -49,28 +49,47 @@ namespace WebsysServer
             */
             //var verInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(Application.ProductVersion);
         }
+        /*
+         * 2023-08-18  by wanghc
+         * 修复某些电脑不允许删除空目录问题。
+         * 当目录下有文件时，不能删除并报错，导致中间件不能启动问题
+         */
+        public void DeleteFileWithFileType(string directory, string fileType) {
+            var allFileNames = new List<string>();
+            allFileNames.AddRange(Directory.GetFiles(directory, fileType));
+            // 根据条件删除文件
+            foreach (var item in allFileNames)
+                File.Delete(item);
+            // 删除空文件夹
+            Directory.Delete(directory);
+        }
         public string moveScriptTxt(string path) {
-            var now = DateTime.Now;
-            var day = now.Day; //Convert.ToInt32(now.DayOfWeek.ToString("d")); // 只备份7天的日志
-            string newPath = Path.Combine(path, "bak_temp", day.ToString());
-            if (Directory.Exists(newPath)) {
-                DirectoryInfo newDi = new DirectoryInfo(newPath);
-                if (0 != newDi.CreationTime.Date.CompareTo(now.Date)) {
-                    Directory.Delete(newPath);
-                }
-            }
-            Directory.CreateDirectory(newPath);
-            String myTemp = Path.Combine(path, "temp");
-            if (Directory.Exists(myTemp)) {   // 增加判断，不然会因为目录不存在导致中间件无法重新启动 [3530041]
-                DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path, "temp"));
-                FileInfo[] fis = tempDir.GetFiles();
-                foreach (FileInfo fi in fis) {
-                    if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
-                        fi.MoveTo(Path.Combine(newPath, fi.Name));
+            try {
+                var now = DateTime.Now;
+                var day = now.Day; //Convert.ToInt32(now.DayOfWeek.ToString("d")); // 只备份7天的日志
+                string newPath = Path.Combine(path, "bak_temp", day.ToString());
+                if (Directory.Exists(newPath)) {
+                    DirectoryInfo newDi = new DirectoryInfo(newPath);
+                    if (0 != newDi.CreationTime.Date.CompareTo(now.Date)) {
+                        DeleteFileWithFileType(newPath, "*.txt");
+                        //Directory.Delete(newPath);
                     }
                 }
-            } else {
-                Directory.CreateDirectory(myTemp);
+                Directory.CreateDirectory(newPath);
+                String myTemp = Path.Combine(path, "temp");
+                if (Directory.Exists(myTemp)) {   // 增加判断，不然会因为目录不存在导致中间件无法重新启动 [3530041]
+                    DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path, "temp"));
+                    FileInfo[] fis = tempDir.GetFiles();
+                    foreach (FileInfo fi in fis) {
+                        if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
+                            fi.MoveTo(Path.Combine(newPath, fi.Name));
+                        }
+                    }
+                } else {
+                    Directory.CreateDirectory(myTemp);
+                }
+            } catch (Exception ex) {
+
             }
             return "";
         }
