@@ -40,6 +40,26 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2023-10-12
+
+###　版本1.2.9
+
+- :bug: 解决解压zip内容错乱问题
+- - 多级目录且子目录有多个文件时会出现此问题
+
+### 2023-09-20
+
+### 版本1.2.8
+
+- 修复读卡方法不传入参时，不能focus问题
+
+- ```js
+  RWCard.focusLazyTime = 1500; /*延迟多长时间focus窗口。没有此行代码时默认:1000毫秒*/
+  //RWCard.focusWindowName = "串码输入框"; /*使用窗口标题定位*/
+  RWCard.focusClassName = "#32770 (对话框)"; /*使用类名定位，例：微信窗口WeChatMainWndForPC*/
+  RWCard.ReadPatCardNo();
+  ```
+
 ### 2023-08-18
 
 ### 版本1.2.7

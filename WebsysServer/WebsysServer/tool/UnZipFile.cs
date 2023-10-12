@@ -42,10 +42,12 @@ namespace WebsysServer.tool
                     //根目录下的文件名称
                     if (dir != "")
                     {
+                        // 2023-10-12 因为第三个else if(dir!="" && fileName!="")永远不会进入，导致path可能指向上一次目录
+                        // 把path赋值放到前面保证不错乱
+                        path = fileDir + "\\" + dir;
                         //创建根目录下的子文件夹，不限制级别
-                        if (!Directory.Exists(fileDir + "\\" + dir))
+                        if (!Directory.Exists(path))
                         {
-                            path = fileDir + "\\" + dir;
                             //在指定的路径创建文件夹
                             Directory.CreateDirectory(path);
                         }

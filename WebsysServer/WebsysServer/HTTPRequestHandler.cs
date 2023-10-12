@@ -364,22 +364,20 @@ namespace WebsysServer
                     if (key.StartsWith("_focusLazyTime")) continue;
                     if (key.StartsWith("M_"))
                     {
+                        /// focus窗口 // 提前读卡时方法没有入参DHCReadCard.ReadCard()也需要focus窗口
+                        if (!("".Equals(AObj.focusClassName)) || !("".Equals(AObj.focusWindowName))) {
+                            System.Threading.Thread focusThread = new System.Threading.Thread(new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime).FocusWindow);
+                            focusThread.Start();
+                        }
                         if (deValue.Contains(PCOUNT))
                         {
                             string[] Arg = ParseMthArg(deValue);
                             //new trakWebEdit3.TrakWebClass().ShowLayout(Arg[0],Arg[1],Arg[2],Arg[3]);
                             try
-                            {
-                                if (!("".Equals(AObj.focusClassName)) || !("".Equals(AObj.focusWindowName)))
-                                {
-                                    System.Threading.Thread focusThread = new System.Threading.Thread(new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime).FocusWindow);
-                                    focusThread.Start();
-                                }
+                            {                                
                                 //new DHCOPPrint.ClsBillPrintClass().ToPrintHDLPStr(Arg[0],Arg[1],Arg[2]);
-                                lastMthRtn = AObj.Invoke(key.Substring(2), Arg);
-                                
-                            }
-                            catch (Exception e)
+                                lastMthRtn = AObj.Invoke(key.Substring(2), Arg);                                
+                            }catch (Exception e)
                             {
                                 throw new Exception("调用"+key.Substring(2)+"方法发生异常,"+e.InnerException+", p="+String.Join(",",Arg));
                             }
