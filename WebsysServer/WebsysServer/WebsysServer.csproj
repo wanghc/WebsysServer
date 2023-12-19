@@ -91,7 +91,7 @@
     <ApplicationIcon>ico64.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>0AE970EE5050C39813324479B2FD654C9CECBE79</ManifestCertificateThumbprint>
