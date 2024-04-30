@@ -116,7 +116,18 @@ namespace WebsysScript
                     tool.Logging.Debug("开始运行:"+txtlang);
                     rtn = EvalDll.Run(txtlang,code); // 此方法会同步
                     tool.Logging.Debug("返回结果："+rtn);
-                }else {
+                }else if (txtlang.ToLower().IndexOf(".jar")>-1){
+                    tool.Logging.Debug("开始运行:" + txtlang);
+                    String jarFileName = txtlang.Substring(2, txtlang.ToLower().IndexOf(".jar") + 3);
+                    if (File.Exists(jarFileName))
+                    {
+                        String dirName = Path.GetDirectoryName(jarFileName);
+                        tool.Logging.Debug("开始运行: dirName: " +dirName+",code: "+code );
+                        rtn = EvalCmd.Run(dirName, code, false); // 此方法会同步
+                    }
+                    tool.Logging.Debug("返回结果：" + rtn);
+                }
+                else {
                     rtn = EvalScript.Run(txtlang, code);
                 }
             }catch(Exception ex){
