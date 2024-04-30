@@ -355,6 +355,7 @@ namespace WebsysServer
                             int nameIndex = pathParam.IndexOf(".exe");
                             if (pathParam.Contains(".dll")) nameIndex = pathParam.IndexOf(".dll");
                             if (pathParam.Contains(".msi")) nameIndex = pathParam.IndexOf(".msi");
+                            if (pathParam.Contains(".jar")) nameIndex = pathParam.IndexOf(".jar");
                             if (nameIndex>spaceIndex) { // 说明路径中包含空格    
                                 string exePath = pathParam.Substring(0, nameIndex + 4);
                                 if (File.Exists(exePath)){
@@ -368,7 +369,25 @@ namespace WebsysServer
                                 // ScriptShell.Run("\"" + LocalDllPath + this.CmdRun + "\"", true);  // 需求号3078733 ；20221115 如果路径包含空格,则会运行失败 
                             }
                         }
-                        ScriptShell.Run(LocalDllPath + this.CmdRun, true);
+                        // 2024-03-22 增加jar调用处理
+                        if (pathParam.IndexOf(".jar") > 0)
+                        {
+                            string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
+                            Logging.Debug("生成", path);
+                            using (StreamWriter sw = File.CreateText(path))
+                            {
+                                sw.WriteLine("/*" + pathParam + "*/");
+                                sw.Write("java -jar "+this.CmdRun);
+                                sw.Close();
+                            }
+                            Logging.Debug("生成", path + "完成");
+                            return "101^" + path + "^" + LocalDllStoreFile;
+                            //return ScriptShell.RunWorkingDirectory(LocalDllPath,"java -jar "+this.CmdRun,false);
+                        }
+                        else
+                        {
+                            ScriptShell.Run(LocalDllPath + this.CmdRun, true);
+                        }
                         //new ScriptShell().CmdRun(this.CmdRun);
                         _obj = null;
                         return "100^成功运行命令";
