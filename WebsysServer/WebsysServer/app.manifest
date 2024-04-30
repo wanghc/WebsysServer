@@ -7,15 +7,15 @@
         <!-- UAC 清单选项
              如果想要更改 Windows 用户帐户控制级别，请使用
              以下节点之一替换 requestedExecutionLevel 节点。n
-        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
-        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
-        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" /> 阻止 UAC 提示并使用用户当前的权限运行目标 EXE（管理员不提升）
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" /> 会导致提升提示，即如果未批准 UAC，应用程序将不会运行
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" /> 最高权限等级执行应用程序
 
             指定 requestedExecutionLevel 元素将禁用文件和注册表虚拟化。
             如果你的应用程序需要此虚拟化来实现向后兼容性，则删除此
             元素。
         -->
-        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
       <applicationRequestMinimum>
         <defaultAssemblyRequest permissionSetReference="Custom" />

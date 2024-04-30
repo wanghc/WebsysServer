@@ -252,13 +252,22 @@ namespace WebsysServer
             string contentPath = System.AppDomain.CurrentDomain.BaseDirectory;              //..bin/x86/Debug    //Application.StartupPath          
             string pfxPath = System.IO.Path.Combine(contentPath, "private.pfx"); // "server127.pfx");
             Logging.Info(pfxPath);
-            X509KeyStorageFlags x509KeyStorageFlags = X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet; //X509KeyStorageFlags.MachineKeySet;
-            X509Certificate2 certificate = new X509Certificate2(pfxPath, "12345678",x509KeyStorageFlags);
-            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-            store.Open(OpenFlags.MaxAllowed);
-            store.Add(certificate);
-            store.Close();
-            string hashStr = certificate.Thumbprint;
+            string hashStr = "";
+            try
+            {
+                X509KeyStorageFlags x509KeyStorageFlags = X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet; //X509KeyStorageFlags.MachineKeySet;
+                X509Certificate2 certificate = new X509Certificate2(pfxPath, "12345678", x509KeyStorageFlags);
+                X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                store.Open(OpenFlags.MaxAllowed);
+                store.Add(certificate);
+                store.Close();
+                hashStr = certificate.Thumbprint;
+            }
+            catch (Exception ex)
+            {
+                Logging.Error("安装证书失败");
+                Logging.Error(ex);               
+            }            
             return hashStr;
         }
     }

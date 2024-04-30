@@ -30,8 +30,23 @@ namespace WebsysServer
                 //String[] prefixes = { "http://*:11996/", "https://*:21996/" };
                 httpListener.Prefixes.Add(url);
                 httpListener.Prefixes.Add(urls);
-                httpListener.Start();
-                Logging.Log(LogLevel.Info,"WebServer Start Successed...");
+                try
+                {
+                    httpListener.Start();
+                    Logging.Log(LogLevel.Info,"WebServer Start Successed...");
+                }
+                catch(Exception ex)
+                {
+                    Logging.Error("启动监听服务失败");
+                    Logging.Error(ex);
+                    Logging.Error("解决办法：使用管理员进入cmd,运行下面4句语句");
+                    Logging.Error("netsh http delete urlacl url = http://*:11996/");
+                    Logging.Error("netsh http delete urlacl url = https://*:21996/");
+                    Logging.Error("netsh http add urlacl url = http://*:11996/ user=\"\\Everyone\"");
+                    Logging.Error("netsh http add urlacl url = https://*:21996/ user=\"\\Everyone\"");
+                }
+                
+                
                 //Logging.Log(LogLevel.Info, url);
                 while (true)
                 {
