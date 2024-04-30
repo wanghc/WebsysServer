@@ -421,7 +421,7 @@ namespace WebsysServer
             */
             try
             {
-                Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+                Process.Start("http://localhost:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
             }
             catch (Exception ex)
             {
@@ -433,7 +433,7 @@ namespace WebsysServer
         {
             try
             {
-                Process.Start("https://127.0.0.1:" + Properties.Settings.Default.HttpsServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+                Process.Start("https://localhost:" + Properties.Settings.Default.HttpsServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
             }
             catch (Exception ex)
             {
@@ -445,7 +445,7 @@ namespace WebsysServer
         {
             try
             {
-                Process.Start("http://127.0.0.1:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+                Process.Start("http://localhost:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
             }
             catch (Exception ex)
             {
