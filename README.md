@@ -40,6 +40,44 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2023-04-30
+
+### 版本1.3.2
+
+- :sparkles: 增加调用jar包中main方法功能
+
+  1. 编写java代码，并有main方法
+
+  ```java
+  package com.imediway.his;
+  public class HelloTest {
+      public static void main(String[] args) {
+      	for (int i=0;i<args.length;i++) {
+          	System.out.print(String.format("第%d个入参%s,",i,args[i])); 
+          }
+          System.out.println("~.~Hello Addins !"); 
+          System.out.println(""); // 结束输出 
+      } 
+  }
+  ```
+
+  2. 把代码打成可运行jar包，且在cmd中可运行，如：`java -jar HelloTest.jar myArg1 myArg2`
+  3. 把jar文件配置到插件管理界面
+  4. 在js中可以使用以下代码来 调用jar文件中main方法
+
+  ```js
+  helloTestObj.clear(); 
+  helloTestObj.cmd('HelloTest.jar myArg1 myArg2',function(rtn){
+  	//{msg:"success",rtn:"第0个入参myArg1,第1个入参myArg2,~.~Hello Addins !",status:200}
+  });
+  ```
+
+  
+
+- :sparkles: 启动时使用当前用户启动，不再强制使用管理员运行
+
+- 管理菜单打开管理界面使用localhost地址
+
 ### 2023-10-12
 
 ###　版本1.2.9
