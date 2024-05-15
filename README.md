@@ -60,8 +60,8 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 
 ### 版本1.3.3
 
-- 修改CurrentUserEvalJs方法，在非管理员权限下运行时，也可以运行
-- 解决：当前操作系统为`非管理员`，运行中间件后，在仅安装WPS的电脑上导出excel问题
+- 修改CurrentUserEvalJs方法，在非管理员权限下运行时，也可以运行 [4567511]
+- 解决：当前操作系统为`非管理员`，运行中间件后，在仅安装WPS的电脑上导出excel问题 [4567511]
 
 ### 2023-04-30
 
