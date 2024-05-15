@@ -59,10 +59,13 @@ namespace WebsysServer.tool
         /// <returns>""</returns>
         public static string CurrentUserRun(string mycode,String lang)
         {
+
+
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
             if (principal.IsInRole(WindowsBuiltInRole.Administrator))
             {
+                Logging.Info("当前是管理员运行");
                 //MessageBox.Show("shell="+Application.StartupPath);
                 string curpath = Path.Combine(Application.StartupPath, @"temp");
                 string oldCodePath = Path.Combine(curpath, "MyCode.txt");
@@ -70,8 +73,10 @@ namespace WebsysServer.tool
                 {
                     File.Delete(oldCodePath);
                 }
+                
                 String myTxtFileName = "MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt";
                 string path = Path.Combine(curpath, myTxtFileName);
+                Logging.Info("创建中间执行文件：" + path);
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     sw.WriteLine("/*"+lang+"*/");
@@ -173,6 +178,10 @@ namespace WebsysServer.tool
                 //sr.Close();
                 return rtn;
                 //Environment.Exit(0);
+            }
+            else
+            {
+                return EvalJs(mycode, lang);
             }
             return "";
         }
@@ -500,6 +509,7 @@ namespace WebsysServer.tool
                         if (txt.IndexOf("WebsysScriptRESULT") == 0) {
                             foundResult = true;
                             rtn = txt.Substring("WebsysScriptRESULT".Length + 1);
+                            rtn += txtsr.ReadToEnd(); //不只是第一行是结果，也把后面行的值拼到字符串上 2024-05-15 by wanghc
                         }
                     }
                     txtsr.Close();

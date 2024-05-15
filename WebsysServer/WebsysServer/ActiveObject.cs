@@ -350,12 +350,21 @@ namespace WebsysServer
                          * */
                         // ScriptShell.Run(LocalDllPath + this.CmdRun, true);
                         string pathParam = LocalDllPath + this.CmdRun;
+                        String jarFileAllPath = "";
                         if (pathParam.Contains(" ")) {
                             int spaceIndex = pathParam.IndexOf(" ");
                             int nameIndex = pathParam.IndexOf(".exe");
-                            if (pathParam.Contains(".dll")) nameIndex = pathParam.IndexOf(".dll");
-                            if (pathParam.Contains(".msi")) nameIndex = pathParam.IndexOf(".msi");
-                            if (pathParam.Contains(".jar")) nameIndex = pathParam.IndexOf(".jar");
+                            if (nameIndex > 0) {
+                                if (this.CmdRun.IndexOf("java.exe")>0 && this.CmdRun.IndexOf("-jar")>-1) //包含了指定java.exe路径 如：C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTest.jar myArg1 myArg2
+                                {
+                                    jarFileAllPath = LocalDllPath + this.CmdRun.Substring(this.CmdRun.IndexOf("-jar")+ 5);
+                                    pathParam = this.CmdRun.Substring(0, this.CmdRun.IndexOf("-jar") + 5) + jarFileAllPath;
+                                    spaceIndex = pathParam.IndexOf(" ");
+                                    nameIndex = pathParam.IndexOf(".exe");
+                                }
+                            } else if (pathParam.Contains(".dll")) nameIndex = pathParam.IndexOf(".dll");
+                            else if (pathParam.Contains(".msi")) nameIndex = pathParam.IndexOf(".msi");
+                            else if (pathParam.Contains(".jar")) nameIndex = pathParam.IndexOf(".jar");
                             if (nameIndex>spaceIndex) { // 说明路径中包含空格    
                                 string exePath = pathParam.Substring(0, nameIndex + 4);
                                 if (File.Exists(exePath)){
@@ -370,14 +379,23 @@ namespace WebsysServer
                             }
                         }
                         // 2024-03-22 增加jar调用处理
-                        if (pathParam.IndexOf(".jar") > 0)
+                        if (this.CmdRun.IndexOf(".jar ") > 0)
                         {
                             string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
                             Logging.Debug("生成", path);
                             using (StreamWriter sw = File.CreateText(path))
                             {
-                                sw.WriteLine("/*" + pathParam + "*/");
-                                sw.Write("java -jar "+this.CmdRun);
+                                
+                                //sw.WriteLine("cd \"" + LocalDllPath+"\"");
+                                if (this.CmdRun.IndexOf("java.exe") > 0 && this.CmdRun.Contains(" -jar ")) // 包含了指定java.exe路径 如：C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTest.jar myArg1 myArg2
+                                {
+                                    sw.WriteLine("/*" + jarFileAllPath + "*/");
+                                    sw.Write(this.CmdRun);
+                                }
+                                else {
+                                    sw.WriteLine("/*" + pathParam + "*/");
+                                    sw.Write("java -jar "+this.CmdRun);
+                                }
                                 sw.Close();
                             }
                             Logging.Debug("生成", path + "完成");

@@ -40,6 +40,29 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2023-05-15
+
+### 版本1.3.4
+
+- :bug: 调用jar文件时只返回一行结果问题处理，修改成：返回值多行
+
+- 支持指定某版java来运行jar包
+
+```js
+helloTestObj.clear(); 
+helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTest.jar arg1 arg2',function(rtn){
+    console.log(rtn);
+    //{msg:"success",rtn:"第0个入参myArg1,第1个入参myArg2,~.~Hello Addins !",status:200} 
+});
+```
+
+
+
+### 版本1.3.3
+
+- 修改CurrentUserEvalJs方法，在非管理员权限下运行时，也可以运行
+- 解决：当前操作系统为`非管理员`，运行中间件后，在仅安装WPS的电脑上导出excel问题
+
 ### 2023-04-30
 
 ### 版本1.3.2
