@@ -80,8 +80,18 @@ namespace WebsysServer.tool
                         int index = line.IndexOf(":");
                         index += 2;
                         CurIPAddress = line.Substring(index).Split('(')[0];
+                    }
+                    if (line.ToLower().IndexOf("default gateway") > -1 || line.ToLower().IndexOf("默认网关") > 0)
+                    {
+                        // 默认网关不为空时，表示是当前使用的网关
+                        int index = line.IndexOf(":");
+                        index += 2;
+                        string DefaultGatewayAddress = line.Substring(index).Split('(')[0];
                         //为了让上面的mac取的是正在用的
-                        break;
+                        if (DefaultGatewayAddress.Length > 8)
+                        {
+                            break;
+                        }
                     }
                     //不断一个个读取
                     line = reader.ReadLine();

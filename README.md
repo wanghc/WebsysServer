@@ -40,13 +40,19 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
-### 2023-05-15
+### 2024-06-06
+
+### 版本1.3.5
+
+- 获取客户端修改时，修改成获取当前使用的`IP`,`MacAddr`
+
+### 2024-05-15
 
 ### 版本1.3.4
 
 - :bug: 调用jar文件时只返回一行结果问题处理，修改成：返回值多行
 
-- 支持指定某版java来运行jar包
+- 支持指定某版java来运行jar包 [4572996]
 
 ```js
 helloTestObj.clear(); 
@@ -56,14 +62,12 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 });
 ```
 
-
-
 ### 版本1.3.3
 
 - 修改CurrentUserEvalJs方法，在非管理员权限下运行时，也可以运行 [4567511]
 - 解决：当前操作系统为`非管理员`，运行中间件后，在仅安装WPS的电脑上导出excel问题 [4567511]
 
-### 2023-04-30
+### 2024-04-30
 
 ### 版本1.3.2
 
