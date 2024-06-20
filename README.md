@@ -39,12 +39,15 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
   4. netsh http add sslcert ipport=0.0.0.0:21996 certhash=b1eb8df9b91cf3080fb30f41e959def25952376a appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
 
 ## 更新日志 ##
+### 2024-06-20
+### 版本1.3.6
+- 安装exe安装时写入监听权限 [4681909]
 
 ### 2024-06-06
 
 ### 版本1.3.5
 
-- 获取客户端修改时，修改成获取当前使用的`IP`,`MacAddr`
+- 获取客户端信息方法修改成获取当前使用的`IP`,`MacAddr`
 
 ### 2024-05-15
 

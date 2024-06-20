@@ -51,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_351256B16FA24D1289D4074809A41DFB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3782C16C8F694A1889688F24445FBB06"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -273,20 +279,6 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_200B48CFDC7B4A1EA8F508360C07EA12"
-            {
-            "Name" = "8:主输出 from WebsysServer (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_09642040_850E_4C7C_9AD6_BD662420A598"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
-            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_4EEF44AC5FFB42FA9EBD69C1B5AA6B89"
             {
             "Name" = "8:主输出 from WebsysServer (Active)"
@@ -299,6 +291,34 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_885A7E03_A529_46B5_96CF_4AD83176F18B"
             "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_6797838050524027A94B37F5664B6EA1"
+            {
+            "Name" = "8:主输出 from WebsysServer (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_5C2DB204EDDF449A8DF60595A37AF310"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_09642040_850E_4C7C_9AD6_BD662420A598"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_8631B343F88F464EB0B3023D6A536687"
+            {
+            "Name" = "8:addins.port.exe"
+            "Condition" = "8:"
+            "Object" = "8:_351256B16FA24D1289D4074809A41DFB"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:/Install"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_9A351027_154F_4457_92C5_DD1F5DF74CE5"
+            "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_8F944DB233C54B77B39E1F3BB7369682"
@@ -396,7 +416,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.3.4, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.3.5, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -467,6 +487,26 @@
             {
             "SourcePath" = "8:C:\\Windows\\System32\\msiexec.exe"
             "TargetName" = "8:msiexec.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_351256B16FA24D1289D4074809A41DFB"
+            {
+            "SourcePath" = "8:addins.port.exe"
+            "TargetName" = "8:addins.port.exe"
             "Tag" = "8:"
             "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
             "Condition" = "8:"
@@ -918,15 +958,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{835FE806-812F-4597-B4A0-DAC4255E3E6C}"
-        "PackageCode" = "8:{B95271B4-6C05-49A7-9005-A983F0793AFC}"
+        "ProductCode" = "8:{B1974F07-CC3D-498B-A37C-DC7357D159C8}"
+        "PackageCode" = "8:{2A912879-9A20-4CC3-B27A-ACE4B8A532B2}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.3.5"
+        "ProductVersion" = "8:1.3.6"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -934,7 +974,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:东华医为科技"
         "Keywords" = "8:插件 chrome"
-        "ARPCOMMENTS" = "8:医为客户端管理程序-V1.3.5"
+        "ARPCOMMENTS" = "8:医为客户端管理程序-V1.3.6"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
