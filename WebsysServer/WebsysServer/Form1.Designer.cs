@@ -54,10 +54,10 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(140, 333);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStart.Location = new System.Drawing.Point(124, 277);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(130, 44);
+            this.btnStart.Size = new System.Drawing.Size(116, 37);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "启用";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -65,10 +65,10 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(300, 333);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStop.Location = new System.Drawing.Point(267, 277);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(122, 44);
+            this.btnStop.Size = new System.Drawing.Size(108, 37);
             this.btnStop.TabIndex = 1;
             this.btnStop.Text = "停止";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -78,10 +78,10 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(129, 446);
+            this.label2.Location = new System.Drawing.Point(115, 372);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(260, 18);
+            this.label2.Size = new System.Drawing.Size(220, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "东华医为客户端管理软件 1.0.0";
             // 
@@ -89,18 +89,18 @@
             // 
             this.msg.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.msg.AutoSize = true;
-            this.msg.Location = new System.Drawing.Point(488, 446);
+            this.msg.Location = new System.Drawing.Point(434, 372);
             this.msg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.msg.Name = "msg";
-            this.msg.Size = new System.Drawing.Size(0, 18);
+            this.msg.Size = new System.Drawing.Size(0, 15);
             this.msg.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 96);
+            this.label1.Location = new System.Drawing.Point(23, 80);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 18);
+            this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 9;
             this.label1.Text = "日志级别";
             // 
@@ -108,17 +108,18 @@
             // 
             this.cbLogLevel.FormattingEnabled = true;
             this.cbLogLevel.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.cbLogLevel.Location = new System.Drawing.Point(132, 93);
+            this.cbLogLevel.Location = new System.Drawing.Point(117, 77);
+            this.cbLogLevel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbLogLevel.Name = "cbLogLevel";
-            this.cbLogLevel.Size = new System.Drawing.Size(112, 26);
+            this.cbLogLevel.Size = new System.Drawing.Size(100, 23);
             this.cbLogLevel.TabIndex = 10;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 161);
+            this.label4.Location = new System.Drawing.Point(23, 134);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 18);
+            this.label4.Size = new System.Drawing.Size(67, 15);
             this.label4.TabIndex = 11;
             this.label4.Text = "监听端口";
             // 
@@ -126,17 +127,18 @@
             // 
             this.tbPort.Enabled = false;
             this.tbPort.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tbPort.Location = new System.Drawing.Point(132, 158);
+            this.tbPort.Location = new System.Drawing.Point(117, 132);
+            this.tbPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbPort.Name = "tbPort";
-            this.tbPort.Size = new System.Drawing.Size(112, 28);
+            this.tbPort.Size = new System.Drawing.Size(100, 25);
             this.tbPort.TabIndex = 12;
             // 
             // lbUrl
             // 
             this.lbUrl.AutoSize = true;
-            this.lbUrl.Location = new System.Drawing.Point(26, 53);
+            this.lbUrl.Location = new System.Drawing.Point(23, 44);
             this.lbUrl.Name = "lbUrl";
-            this.lbUrl.Size = new System.Drawing.Size(80, 18);
+            this.lbUrl.Size = new System.Drawing.Size(67, 15);
             this.lbUrl.TabIndex = 13;
             this.lbUrl.Text = "监听路径";
             // 
@@ -161,7 +163,7 @@
             this.ExitToolStripMenuItem,
             this.AboutToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 172);
             // 
             // MgrToolStripMenuItem
             // 
@@ -169,65 +171,68 @@
             this.hTTPSToolStripMenuItem,
             this.hTTP界面ToolStripMenuItem});
             this.MgrToolStripMenuItem.Name = "MgrToolStripMenuItem";
-            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
             this.MgrToolStripMenuItem.Text = "管理";
             this.MgrToolStripMenuItem.Click += new System.EventHandler(this.MgrToolStripMenuItem_Click);
             // 
             // hTTPSToolStripMenuItem
             // 
             this.hTTPSToolStripMenuItem.Name = "hTTPSToolStripMenuItem";
-            this.hTTPSToolStripMenuItem.Size = new System.Drawing.Size(203, 32);
+            this.hTTPSToolStripMenuItem.Size = new System.Drawing.Size(177, 28);
             this.hTTPSToolStripMenuItem.Text = "HTTPS界面";
             this.hTTPSToolStripMenuItem.Click += new System.EventHandler(this.hTTPSToolStripMenuItem_Click);
             // 
             // hTTP界面ToolStripMenuItem
             // 
             this.hTTP界面ToolStripMenuItem.Name = "hTTP界面ToolStripMenuItem";
-            this.hTTP界面ToolStripMenuItem.Size = new System.Drawing.Size(203, 32);
+            this.hTTP界面ToolStripMenuItem.Size = new System.Drawing.Size(177, 28);
             this.hTTP界面ToolStripMenuItem.Text = "HTTP界面";
             this.hTTP界面ToolStripMenuItem.Click += new System.EventHandler(this.hTTP界面ToolStripMenuItem_Click);
             // 
             // StartupToolStripMenuItem
             // 
             this.StartupToolStripMenuItem.Name = "StartupToolStripMenuItem";
-            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
             this.StartupToolStripMenuItem.Text = "启用";
+            this.StartupToolStripMenuItem.Visible = false;
             this.StartupToolStripMenuItem.Click += new System.EventHandler(this.StartupToolStripMenuItem_Click);
             // 
             // ShutDownToolStripMenuItem
             // 
             this.ShutDownToolStripMenuItem.Name = "ShutDownToolStripMenuItem";
-            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
             this.ShutDownToolStripMenuItem.Text = "停止";
+            this.ShutDownToolStripMenuItem.Visible = false;
             this.ShutDownToolStripMenuItem.Click += new System.EventHandler(this.ShutDownToolStripMenuItem_Click);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
             this.ExitToolStripMenuItem.Text = "退出";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem1
             // 
             this.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1";
-            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(126, 32);
+            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(210, 28);
             this.AboutToolStripMenuItem1.Text = "关于";
             this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(429, 333);
+            this.button1.Location = new System.Drawing.Point(381, 277);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(89, 44);
+            this.button1.Size = new System.Drawing.Size(79, 37);
             this.button1.TabIndex = 1;
             this.button1.Text = "Test";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 477);
+            this.ClientSize = new System.Drawing.Size(491, 397);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lbUrl);
             this.Controls.Add(this.tbPort);
@@ -239,7 +244,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -39,6 +39,13 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
   4. netsh http add sslcert ipport=0.0.0.0:21996 certhash=b1eb8df9b91cf3080fb30f41e959def25952376a appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
 
 ## 更新日志 ##
+
+### 2024-07-08
+
+### 版本1.3.7
+
+- 去除停止/启动菜单 [4748462]
+
 ### 2024-06-20
 ### 版本1.3.6
 - 安装exe安装时写入监听权限 [4681909]
