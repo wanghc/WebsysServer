@@ -40,6 +40,12 @@ d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 
 ## 更新日志 ##
 
+### 2024-07-27
+
+### 版本1.3.8
+
+- 读mispos失败问题 [4805120]
+
 ### 2024-07-08
 
 ### 版本1.3.7

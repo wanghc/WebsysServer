@@ -335,6 +335,47 @@ namespace WebsysServer
                 }
                 if (downloadSucc)
                 {
+                    Logging.Debug("先判断cmdRun是否为空：{0}",("".Equals(this.CmdRun))?"true":"false");
+                    if ("".Equals(this.CmdRun)){
+                        Logging.Debug("进入运行dll判断");
+                        if (LocalDllStoreFile.ToLower().EndsWith(".dll"))
+                        {
+                            // 20220617 配置了才使用exe来运行dll   
+                            if (InvokeProcessWebsysScript)
+                            { // 修改成写文本 ， 使用WebsysScript来运行文本
+
+                                string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
+                                Logging.Debug("生成{0}", path);
+                                using (StreamWriter sw = File.CreateText(path))
+                                {
+                                    sw.WriteLine("/*" + LocalDllStoreFile + "*/");
+                                    // http://localhost:11996/websys/Interop.PrjSetTime/PrjSetTime.CLSSETTIMEClass?_dllDir=http%3A%2F%2F127.0.0.1%2Fdthealth%2Fweb%2Faddins%2Fplugin%2FPrjSetTime%2FInterop.PrjSetTime.dll%2CSetTime.dll  &_version = 1.0.0.0 & _clientIPExp = 127.0.0.1 & VYear = 2019 & VMonth = 9 & VDay = 17 & VHour = 9 & VMinute = 55 & M_SetTime =
+                                    sw.Write(Url);
+                                    sw.Close();
+                                }
+                                Logging.Debug("生成{0}", path + "完成");
+                                return "101^" + path + "^" + LocalDllStoreFile;
+                            }
+                            // 测试发现 在其它目录注册trakWebEdit3.dll后，只要interop.trakWebEdit3.dll在就可以反射
+                            //会占用文件
+                            Logging.Debug("LoadFrom 开始 {0}", LocalDllStoreFile);
+                            Assembly ass = Assembly.LoadFrom(LocalDllStoreFile);
+                            //Assembly ass = Assembly.Load(File.ReadAllBytes(LocalDllStoreFile));  // 护理医嘱单DoctorSheet使用Load方法调用不能加载依赖项；组件layout可以
+                            Logging.Debug("LoadFrom 结束 {0}", LocalDllStoreFile);
+                            Logging.Debug("ass.GetType 开始 {0}", LocalDllStoreFile);
+                            _type = ass.GetType(Cls);
+                            Logging.Debug("ass.GetType 结束 {0}", LocalDllStoreFile);
+                            if (_type == null) return "-2^获得实类失败" + Cls;
+                            _obj = Activator.CreateInstance(_type);
+                            return "0";
+                        }
+                        else
+                        {
+
+                            return "-3^注册成功。入口不是DLL无需运行";
+                        }
+                    }
+                    Logging.Debug("先判断cmdRun不为空：{0}", ("".Equals(this.CmdRun)) ? "false" : "true");
                     if (!("".Equals(this.CmdRun)))
                     {
                         /// 2020-07-10 此时不dll反射运行,调用exe
@@ -410,43 +451,7 @@ namespace WebsysServer
                         _obj = null;
                         return "100^成功运行命令";
                     }
-                    else
-                    {
-                        if (LocalDllStoreFile.ToLower().EndsWith(".dll"))
-                        {
-                            // 20220617 配置了才使用exe来运行dll   
-                            if (InvokeProcessWebsysScript) { // 修改成写文本 ， 使用WebsysScript来运行文本
-
-                                string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
-                                Logging.Debug("生成", path);
-                                using (StreamWriter sw = File.CreateText(path)) {
-                                    sw.WriteLine("/*"+ LocalDllStoreFile + "*/");
-                                    // http://localhost:11996/websys/Interop.PrjSetTime/PrjSetTime.CLSSETTIMEClass?_dllDir=http%3A%2F%2F127.0.0.1%2Fdthealth%2Fweb%2Faddins%2Fplugin%2FPrjSetTime%2FInterop.PrjSetTime.dll%2CSetTime.dll  &_version = 1.0.0.0 & _clientIPExp = 127.0.0.1 & VYear = 2019 & VMonth = 9 & VDay = 17 & VHour = 9 & VMinute = 55 & M_SetTime =
-                                    sw.Write(Url);
-                                    sw.Close();
-                                }
-                                Logging.Debug("生成", path+"完成");
-                                return "101^" + path+"^"+ LocalDllStoreFile;
-                            }
-                            // 测试发现 在其它目录注册trakWebEdit3.dll后，只要interop.trakWebEdit3.dll在就可以反射
-                            //会占用文件
-                            Logging.Debug("LoadFrom 开始 {0}", LocalDllStoreFile);
-                            Assembly ass = Assembly.LoadFrom(LocalDllStoreFile);
-                            //Assembly ass = Assembly.Load(File.ReadAllBytes(LocalDllStoreFile));  // 护理医嘱单DoctorSheet使用Load方法调用不能加载依赖项；组件layout可以
-                            Logging.Debug("LoadFrom 结束 {0}", LocalDllStoreFile);
-                            Logging.Debug("ass.GetType 开始 {0}", LocalDllStoreFile);
-                            _type = ass.GetType(Cls);
-                            Logging.Debug("ass.GetType 结束 {0}", LocalDllStoreFile);
-                            if (_type == null) return "-2^获得实类失败" + Cls;
-                            _obj = Activator.CreateInstance(_type);
-                            return "0";
-                        }
-                        else
-                        {
-
-                            return "-3^注册成功。入口不是DLL无需运行";
-                        }
-                    }
+                    
                 }
                 return "-3^未加载到要求版本的["+Ass+"]控件";
             }catch (Exception e)
