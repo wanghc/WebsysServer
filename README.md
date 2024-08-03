@@ -1,6 +1,6 @@
 # WebsysServer #
-Chrome调用动态库中间件，提供HTTP服务接口来调用本地服务，提供跨浏览器通过js调用本地服务功能。
-操作系统环境Win10, Chrome版本76.0.3809.132。关闭Win10的UAC体验更佳
+医为客户端管理，提供HTTP服务接口来调用本地服务，在现代浏览器上通过js调用本地服务功能。
+操作系统环境Win7, Win10,Win11,关闭操作系统的UAC体验更佳
 依赖开发环境：
 
 1. 开发环境Framework4.0
@@ -9,50 +9,67 @@ Chrome调用动态库中间件，提供HTTP服务接口来调用本地服务，�
 # 使用介绍
 ## 下载与更新
 #### 1.下载[WebsysServerSetup.zip](//hisui.cn/wp-content/uploads/2023/01/WebsysServerSetup.zip)放到web\addins\plugin\WebsysServerSetup\目录下,最终文件路径为web\addins\plugin\WebsysServerSetup\WebsysServerSetup.zip
-#### 2.把上面下载的zip包解压出的msi文件放到web\addins\plugin\目录下，最终文件路径为web\addins\plugin\WebsysServerSetup.msi
+#### 2.把下载的zip包解压出的msi文件放到web\addins\plugin\目录下，最终文件路径为web\addins\plugin\WebsysServerSetup.msi
 #### 3. iMedical8.4项目发送web\scripts\dhc.logon.js文件给基础平台组修改, 9.0不用修改
 #### 4. 进入demo – 开发工具 – 插件管理界面找到CMgr记录并选中
 - 修改版本号，最后一位增加1即可。
 - 如当前是1.1.3.6，则修改成1.1.3.7
 - DLL文件路径框内容写入WebsysServerSetup/WebsysServerSetup.zip
 - 点击保存
-  
-## 引用方式
 
-### 1. `csp`中引用中间件环境
+## 支持静默安装
+
+- 编写一bat文件，内容如下，放到msi同一层目录内，双击bat即可指定目录安装
+
+```bash
+msiexec /i "d:\xx\WebsysServerSetup.msi" TARGETDIR="D:/Program Files\MediWay" /qb
+```
+或
+```bash
+"d:\xx\WebsysServerSetup.msi" /qb TARGETDIR="D:/Program Files\MediWay"
+```
+
+
+
+## 开发使用
+
+### 1. 在`CSP`中引用中间件环境
 
 ```html
 <ADDINS></ADDINS>
 ```
 
-### 2.`组件`中引用中间件环境
+### 2.在`组件`中引用中间件环境(基础平台已处理)
 
 ```vb
 d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
 ```
-已配置对象列表如下：
+### 3. Javascripts中调用
 
-|对象名|方法列表|功能说明|
-|:-----:|:--------:|:---------:|
-|CmdShell|GetInfo,GetIP,Run|调用cmd命令|
-|DHCOPPrint|ToPrintHDLPStr|DHCOPPrint.CAB包打印|
-|LODOP|FORMAT,PRINT_INIT,PRINT等方法|LODOP打印对象|
-|TrakWebEdit3|ShowLayout|调用组件|
-|PrjSetTime|SetTime|设置本地时间|
+```js
+function Fun(){
+    if ("undefined"====typeof EnableLocalWeb || 0====EnableLocalWeb || IsIE){
+        //未开启使用中间件 或 老项目,IE然仍用老的方式运行
+    }else{
+        //中间件运行,此处的DoctorSheet为配置界面的调用ID
+        DoctorSheet.showDoctorOrderSheetWindow("1","2","3","4","5");
+    }
+}
+```
+
+[详细开发说明及示例](https://hisui.cn/wp-content/uploads/2022/06/Chrome中间件相关开发.pdf)
 
 ### 常见问题处理
 
 - 调用对象都有notReturn属性，`DoctorSheet.notReturn=0`即有返回值调用，同步调用。默认为1异步调用
-
 - 调用客户端方法报错，检查桌面快捷方法-插件管理-右键属性-兼容性以管理员身份运行此程序是否勾选
-
 - 在只安装了WPS的客户端，使用Excel导出或打印时报错，可以把`CmdShell.EvalJs(mycode)`修改成`CmdShell.CurrentUserEvalJs(mycode)`再测试
-
 - 安装成功后,HTTP管理界面可用但HTTPS管理界面不可用，可手动安装证书
   1. private.pfx安装---本地计算机---到【个人】中，密码为12345678
   2. private.crt安装---本地计算机---到【受信任的根证书颁发机构】中
   3. netsh http add sslcert ipport=0.0.0.0:21996 certhash=dd8652db5c07076d154827273642604ca8405332 appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
   4. netsh http add sslcert ipport=0.0.0.0:21996 certhash=b1eb8df9b91cf3080fb30f41e959def25952376a appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
+- 不能自动下载插件包，console.log日志中提示`The requested security protocol is not supported` 或 `请求被中止：未能创建SSL/TLS安全通道`, 请检查本地客户端是否安装framework4.5或修改注册表 [查看原因与解决1](https://www.cnblogs.com/Charltsing/p/Net4TLS12.html),[查看原因与解决2](//hisui.cn/?p=332)。
 
 ## 更新日志 ##
 
