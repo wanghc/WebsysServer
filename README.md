@@ -2,14 +2,16 @@
 Chrome调用动态库中间件，提供HTTP服务接口来调用本地服务，提供跨浏览器通过js调用本地服务功能。
 操作系统环境Win10, Chrome版本76.0.3809.132。关闭Win10的UAC体验更佳
 依赖开发环境：
+
 1. 开发环境Framework4.0
 2. 分三个工程，分别为服务功能，保护功能，安装功能
 # 使用介绍 #
 ## 引用方式 ##
-### 1. `csp`中引用中间件环境 ###
+### 1. `csp`中引用中间件环境
 ```html
 <ADDINS></ADDINS>
 ```
+
 ### 2.`组件`中引用中间件环境
 ```vb
 d ##class(websys.AddInsTmpl).WriteInvokerJsCode()
