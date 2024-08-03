@@ -8,7 +8,7 @@
 
 # 使用介绍
 ## 下载与更新
-#### 1.下载[WebsysServerSetup.zip](//hisui.cn/wp-content/uploads/2023/01/WebsysServerSetup.zip)放到web\addins\plugin\WebsysServerSetup\目录下,最终文件路径为web\addins\plugin\WebsysServerSetup\WebsysServerSetup.zip
+#### 1.下载[WebsysServerSetup.zip](//bsp.hisui.cn/static/WebsysServerSetup.zip)放到web\addins\plugin\WebsysServerSetup\目录下,最终文件路径为web\addins\plugin\WebsysServerSetup\WebsysServerSetup.zip
 #### 2.把下载的zip包解压出的msi文件放到web\addins\plugin\目录下，最终文件路径为web\addins\plugin\WebsysServerSetup.msi
 #### 3. iMedical8.4项目发送web\scripts\dhc.logon.js文件给基础平台组修改, 9.0不用修改
 #### 4. 进入demo – 开发工具 – 插件管理界面找到CMgr记录并选中
