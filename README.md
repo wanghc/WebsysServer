@@ -17,9 +17,10 @@
 - DLL文件路径框内容写入WebsysServerSetup/WebsysServerSetup.zip
 - 点击保存
 
-## 支持静默安装
+## 客户端支持静默安装(可选)
 
-- 编写一bat文件，内容如下，放到msi同一层目录内，双击bat即可指定目录安装
+- 如果项目要求静默安装到固定目录，可以使用以下方式默认安装
+- 编写bat文件，内容如下，放到msi同一层目录内，双击bat即可安装到指定目录
 
 ```bash
 msiexec /i "d:\xx\WebsysServerSetup.msi" TARGETDIR="D:/Program Files\MediWay" /qb
