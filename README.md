@@ -73,6 +73,23 @@ function Fun(){
 
 ## 更新日志 ##
 
+### 2024-08-14
+
+#### 版本1.3.9
+
+- 解决dll内存冲突，实现调用exe程序且拿到返回值 [4788656]
+
+  ```javascript
+  // 所有插件管理界面的调用ID都用cmd方法
+  DomId.clear()
+  DomId.notReturn = 1
+  DomId.cmd("mytest.exe arg1 arg2",function(rtn){
+  	// rtn //JSON返回值
+  })
+  ```
+
+  
+
 ### 2024-07-27
 
 ### 版本1.3.8

@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("WebsysServer")]
-[assembly: AssemblyDescription("iMedical插件管理1.3.8")]
+[assembly: AssemblyDescription("iMedical插件管理1.3.9")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MediWay")]
 [assembly: AssemblyProduct("WebsysServer")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // 可以指定所有这些值，也可以使用“内部版本号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.3.8")]
-[assembly: AssemblyFileVersion("1.1.3.8")]
+[assembly: AssemblyVersion("1.1.3.9")]
+[assembly: AssemblyFileVersion("1.1.3.9")]
 [assembly: NeutralResourcesLanguage("zh-cn")]
 

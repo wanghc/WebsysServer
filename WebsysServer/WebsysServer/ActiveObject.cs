@@ -442,6 +442,18 @@ namespace WebsysServer
                             Logging.Debug("生成", path + "完成");
                             return "101^" + path + "^" + LocalDllStoreFile;
                             //return ScriptShell.RunWorkingDirectory(LocalDllPath,"java -jar "+this.CmdRun,false);
+                        }else if (this.CmdRun.IndexOf(".exe") > 0) {
+                                string path = CGI.Combine("temp/MyCode" + DateTime.Now.ToFileTimeUtc().ToString() + ".txt");
+                                Logging.Debug("生成", path);
+                                using (StreamWriter sw = File.CreateText(path))
+                                {
+                                    sw.WriteLine("/*" + pathParam + "*/");
+                                    sw.Write(this.CmdRun);
+                                    sw.Close();
+                                }
+                                Logging.Debug("生成", path + "完成");
+                                return "101^" + path + "^" + LocalDllStoreFile;
+                                //return ScriptShell.RunWorkingDirectory(LocalDllPath,"java -jar "+this.CmdRun,false);
                         }
                         else
                         {

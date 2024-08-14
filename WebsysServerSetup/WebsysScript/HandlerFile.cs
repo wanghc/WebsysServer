@@ -112,17 +112,28 @@ namespace WebsysScript
             string errorMessage = "";
             try
             {
-                if (txtlang.ToLower().IndexOf("dll")>-1){
-                    tool.Logging.Debug("开始运行:"+txtlang);
-                    rtn = EvalDll.Run(txtlang,code); // 此方法会同步
-                    tool.Logging.Debug("返回结果："+rtn);
-                }else if (txtlang.ToLower().IndexOf(".jar")>-1){
+                if (txtlang.ToLower().IndexOf("dll") > -1) {
+                    tool.Logging.Debug("开始运行:" + txtlang);
+                    rtn = EvalDll.Run(txtlang, code); // 此方法会同步
+                    tool.Logging.Debug("返回结果：" + rtn);
+                } else if (txtlang.ToLower().IndexOf(".jar") > -1) {
                     tool.Logging.Debug("开始运行:" + txtlang);
                     String jarFileName = txtlang.Substring(2, txtlang.ToLower().IndexOf(".jar") + 3);
                     if (File.Exists(jarFileName))
                     {
                         String dirName = Path.GetDirectoryName(jarFileName);
-                        tool.Logging.Debug("开始运行: dirName: " +dirName+",code: "+code );
+                        tool.Logging.Debug("开始运行: dirName: " + dirName + ",code: " + code);
+                        rtn = EvalCmd.Run(dirName, code, false); // 此方法会同步
+                    }
+                    tool.Logging.Debug("返回结果：" + rtn);
+                }else if (txtlang.ToLower().IndexOf(".exe") > -1)
+                {
+                    tool.Logging.Debug("开始运行:" + txtlang);
+                    String exeFileName = txtlang.Substring(2, txtlang.ToLower().IndexOf(".exe") + 2);
+                    if (File.Exists(exeFileName))
+                    {
+                        String dirName = Path.GetDirectoryName(exeFileName);
+                        tool.Logging.Debug("开始运行: dirName: " + dirName + ",code: " + code);
                         rtn = EvalCmd.Run(dirName, code, false); // 此方法会同步
                     }
                     tool.Logging.Debug("返回结果：" + rtn);

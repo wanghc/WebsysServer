@@ -39,7 +39,7 @@ namespace WebsysScript
                 string cmdRtn = p.StandardOutput.ReadToEnd();
                 string[] arr = cmdRtn.Split('\n');
                 StringBuilder rtn = new StringBuilder(); Boolean startResult = false;
-                for (var i = 0; i < arr.Length - 1; i++)
+                for (var i = 0; i < arr.Length; i++)
                 {
                     if (startResult) rtn.Append(arr[i] + "\n");
                     if (arr[i].Contains("exit")) startResult = true;

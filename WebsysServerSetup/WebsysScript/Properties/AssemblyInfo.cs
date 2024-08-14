@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("WebsysScript")]
-[assembly: AssemblyDescription("WebsysScript1.1.5多文件运行代码")]
+[assembly: AssemblyDescription("WebsysScript1.1.6多文件运行代码")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("东华医为科技有限公司")]
 [assembly: AssemblyProduct("WebsysScript")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.5")]
-[assembly: AssemblyFileVersion("1.1.0.5")]
+[assembly: AssemblyVersion("1.1.0.6")]
+[assembly: AssemblyFileVersion("1.1.0.6")]
