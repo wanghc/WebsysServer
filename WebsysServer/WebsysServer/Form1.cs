@@ -125,6 +125,7 @@ namespace WebsysServer
             {
                 //开启一个线程处理收到的数据
                 httpServer = new HTTPServer();
+                httpServer.mainForm = this;
                 sthread = new Thread(httpServer.Start);
                 sthread.SetApartmentState(ApartmentState.STA);
                 sthread.Name = "S" + sthread.ManagedThreadId; ;

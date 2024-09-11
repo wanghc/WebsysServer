@@ -416,7 +416,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.3.8, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.3.9, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -958,15 +958,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{00D25979-9C2D-42B0-B17D-60411DC73FCA}"
-        "PackageCode" = "8:{0B6B695C-7949-4799-A348-E6A9E90C7BC0}"
+        "ProductCode" = "8:{805501F4-06FA-4429-B25E-84DA438AB585}"
+        "PackageCode" = "8:{AF51419F-B201-4BC7-8C55-3334BA91985C}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.3.9"
+        "ProductVersion" = "8:1.4.1"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

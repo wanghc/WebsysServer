@@ -22,11 +22,12 @@ namespace WebsysServer
         private string Rtn;
         public static string PCOUNT = "P_COUNT";
         public static string P = "P_";
-
-        public HTTPRequestHandler(HttpListenerContext ctx,int timeout)
+        public Form1 mainForm;
+        public HTTPRequestHandler(HttpListenerContext ctx,int timeout, Form1 mainForm)
         {
             this.ctx = ctx;
             this.Timeout = timeout;
+            this.mainForm = mainForm;
         }
         private void LogReqHeader(HttpListenerRequest request)
         {
@@ -366,7 +367,17 @@ namespace WebsysServer
                     {
                         /// focus窗口 // 提前读卡时方法没有入参DHCReadCard.ReadCard()也需要focus窗口
                         if (!("".Equals(AObj.focusClassName)) || !("".Equals(AObj.focusWindowName))) {
-                            System.Threading.Thread focusThread = new System.Threading.Thread(new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime).FocusWindow);
+                            //System.Threading.Thread focusThread = new System.Threading.Thread(new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime).FocusWindow);
+                            //focusThread.Start();
+                            Mgr mgr = new Mgr(AObj.focusClassName, AObj.focusWindowName, AObj.focusLazyTime);
+                            Logging.Info("焦点设置开始: focusClassName=" + AObj.focusClassName+ ",focusWindowName="+AObj.focusWindowName+ ",focusLazyTime=" + AObj.focusLazyTime);
+                            // 创建一个新的线程
+                            System.Threading.Thread focusThread = new System.Threading.Thread(() =>
+                            {
+                                Logging.Info("使用主UI线程invoke焦点"+ mainForm);
+                                // 在 UI 线程中执行 FocusWindow 方法
+                                if (mainForm!=null) mainForm.Invoke(new Action(mgr.FocusWindow));
+                            });
                             focusThread.Start();
                         }
                         if (deValue.Contains(PCOUNT))

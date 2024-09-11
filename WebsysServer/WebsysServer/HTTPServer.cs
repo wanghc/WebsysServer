@@ -14,6 +14,7 @@ namespace WebsysServer
         HttpListener httpListener;
         List<Thread> threadList = null;
         public Boolean IsAlive = false;
+        public Form1 mainForm;
         //int CurrentThreadNum = 0;
         public HTTPServer()
         {
@@ -59,7 +60,7 @@ namespace WebsysServer
                         /* 多线程处理请求*/
                         // httpListener.BeginGetContext(new AsyncCallback(GetContextCallBack), httpListener);
                             Logging.Error("-------------------client ApartmentState.STA------------");
-                            Thread clientThread = new Thread(new HTTPRequestHandler(ctx, d.ReqTimeOut).RequestHandler);
+                            Thread clientThread = new Thread(new HTTPRequestHandler(ctx, d.ReqTimeOut,mainForm).RequestHandler);
                             clientThread.Name = "C" + clientThread.ManagedThreadId;
                         // 血液净化----要求单线程单元 
                         clientThread.SetApartmentState(ApartmentState.STA); //设置这个参数，指示应用程序的COM线程模型 是 单线程单元                                                                            

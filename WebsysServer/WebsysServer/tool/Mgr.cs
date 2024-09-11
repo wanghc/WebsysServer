@@ -266,6 +266,7 @@ namespace WebsysServer.tool
         {
             if ("".Equals(lpClassName)) lpClassName = null;
             if ("".Equals(lpWindowName)) lpWindowName = null;
+            Logging.Info("sleep (ms): " + this.focusLazyTime);
             System.Threading.Thread.Sleep(this.focusLazyTime);
             IntPtr maindHwnd = FindWindow(lpClassName, lpWindowName);
             if (maindHwnd != IntPtr.Zero)
