@@ -118,19 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>关于</value>
   </data>
   <data name="Administrators" xml:space="preserve">
-    <value>Administrators</value>
+    <value>管理员</value>
   </data>
   <data name="ApplicationInstallationPath" xml:space="preserve">
-    <value>Application Installation Path</value>
+    <value>应用安装路径</value>
+  </data>
+  <data name="AppStartListenError" xml:space="preserve">
+    <value>启用服务监听程序出错</value>
+  </data>
+  <data name="AppStopListenError" xml:space="preserve">
+    <value>停止服务监听程序出错</value>
   </data>
   <data name="DefaultBrowserNotFound" xml:space="preserve">
-    <value>Default browser not found. Please set the default browser and enter the management interface</value>
+    <value>未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面.</value>
   </data>
   <data name="Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>退出</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ico256" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -143,36 +149,30 @@
     <value>icon-info.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iMedicalPluginManagement" xml:space="preserve">
-    <value>iMedical Plugin Management</value>
+    <value>iMedical插件管理</value>
   </data>
   <data name="ManageHttp" xml:space="preserve">
-    <value>ManageHttp</value>
+    <value>HTTP管理</value>
   </data>
   <data name="ManageHttps" xml:space="preserve">
-    <value>ManageHttps</value>
+    <value>HTTPS管理</value>
   </data>
   <data name="Management" xml:space="preserve">
-    <value>Management</value>
+    <value>管理</value>
   </data>
   <data name="MediwayClientManagement" xml:space="preserve">
-    <value>MediwayClientManagement</value>
-  </data>
-  <data name="NormalRestart" xml:space="preserve">
-    <value>Normal Restart</value>
-  </data>
-  <data name="OSVersion" xml:space="preserve">
-    <value>Operating System Version</value>
-  </data>
-  <data name="Tip" xml:space="preserve">
-    <value>Tip</value>
-  </data>
-  <data name="AppStartListenError" xml:space="preserve">
-    <value>App Start Listen Error</value>
-  </data>
-  <data name="AppStopListenError" xml:space="preserve">
-    <value>App Stop Listen Error</value>
+    <value>医为客户端管理</value>
   </data>
   <data name="MediwayClientManagementVersion" xml:space="preserve">
-    <value>Mediway Client Management Version</value>
+    <value>医为客户端管理版本</value>
+  </data>
+  <data name="NormalRestart" xml:space="preserve">
+    <value>正常重启</value>
+  </data>
+  <data name="OSVersion" xml:space="preserve">
+    <value>操作系统版本</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提示</value>
   </data>
 </root>

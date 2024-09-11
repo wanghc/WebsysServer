@@ -25,8 +25,14 @@ namespace WebsysServer
         public static string version = Application.ProductVersion; // 1.0.0.10
         public Form1()
         {
+            // 手动转换语言
+
+            //WebsysServer.Properties.Resources.Culture = new System.Globalization.CultureInfo("en");
+            
             InitializeComponent();
+            this.AboutToolStripMenuItem1.Text = WebsysServer.Properties.Resources.About;
             this.FormBorderStyle = FormBorderStyle.None;
+            //MessageBox.Show(System.Globalization.CultureInfo.CurrentCulture.Name);
             //this.ShowInTaskbar = false;
             //this.ShowIcon = false;
             cbLogLevel.Items.Add("Debug");
@@ -37,6 +43,11 @@ namespace WebsysServer
             int urlPort = Properties.Settings.Default.HttpServerPort;
             string urlServer = Properties.Settings.Default.HttpServerIP;
             string urlApplication = Properties.Settings.Default.HttpServerApplication;
+            this.AboutToolStripMenuItem1.Text = WebsysServer.Properties.Resources.About;
+            this.ExitToolStripMenuItem.Text = WebsysServer.Properties.Resources.Exit;
+            this.MgrToolStripMenuItem.Text = WebsysServer.Properties.Resources.Management;
+            this.hTTPSToolStripMenuItem.Text = WebsysServer.Properties.Resources.ManageHttps;
+            this.hTTP界面ToolStripMenuItem.Text = WebsysServer.Properties.Resources.ManageHttp;
             cbLogLevel.SelectedIndex = LogLevel;
             tbPort.Text = urlPort.ToString();
             lbUrl.Text = "监听服务路径 http://" + urlServer + ":" + urlPort + urlApplication;
@@ -114,7 +125,7 @@ namespace WebsysServer
                 }
             } catch (Exception e)
             {
-                MessageBox.Show("提示", "启用服务监听程序出错：" + e.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.AppStopListenError  +"：" + e.Message);
                 return "-1";
             }
             return "";
@@ -133,7 +144,7 @@ namespace WebsysServer
                 Logging.Warn("启动服务器线程" + sthread.ManagedThreadId.ToString("00"));
             } catch (Exception e)
             {
-                MessageBox.Show("提示", "启用服务监听程序出错：" + e.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.AppStartListenError + "：" + e.Message);
                 return "-1";
             }
             return "";
@@ -386,20 +397,20 @@ namespace WebsysServer
             String osStr = Environment.OSVersion.ToString();
             String netStr = Environment.Version.ToString();
             String installPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            String content = "插件管理版本 : " + version + "{0} \r\n操作系统版本 : " + osStr + "\r\nframework : " + netStr + "\r\n " + "应用安装路径 : " + installPath + "\r\n";
+            String content = WebsysServer.Properties.Resources.MediwayClientManagementVersion + " : " + version + "{0} \r\n"+ WebsysServer.Properties.Resources.OSVersion +" : " + osStr + "\r\nframework : " + netStr + "\r\n "+ WebsysServer.Properties.Resources.ApplicationInstallationPath + " : " + installPath + "\r\n";
             if ("".Equals(RestartApplicationNote) ){
-                content += "正常重启\r\n";
+                content += WebsysServer.Properties.Resources.NormalRestart+"\r\n";
             }else{
                 content += RestartApplicationNote+ "\r\n";
             }
             System.Security.Principal.WindowsIdentity current = System.Security.Principal.WindowsIdentity.GetCurrent();
             if (new System.Security.Principal.WindowsPrincipal(current).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
-                content = string.Format(content, "(管理员)");
+                content = string.Format(content, "(" + WebsysServer.Properties.Resources.Administrators + ")");
             }
-            content = string.Format(content, "(管理员)");
+            content = string.Format(content, "("+ WebsysServer.Properties.Resources.Administrators+")");
           
-            MessageBox.Show(content, "iMedical插件管理", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(content, WebsysServer.Properties.Resources.iMedicalPluginManagement, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
@@ -422,11 +433,11 @@ namespace WebsysServer
             */
             try
             {
-                Process.Start("http://localhost:" + Properties.Settings.Default.HttpServerPort + Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
+                Process.Start("http://localhost:" + WebsysServer.Properties.Settings.Default.HttpServerPort + WebsysServer.Properties.Settings.Default.HttpServerApplication + "mgr/index.html");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound + ex.Message);
             }
         }
 
@@ -438,7 +449,7 @@ namespace WebsysServer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound  + ex.Message);
             }
         }
 
@@ -450,7 +461,7 @@ namespace WebsysServer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("提示", "未找到默认浏览器。\n请到设置默认浏览器,然后进入管理界面." + ex.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound + ex.Message);
             }
         } 
         

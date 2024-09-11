@@ -73,6 +73,28 @@ function Fun(){
 
 ## 更新日志 ##
 
+### 2024-08-28
+#### 版本1.4.3
+- 支持国际化
+- - 在英文操作系统显示英文
+- - 在中文操作系统显示中文
+
+#### 版本1.4.1
+
+- 解决弹出form置顶问题
+
+  ```js
+  // xx是任意的调用DLL插件的对象
+  xx.clear();
+  xx.notReturn = 0;
+  xx.focusLazyTime = 1500; /*延迟多长时间focus窗口。没有此行代码时默认:1000毫秒*/
+  xx.focusWindowName = "串码输入框";       /*使用窗口标题定位，例：串码输入框*/
+  // xx.focusClassName = "#32770 (对话框)";      /*使用类名定位，例：微信窗口WeChatMainWndForPC*/
+  xx.ReadPatCardNo();  /*具体方法*/
+  ```
+
+  
+
 ### 2024-08-14
 
 #### 版本1.3.9

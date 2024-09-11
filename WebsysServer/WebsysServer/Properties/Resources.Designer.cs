@@ -61,6 +61,69 @@ namespace WebsysServer.Properties {
         }
         
         /// <summary>
+        ///   查找类似 About 的本地化字符串。
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Administrators 的本地化字符串。
+        /// </summary>
+        internal static string Administrators {
+            get {
+                return ResourceManager.GetString("Administrators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Application Installation Path 的本地化字符串。
+        /// </summary>
+        internal static string ApplicationInstallationPath {
+            get {
+                return ResourceManager.GetString("ApplicationInstallationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 App Start Listen Error 的本地化字符串。
+        /// </summary>
+        internal static string AppStartListenError {
+            get {
+                return ResourceManager.GetString("AppStartListenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 App Stop Listen Error 的本地化字符串。
+        /// </summary>
+        internal static string AppStopListenError {
+            get {
+                return ResourceManager.GetString("AppStopListenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Default browser not found. Please set the default browser and enter the management interface 的本地化字符串。
+        /// </summary>
+        internal static string DefaultBrowserNotFound {
+            get {
+                return ResourceManager.GetString("DefaultBrowserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exit 的本地化字符串。
+        /// </summary>
+        internal static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon ico256 {
@@ -87,6 +150,87 @@ namespace WebsysServer.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon_info", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 iMedical Plugin Management 的本地化字符串。
+        /// </summary>
+        internal static string iMedicalPluginManagement {
+            get {
+                return ResourceManager.GetString("iMedicalPluginManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ManageHttp 的本地化字符串。
+        /// </summary>
+        internal static string ManageHttp {
+            get {
+                return ResourceManager.GetString("ManageHttp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ManageHttps 的本地化字符串。
+        /// </summary>
+        internal static string ManageHttps {
+            get {
+                return ResourceManager.GetString("ManageHttps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Management 的本地化字符串。
+        /// </summary>
+        internal static string Management {
+            get {
+                return ResourceManager.GetString("Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 MediwayClientManagement 的本地化字符串。
+        /// </summary>
+        internal static string MediwayClientManagement {
+            get {
+                return ResourceManager.GetString("MediwayClientManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Mediway Client Management Version 的本地化字符串。
+        /// </summary>
+        internal static string MediwayClientManagementVersion {
+            get {
+                return ResourceManager.GetString("MediwayClientManagementVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Normal Restart 的本地化字符串。
+        /// </summary>
+        internal static string NormalRestart {
+            get {
+                return ResourceManager.GetString("NormalRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Operating System Version 的本地化字符串。
+        /// </summary>
+        internal static string OSVersion {
+            get {
+                return ResourceManager.GetString("OSVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tip 的本地化字符串。
+        /// </summary>
+        internal static string Tip {
+            get {
+                return ResourceManager.GetString("Tip", resourceCulture);
             }
         }
     }

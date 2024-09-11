@@ -126,6 +126,12 @@
   <data name="ApplicationInstallationPath" xml:space="preserve">
     <value>Application Installation Path</value>
   </data>
+  <data name="AppStartListenError" xml:space="preserve">
+    <value>App Start Listen Error</value>
+  </data>
+  <data name="AppStopListenError" xml:space="preserve">
+    <value>App Stop Listen Error</value>
+  </data>
   <data name="DefaultBrowserNotFound" xml:space="preserve">
     <value>Default browser not found. Please set the default browser and enter the management interface</value>
   </data>
@@ -155,7 +161,10 @@
     <value>Management</value>
   </data>
   <data name="MediwayClientManagement" xml:space="preserve">
-    <value>MediwayClientManagement</value>
+    <value>Mediway Client Management</value>
+  </data>
+  <data name="MediwayClientManagementVersion" xml:space="preserve">
+    <value>Mediway Client Management Version</value>
   </data>
   <data name="NormalRestart" xml:space="preserve">
     <value>Normal Restart</value>
@@ -163,16 +172,10 @@
   <data name="OSVersion" xml:space="preserve">
     <value>Operating System Version</value>
   </data>
+  <data name="PluginManagementVersion" xml:space="preserve">
+    <value>Plugin Management Version</value>
+  </data>
   <data name="Tip" xml:space="preserve">
     <value>Tip</value>
-  </data>
-  <data name="AppStartListenError" xml:space="preserve">
-    <value>App Start Listen Error</value>
-  </data>
-  <data name="AppStopListenError" xml:space="preserve">
-    <value>App Stop Listen Error</value>
-  </data>
-  <data name="MediwayClientManagementVersion" xml:space="preserve">
-    <value>Mediway Client Management Version</value>
   </data>
 </root>
