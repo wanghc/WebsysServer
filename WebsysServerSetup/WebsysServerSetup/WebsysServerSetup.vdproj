@@ -57,12 +57,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_351256B16FA24D1289D4074809A41DFB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3782C16C8F694A1889688F24445FBB06"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -196,12 +190,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1629503AD20B4037BF6D736C05E6F892"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_56E43413D47D4C15A7626D458BE2D4A2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -209,6 +197,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_16B26E395E0F42089B18AAFBAF4C69E5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1629503AD20B4037BF6D736C05E6F892"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -326,24 +320,10 @@
             "InstallAction" = "3:1"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
-            "Sequence" = "3:2"
+            "Sequence" = "3:1"
             "Identifier" = "8:_09642040_850E_4C7C_9AD6_BD662420A598"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_8631B343F88F464EB0B3023D6A536687"
-            {
-            "Name" = "8:addins.port.exe"
-            "Condition" = "8:"
-            "Object" = "8:_351256B16FA24D1289D4074809A41DFB"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:/Install"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_9A351027_154F_4457_92C5_DD1F5DF74CE5"
-            "InstallerClass" = "11:FALSE"
-            "CustomActionData" = "8:"
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_8F944DB233C54B77B39E1F3BB7369682"
             {
@@ -440,7 +420,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.3, Culture=zh-CN, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.4, Culture=zh-CN, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_1629503AD20B4037BF6D736C05E6F892"
@@ -471,7 +451,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.4.3, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.4.4, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -558,31 +538,11 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_351256B16FA24D1289D4074809A41DFB"
-            {
-            "SourcePath" = "8:addins.port.exe"
-            "TargetName" = "8:addins.port.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_FECB53B19D3B44C9B419A25FE33E61B0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_56E43413D47D4C15A7626D458BE2D4A2"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.3, Culture=en, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.4, Culture=en, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_56E43413D47D4C15A7626D458BE2D4A2"
@@ -939,7 +899,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_B631F20346354FBA8290539B87D26255"
                     {
-                    "Name" = "8:iMedical插件管理"
+                    "Name" = "8:iMedicalPluginManager"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -1066,15 +1026,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{DF4AD1E5-44FE-43A5-A9A4-3F740D60B9DB}"
-        "PackageCode" = "8:{782FE7FD-5979-4280-B1C9-9E669BEBFB46}"
+        "ProductCode" = "8:{2E040D73-E24A-49FB-8C8F-03FAD38134A5}"
+        "PackageCode" = "8:{974565A1-3F8D-4854-8C18-FC90CE198449}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.3"
+        "ProductVersion" = "8:1.4.5"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1082,7 +1042,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:Mediway-bsp"
         "Keywords" = "8:plugin chrome"
-        "ARPCOMMENTS" = "8:MediwayClientMgr-V1.4.3"
+        "ARPCOMMENTS" = "8:MediwayClientMgr-V1.4.5"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -1321,7 +1281,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_62B363630FFC40929B980E285F7E544B"
             {
-            "Name" = "8:iMedical插件管理"
+            "Name" = "8:iMedicalPluginManager"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1335,9 +1295,9 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_88953ECA695D4FCC9A2769D0EC84A0B7"
             {
-            "Name" = "8:iMedical插件管理"
+            "Name" = "8:iMedicalPluginManager"
             "Arguments" = "8:"
-            "Description" = "8:iMedical插件管理V39"
+            "Description" = "8:iMedicalPluginManager"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"

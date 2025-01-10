@@ -48,6 +48,10 @@ namespace WebsysServer
             this.MgrToolStripMenuItem.Text = WebsysServer.Properties.Resources.Management;
             this.hTTPSToolStripMenuItem.Text = WebsysServer.Properties.Resources.ManageHttps;
             this.hTTP界面ToolStripMenuItem.Text = WebsysServer.Properties.Resources.ManageHttp;
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipText = WebsysServer.Properties.Resources.iMedicalPluginManagement ;
+            this.notifyIcon1.BalloonTipTitle = WebsysServer.Properties.Resources.iMedicalPluginManagement;
+            this.notifyIcon1.Text = WebsysServer.Properties.Resources.iMedicalPluginManagement ;
             cbLogLevel.SelectedIndex = LogLevel;
             tbPort.Text = urlPort.ToString();
             lbUrl.Text = "监听服务路径 http://" + urlServer + ":" + urlPort + urlApplication;

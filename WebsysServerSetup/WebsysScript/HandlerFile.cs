@@ -112,7 +112,7 @@ namespace WebsysScript
             string errorMessage = "";
             try
             {
-                if (txtlang.ToLower().IndexOf("dll") > -1) {
+                if (txtlang.ToLower().IndexOf(".dll") > -1) {
                     tool.Logging.Debug("开始运行:" + txtlang);
                     rtn = EvalDll.Run(txtlang, code); // 此方法会同步
                     tool.Logging.Debug("返回结果：" + rtn);

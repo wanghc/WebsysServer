@@ -54,29 +54,37 @@ namespace WebsysServer
                     // 没有请求则GetContext处于阻塞状态
                     try { 
                         HttpListenerContext ctx = httpListener.GetContext();
+                        //可以用来判定白名单(request.RemoteEndPoint.Address.ToString() == "::1" || request.RemoteEndPoint.Address.ToString() == "127.0.0.1")
+                        if (ctx.Request.IsLocal)
+                        {
+                            //new HTTPRequestHandler(ctx, d.ReqTimeOut).RequestHandler(); //单线程处理
 
-                        //new HTTPRequestHandler(ctx, d.ReqTimeOut).RequestHandler(); //单线程处理
-
-                        /* 多线程处理请求*/
-                        // httpListener.BeginGetContext(new AsyncCallback(GetContextCallBack), httpListener);
-                            Logging.Error("-------------------client ApartmentState.STA------------");
-                            Thread clientThread = new Thread(new HTTPRequestHandler(ctx, d.ReqTimeOut,mainForm).RequestHandler);
+                            /* 多线程处理请求*/
+                            // httpListener.BeginGetContext(new AsyncCallback(GetContextCallBack), httpListener);
+                            // Logging.Error("-------------------client ApartmentState.STA------------");
+                            Thread clientThread = new Thread(new HTTPRequestHandler(ctx, d.ReqTimeOut, mainForm).RequestHandler);
                             clientThread.Name = "C" + clientThread.ManagedThreadId;
-                        // 血液净化----要求单线程单元 
-                        clientThread.SetApartmentState(ApartmentState.STA); //设置这个参数，指示应用程序的COM线程模型 是 单线程单元                                                                            
-                        // 在多线程条件下，主线程如果关闭，那么子线没有跑完的情况下。 子线还在跑。                        
-                        // 前台线程；后台线程；                        
-                        // 前台线程：                        
-                        // 只有所有的前台程序都关闭了，才能完成程序的关闭；
-                        // 后台线程：
-                        // 只要所有的前台线程结束，后台线程自动结束。   自动。
-                        // 默认新创建的线程，都是前台线程。只有所有前台线程都结束，后台才自动结束，完成整个程序的关闭。
-                        // 所以为了关闭线程，我们将client线程，设置为后台线程。
-                        // 将线程设置为后台线程
-                        clientThread.IsBackground = true;
-                        clientThread.Start();
-                        //myEvent.WaitOne();
-                        //threadList.
+                            // 血液净化----要求单线程单元 
+                            clientThread.SetApartmentState(ApartmentState.STA); //设置这个参数，指示应用程序的COM线程模型 是 单线程单元                                                                            
+                                                                                // 在多线程条件下，主线程如果关闭，那么子线没有跑完的情况下。 子线还在跑。                        
+                                                                                // 前台线程；后台线程；                        
+                                                                                // 前台线程：                        
+                                                                                // 只有所有的前台程序都关闭了，才能完成程序的关闭；
+                                                                                // 后台线程：
+                                                                                // 只要所有的前台线程结束，后台线程自动结束。   自动。
+                                                                                // 默认新创建的线程，都是前台线程。只有所有前台线程都结束，后台才自动结束，完成整个程序的关闭。
+                                                                                // 所以为了关闭线程，我们将client线程，设置为后台线程。
+                                                                                // 将线程设置为后台线程
+                            clientThread.IsBackground = true;
+                            clientThread.Start();
+                            //myEvent.WaitOne();
+                            //threadList.
+                        }else{
+                            // 如果不是本地请求，则拒绝访问
+                            ctx.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                            ctx.Response.StatusDescription = "Access Forbidden";
+                            ctx.Response.Close();
+                        }
                     }
                     catch(Exception ex)
                     {

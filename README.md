@@ -70,8 +70,20 @@ function Fun(){
   3. netsh http add sslcert ipport=0.0.0.0:21996 certhash=dd8652db5c07076d154827273642604ca8405332 appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
   4. netsh http add sslcert ipport=0.0.0.0:21996 certhash=b1eb8df9b91cf3080fb30f41e959def25952376a appid={9e977cef-28ef-4d4f-968a-bff2514384c4}
 - 不能自动下载插件包，console.log日志中提示`The requested security protocol is not supported` 或 `请求被中止：未能创建SSL/TLS安全通道`, 请检查本地客户端是否安装framework4.5或修改注册表 [查看原因与解决1](https://www.cnblogs.com/Charltsing/p/Net4TLS12.html),[查看原因与解决2](//hisui.cn/?p=332)。
+- 安装时提示安装无效，检查是否被杀毒软件隔离，或被操作系统防火墙隔离
 
 ## 更新日志 ##
+
+### 2025-01-10
+
+#### 版本1.4.5
+
+- 解决调用jar包时入参中包含dll字符时提示`处理请求异常:未将对象引用设置到对象的实例`问题
+- 去除addins.port.exe文件，windows防火墙误以软件为病毒
+
+#### 版本1.4.4
+
+- 医为客户端服务只允许本机访问
 
 ### 2024-08-28
 #### 版本1.4.3
@@ -83,15 +95,15 @@ function Fun(){
 
 - 解决弹出form置顶问题
 
-  ```js
-  // xx是任意的调用DLL插件的对象
-  xx.clear();
-  xx.notReturn = 0;
-  xx.focusLazyTime = 1500; /*延迟多长时间focus窗口。没有此行代码时默认:1000毫秒*/
-  xx.focusWindowName = "串码输入框";       /*使用窗口标题定位，例：串码输入框*/
-  // xx.focusClassName = "#32770 (对话框)";      /*使用类名定位，例：微信窗口WeChatMainWndForPC*/
-  xx.ReadPatCardNo();  /*具体方法*/
-  ```
+```js
+// xx是任意的调用DLL插件的对象
+xx.clear();
+xx.notReturn = 0;
+xx.focusLazyTime = 1500; /*延迟多长时间focus窗口。没有此行代码时默认:1000毫秒*/
+xx.focusWindowName = "串码输入框";  /*使用窗口标题定位，例：串码输入框*/
+// xx.focusClassName = "#32770 (对话框)";  /*使用类名定位，例：微信窗口WeChatMainWndForPC*/
+xx.ReadPatCardNo();  /*具体方法*/
+```
 
   
 
@@ -101,42 +113,42 @@ function Fun(){
 
 - 解决dll内存冲突，实现调用exe程序且拿到返回值 [4788656]
 
-  ```javascript
-  // 所有插件管理界面的调用ID都用cmd方法
-  DomId.clear()
-  DomId.notReturn = 1
-  DomId.cmd("mytest.exe arg1 arg2",function(rtn){
-  	// rtn //JSON返回值
-  })
-  ```
-
-  
+```javascript
+// 所有插件管理界面的调用ID都用cmd方法
+DomId.clear()
+DomId.notReturn = 1
+DomId.cmd("mytest.exe arg1 arg2",function(rtn){
+  // rtn //JSON返回值
+})
+```
 
 ### 2024-07-27
 
-### 版本1.3.8
+#### 版本1.3.8
 
 - 读mispos失败问题 [4805120]
 
 ### 2024-07-08
 
-### 版本1.3.7
+#### 版本1.3.7
 
 - 去除停止/启动菜单 [4748462]
 
 ### 2024-06-20
-### 版本1.3.6
+
+#### 版本1.3.6
+
 - 安装exe安装时写入监听权限 [4681909]
 
 ### 2024-06-06
 
-### 版本1.3.5
+#### 版本1.3.5
 
 - 获取客户端信息方法修改成获取当前使用的`IP`,`MacAddr`
 
 ### 2024-05-15
 
-### 版本1.3.4
+#### 版本1.3.4
 
 - :bug: 调用jar文件时只返回一行结果问题处理，修改成：返回值多行
 
@@ -150,14 +162,14 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 });
 ```
 
-### 版本1.3.3
+#### 版本1.3.3
 
 - 修改CurrentUserEvalJs方法，在非管理员权限下运行时，也可以运行 [4567511]
 - 解决：当前操作系统为`非管理员`，运行中间件后，在仅安装WPS的电脑上导出excel问题 [4567511]
 
 ### 2024-04-30
 
-### 版本1.3.2
+#### 版本1.3.2
 
 - :sparkles: 增加调用jar包中main方法功能
 
@@ -195,14 +207,14 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 
 ### 2023-10-12
 
-###　版本1.2.9
+####　版本1.2.9
 
 - :bug: 解决解压zip内容错乱问题
 - - 多级目录且子目录有多个文件时会出现此问题
 
 ### 2023-09-20
 
-### 版本1.2.8
+#### 版本1.2.8
 
 - 修复读卡方法不传入参时，不能focus问题
 
@@ -215,41 +227,41 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 
 ### 2023-08-18
 
-### 版本1.2.7
+#### 版本1.2.7
 
 - 修复某些客户端不允许删除非空目录，导致中间件反复启动问题
 - - 如`\MediWay\WebsysServer\bak_temp\18`目录下有多个txt目录时，会出现问题
 
 ### 2023-05-19
 
-### 版本1.2.5
+#### 版本1.2.5
 
 - 新电脑安装中间件后，反复启动中间件问题
 - - 缺少websysServer/temp目录导致
 
 ### 2023-05-08
 
-### 版本1.2.4
+#### 版本1.2.4
 
 - 多次重复打开中间件不再弹出提示窗口
 
 ### 2023-05-07
 
-### 版本1.2.3
+#### 版本1.2.3
 
 - 有很多Win7电脑安装不了framewok4.5.2，导致不能安装中间件，回滚到1.2.0版
 - - 使用HTTP2协议的项目只有一家
 - - 发现Win10,Win11第一次安装1.2.1后会导致中间件反复重启，要卸载且删除目录重新安装才可以。
 
-## 2023-04-12
+### 2023-04-12
 
-### 版本1.2.2
+#### 版本1.2.2
 
 - Win7-32bit与Win7-64bit都使用CurlSharp32动态库，去掉64的包依赖  [3408462]
 
-## 2023-04-07
+### 2023-04-07
 
-### 版本1.2.1
+#### 版本1.2.1
 
 - Win7下支持HTTP2.0协议下载资源  :sparkles: [3408462]
 
@@ -257,9 +269,9 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 
   
 
-## 2023-03-22
+### 2023-03-22
 
-### 版本1.2.0
+#### 版本1.2.0
 
 - 在某些云桌面不能获得IP与MAC :sparkles: [3362661]
 
@@ -267,9 +279,9 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
   Dns.GetHostEntry 修改成 Dns.GetHostAddresses
   ```
 
-## 2023-03-17
+### 2023-03-17
 
-### 版本1.1.9
+#### 版本1.1.9
 
 - 导出Excel时，导出的数据不是当前的，而是曾经导出的数据。[3349949] :bug:
 - 当客户端启用了杀毒或防护软件时，导致不能运行脚本，把脚本文档删除，防止影响下次调用。[3366788] :bug:
@@ -278,31 +290,31 @@ helloTestObj.cmd('"C:\\Program Files\\Java\\jre-1.8\\bin\\java.exe" -jar HelloTe
 
 ### 2023-01-03
 
-### 版本1.1.8
+#### 版本1.1.8
 
 - 修复对负载不支持TLS1.2协议问题处理。不能通过负载下载ZIP包问题 :bug:
 
 ### 2022-12-06
 
-### 版本1.1.7
+#### 版本1.1.7
 
 - 修复1.1.6版本后,导致不能打开血透重症exe问题 [3129682]
 
 ### 2022-11-15
 
-### 版本1.1.6
+#### 版本1.1.6
 
 - 中间件安装到包含空格的目录后，不能运行vbs问题修复 [3078733]
 
 ### 2022-11-06
 
-### 版本1.1.5
+#### 版本1.1.5
 
 - 读取ScriptShell.exe运行的结果优化
 
 ### 2022-11-04
 
-### 版本1.1.4
+#### 版本1.1.4
 
 - 使用CurrentUserEvalJs导出excel时，弹出黑窗口问题 [2953530]
 
