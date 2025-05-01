@@ -3,7 +3,7 @@
 操作系统环境Win7, Win10,Win11,关闭操作系统的UAC体验更佳
 依赖开发环境：
 
-1. 开发环境Framework4.0
+1. 开发环境Framework4.0，VS2017+Microsoft Visual Studio Installer Projects
 2. 分三个工程，分别为服务功能，保护功能，安装功能
 
 # 使用介绍
