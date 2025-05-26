@@ -22,11 +22,11 @@
 - 编写bat文件，内容如下，放到msi同一层目录内，双击bat即可安装到指定目录
 
 ```bash
-msiexec /i "d:\xx\WebsysServerSetup.msi" TARGETDIR="D:/Program Files\MediWay" /qb
+msiexec /i "D:\iMedical-plugin\WebsysServerSetup.msi" TARGETDIR="C:\\Mediway\\WebsysServer" /qb
 ```
 或
 ```bash
-"d:\xx\WebsysServerSetup.msi" /qb TARGETDIR="D:/Program Files\MediWay"
+"D:\iMedical-plugin\WebsysServerSetup.msi" /qb TARGETDIR="C:\\Mediway\\WebsysServer"
 ```
 
 
