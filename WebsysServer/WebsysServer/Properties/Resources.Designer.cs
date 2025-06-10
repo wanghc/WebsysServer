@@ -154,7 +154,7 @@ namespace WebsysServer.Properties {
         }
         
         /// <summary>
-        ///   查找类似 iMedical Plugin Management 的本地化字符串。
+        ///   查找类似 Plugin Management 的本地化字符串。
         /// </summary>
         internal static string iMedicalPluginManagement {
             get {
@@ -190,7 +190,7 @@ namespace WebsysServer.Properties {
         }
         
         /// <summary>
-        ///   查找类似 MediwayClientManagement 的本地化字符串。
+        ///   查找类似 ClientManagement 的本地化字符串。
         /// </summary>
         internal static string MediwayClientManagement {
             get {
@@ -199,7 +199,7 @@ namespace WebsysServer.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Mediway Client Management Version 的本地化字符串。
+        ///   查找类似 Client Management Version 的本地化字符串。
         /// </summary>
         internal static string MediwayClientManagementVersion {
             get {

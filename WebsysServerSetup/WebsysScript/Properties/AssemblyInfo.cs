@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WebsysScript")]
 [assembly: AssemblyDescription("WebsysScript1.1.7多文件运行代码")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("东华医为科技有限公司")]
+[assembly: AssemblyCompany("科技有限公司")]
 [assembly: AssemblyProduct("WebsysScript")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]

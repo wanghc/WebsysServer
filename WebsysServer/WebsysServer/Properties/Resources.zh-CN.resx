@@ -149,7 +149,7 @@
     <value>icon-info.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iMedicalPluginManagement" xml:space="preserve">
-    <value>iMedical插件管理</value>
+    <value>插件管理</value>
   </data>
   <data name="ManageHttp" xml:space="preserve">
     <value>HTTP管理</value>
@@ -161,10 +161,10 @@
     <value>管理</value>
   </data>
   <data name="MediwayClientManagement" xml:space="preserve">
-    <value>医为客户端管理</value>
+    <value>客户端管理</value>
   </data>
   <data name="MediwayClientManagementVersion" xml:space="preserve">
-    <value>医为客户端管理版本</value>
+    <value>客户端管理版本</value>
   </data>
   <data name="NormalRestart" xml:space="preserve">
     <value>正常重启</value>

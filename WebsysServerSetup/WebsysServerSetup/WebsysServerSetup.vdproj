@@ -420,7 +420,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.4, Culture=zh-CN, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.6, Culture=zh-CN, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_1629503AD20B4037BF6D736C05E6F892"
@@ -451,7 +451,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.4.4, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer, Version=1.1.4.6, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_16B26E395E0F42089B18AAFBAF4C69E5"
@@ -542,7 +542,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.4, Culture=en, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebsysServer.resources, Version=1.1.4.6, Culture=en, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_56E43413D47D4C15A7626D458BE2D4A2"
@@ -899,7 +899,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_B631F20346354FBA8290539B87D26255"
                     {
-                    "Name" = "8:iMedicalPluginManager"
+                    "Name" = "8:PluginManager"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -1026,19 +1026,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WebsysServer"
-        "ProductCode" = "8:{2E040D73-E24A-49FB-8C8F-03FAD38134A5}"
-        "PackageCode" = "8:{974565A1-3F8D-4854-8C18-FC90CE198449}"
+        "ProductCode" = "8:{A481787A-5CC2-4BBF-A2EC-9DE5F64306AB}"
+        "PackageCode" = "8:{ABD1C608-EAA8-4670-B36C-9347DF949145}"
         "UpgradeCode" = "8:{6407911C-4CE6-498C-A628-4AE056017A3C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.5"
+        "ProductVersion" = "8:1.4.7"
         "Manufacturer" = "8:MediWay"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:iMedicalPluginManagement"
+        "Title" = "8:PluginManagement"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Mediway-bsp"
         "Keywords" = "8:plugin chrome"
@@ -1281,7 +1281,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_62B363630FFC40929B980E285F7E544B"
             {
-            "Name" = "8:iMedicalPluginManager"
+            "Name" = "8:PluginManager"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1295,9 +1295,9 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_88953ECA695D4FCC9A2769D0EC84A0B7"
             {
-            "Name" = "8:iMedicalPluginManager"
+            "Name" = "8:PluginManager"
             "Arguments" = "8:"
-            "Description" = "8:iMedicalPluginManager"
+            "Description" = "8:PluginManager"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"

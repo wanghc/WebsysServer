@@ -143,7 +143,7 @@
     <value>icon-info.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iMedicalPluginManagement" xml:space="preserve">
-    <value>iMedical Plugin Management</value>
+    <value>Plugin Management</value>
   </data>
   <data name="ManageHttp" xml:space="preserve">
     <value>ManageHttp</value>
@@ -155,7 +155,7 @@
     <value>Management</value>
   </data>
   <data name="MediwayClientManagement" xml:space="preserve">
-    <value>MediwayClientManagement</value>
+    <value>ClientManagement</value>
   </data>
   <data name="NormalRestart" xml:space="preserve">
     <value>Normal Restart</value>
@@ -173,6 +173,6 @@
     <value>App Stop Listen Error</value>
   </data>
   <data name="MediwayClientManagementVersion" xml:space="preserve">
-    <value>Mediway Client Management Version</value>
+    <value>Client Management Version</value>
   </data>
 </root>
