@@ -5,11 +5,15 @@ using System.Text;
 using System.Net;
 using WebsysServer.tool;
 using System.Threading;
+using System.Threading.Tasks;
 namespace WebsysServer
 {
     class HTTPServer
     {
 
+        private readonly ManualResetEvent stopRequested = new ManualResetEvent(false);
+        private readonly int maxConcurrency = 2; // 最大并发请求数
+        private readonly Semaphore threadPoolSemaphore;
         //public static ManualResetEvent myEvent = new ManualResetEvent(false);
         HttpListener httpListener;
         List<Thread> threadList = null;
@@ -18,6 +22,7 @@ namespace WebsysServer
         //int CurrentThreadNum = 0;
         public HTTPServer()
         {
+            threadPoolSemaphore = new Semaphore(maxConcurrency, maxConcurrency);
         }
         public void Start (){
             using (httpListener = new HttpListener())
@@ -49,19 +54,48 @@ namespace WebsysServer
                 
                 
                 //Logging.Log(LogLevel.Info, url);
-                while (true)
+                while (!stopRequested.WaitOne(0))
                 {
                     // 没有请求则GetContext处于阻塞状态
-                    try { 
+                    try {
                         HttpListenerContext ctx = httpListener.GetContext();
                         //可以用来判定白名单(request.RemoteEndPoint.Address.ToString() == "::1" || request.RemoteEndPoint.Address.ToString() == "127.0.0.1")
                         if (ctx.Request.IsLocal)
                         {
+                            if (!threadPoolSemaphore.WaitOne(3000)) {  // 获取一个信号量, 当请求数达到max值时,最多等待3秒
+                                ctx.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+                                ctx.Response.StatusDescription = "Too many requests";
+                                ctx.Response.Close();
+                                return;
+                            };
+                            Task.Factory.StartNew(state =>
+                            {
+                                HttpListenerContext context = (HttpListenerContext)state;
+                                try
+                                {
+                                    // 创建新线程处理（如果 RequestHandler 需要 STA）
+                                    Thread handlerThread = new Thread(() =>
+                                    {
+                                        new HTTPRequestHandler(context, d.ReqTimeOut, mainForm).RequestHandler();
+                                    });
+                                    handlerThread.Name = "C" + handlerThread.ManagedThreadId;
+                                    handlerThread.SetApartmentState(ApartmentState.STA);
+                                    handlerThread.IsBackground = true;
+                                    handlerThread.Start();
+                                    handlerThread.Join(); // 可选：等待线程完成
+                                }
+                                finally
+                                {
+                                    threadPoolSemaphore.Release(); // 释放信号量
+                                }
+                            }, ctx, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+                        
                             //new HTTPRequestHandler(ctx, d.ReqTimeOut).RequestHandler(); //单线程处理
 
                             /* 多线程处理请求*/
                             // httpListener.BeginGetContext(new AsyncCallback(GetContextCallBack), httpListener);
                             // Logging.Error("-------------------client ApartmentState.STA------------");
+                            /*20250610修改成信号量控制线程数量
                             Thread clientThread = new Thread(new HTTPRequestHandler(ctx, d.ReqTimeOut, mainForm).RequestHandler);
                             clientThread.Name = "C" + clientThread.ManagedThreadId;
                             // 血液净化----要求单线程单元 
@@ -76,7 +110,7 @@ namespace WebsysServer
                                                                                 // 所以为了关闭线程，我们将client线程，设置为后台线程。
                                                                                 // 将线程设置为后台线程
                             clientThread.IsBackground = true;
-                            clientThread.Start();
+                            clientThread.Start();*/
                             //myEvent.WaitOne();
                             //threadList.
                         }else{
@@ -107,6 +141,7 @@ namespace WebsysServer
             {
                 processingTask.Wait();
             }*/
+            //stopRequested.Set();
             if (this.httpListener.IsListening)
             {
                 this.httpListener.Stop();
