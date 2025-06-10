@@ -12,7 +12,7 @@ namespace WebsysServer
     {
 
         private readonly ManualResetEvent stopRequested = new ManualResetEvent(false);
-        private readonly int maxConcurrency = 2; // 最大并发请求数
+        private readonly int maxConcurrency = 100; // 最大并发请求数
         private readonly Semaphore threadPoolSemaphore;
         //public static ManualResetEvent myEvent = new ManualResetEvent(false);
         HttpListener httpListener;
@@ -62,11 +62,11 @@ namespace WebsysServer
                         //可以用来判定白名单(request.RemoteEndPoint.Address.ToString() == "::1" || request.RemoteEndPoint.Address.ToString() == "127.0.0.1")
                         if (ctx.Request.IsLocal)
                         {
-                            if (!threadPoolSemaphore.WaitOne(3000)) {  // 获取一个信号量, 当请求数达到max值时,最多等待3秒
-                                ctx.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+                            if (!threadPoolSemaphore.WaitOne(3)) {  // 获取一个信号量, 当请求数达到max值时,最多等待3秒
+                                ctx.Response.StatusCode = (int)HttpStatusCode.RequestEntityTooLarge;
                                 ctx.Response.StatusDescription = "Too many requests";
                                 ctx.Response.Close();
-                                return;
+                                continue;
                             };
                             Task.Factory.StartNew(state =>
                             {
