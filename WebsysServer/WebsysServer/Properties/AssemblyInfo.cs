@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("WebsysServer")]
-[assembly: AssemblyDescription("Client Plugin Manager 1.4.6")]
+[assembly: AssemblyDescription("Client Plugin Manager 1.4.8")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Company")]
 [assembly: AssemblyProduct("WebsysServer")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // 可以指定所有这些值，也可以使用“内部版本号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.4.6")]
-[assembly: AssemblyFileVersion("1.1.4.6")]
+[assembly: AssemblyVersion("1.1.4.8")]
+[assembly: AssemblyFileVersion("1.1.4.8")]
 

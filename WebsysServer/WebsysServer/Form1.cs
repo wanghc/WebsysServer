@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using WebsysServer.tool;
@@ -13,6 +10,8 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
+using System.IO.Pipes;
+using System.Threading.Tasks;
 
 namespace WebsysServer
 {
@@ -28,7 +27,7 @@ namespace WebsysServer
             // 手动转换语言
 
             //WebsysServer.Properties.Resources.Culture = new System.Globalization.CultureInfo("en");
-            
+
             InitializeComponent();
             this.AboutToolStripMenuItem1.Text = WebsysServer.Properties.Resources.About;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -57,6 +56,7 @@ namespace WebsysServer
             lbUrl.Text = "监听服务路径 http://" + urlServer + ":" + urlPort + urlApplication;
             CGI.LocalInstall = Path.Combine(System.Windows.Forms.Application.StartupPath, "");
             moveScriptTxt(Path.Combine(CGI.LocalInstall));
+            Application.ApplicationExit += OnApplicationExit;
             /*var conf = JinianNet.JNTemplate.Configuration.EngineConfig.CreateDefault();
             conf.StripWhiteSpace = false;
             conf.ResourceDirectories = new string[] { Path.Combine(System.Windows.Forms.Application.StartupPath, @"tmpl\scripts") };
@@ -69,7 +69,8 @@ namespace WebsysServer
          * 修复某些电脑不允许删除空目录问题。
          * 当目录下有文件时，不能删除并报错，导致中间件不能启动问题
          */
-        public void DeleteFileWithFileType(string directory, string fileType) {
+        public void DeleteFileWithFileType(string directory, string fileType)
+        {
             var allFileNames = new List<string>();
             allFileNames.AddRange(Directory.GetFiles(directory, fileType));
             // 根据条件删除文件
@@ -83,27 +84,36 @@ namespace WebsysServer
                 var now = DateTime.Now;
                 var day = now.Day; //Convert.ToInt32(now.DayOfWeek.ToString("d")); // 只备份7天的日志
                 string newPath = Path.Combine(path, "bak_temp", day.ToString());
-                if (Directory.Exists(newPath)) {
+                if (Directory.Exists(newPath))
+                {
                     DirectoryInfo newDi = new DirectoryInfo(newPath);
-                    if (0 != newDi.CreationTime.Date.CompareTo(now.Date)) {
+                    if (0 != newDi.CreationTime.Date.CompareTo(now.Date))
+                    {
                         DeleteFileWithFileType(newPath, "*.txt");
                         //Directory.Delete(newPath);
                     }
                 }
                 Directory.CreateDirectory(newPath);
                 String myTemp = Path.Combine(path, "temp");
-                if (Directory.Exists(myTemp)) {   // 增加判断，不然会因为目录不存在导致中间件无法重新启动 [3530041]
+                if (Directory.Exists(myTemp))
+                {   // 增加判断，不然会因为目录不存在导致中间件无法重新启动 [3530041]
                     DirectoryInfo tempDir = new DirectoryInfo(Path.Combine(path, "temp"));
                     FileInfo[] fis = tempDir.GetFiles();
-                    foreach (FileInfo fi in fis) {
-                        if (!fi.Name.Equals("console.log")) {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
+                    foreach (FileInfo fi in fis)
+                    {
+                        if (!fi.Name.Equals("console.log"))
+                        {  // 把非console.log的日志都移走，避免运行错误脚本 [3349949]
                             fi.MoveTo(Path.Combine(newPath, fi.Name));
                         }
                     }
-                } else {
+                }
+                else
+                {
                     Directory.CreateDirectory(myTemp);
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
 
             }
             return "";
@@ -127,9 +137,10 @@ namespace WebsysServer
                     sthread.Abort();
                     sthread = null;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
-                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.AppStopListenError  +"：" + e.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.AppStopListenError + "：" + e.Message);
                 return "-1";
             }
             return "";
@@ -146,7 +157,8 @@ namespace WebsysServer
                 sthread.Name = "S" + sthread.ManagedThreadId; ;
                 sthread.Start();
                 Logging.Warn("启动服务器线程" + sthread.ManagedThreadId.ToString("00"));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.AppStartListenError + "：" + e.Message);
                 return "-1";
@@ -160,7 +172,8 @@ namespace WebsysServer
             Logging.CurLogLevel = logLevel;
 
             Properties.Settings.Default.LogLevel = logLevel;
-            if ("".Equals(StartUpHttpServer())) {
+            if ("".Equals(StartUpHttpServer()))
+            {
                 msg.Text = "启动成功";
                 btnStart.Enabled = false;
                 btnStart.Text = "已启动";
@@ -215,6 +228,23 @@ namespace WebsysServer
                     Process.Start(path);
                 }
             }
+            // 2025-08-18
+            Task.Factory.StartNew(state =>
+            {
+                var server = new NamedPipeServerStream("WebsysServerPipe");
+                server.WaitForConnection();
+                using (var reader = new StreamReader(server))
+                {
+                    string command = reader.ReadLine();
+                    if (command == "EXIT")
+                    {
+                        Logging.Info("收到 pipe 消息: EXIT");
+                        notifyIcon1?.Dispose();
+                        Application.Exit();
+                    }
+                }
+            }, null, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+
         }
 
 
@@ -271,12 +301,13 @@ namespace WebsysServer
 
         private void ShutDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ("".Equals(ShutDownHttpServer())) {
+            if ("".Equals(ShutDownHttpServer()))
+            {
                 ShutDownToolStripMenuItem.Enabled = false;
                 StartupToolStripMenuItem.Enabled = true;
                 System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
                 //notifyIcon1.Icon = Properties.Resources.ico256gray;// (System.Drawing.Icon)resources.GetObject(Properties.Resources.ico256gray);
-                notifyIcon1.Icon = this.Icon; // Icon.FromHandle(Properties.Resources.ico256gray.GetHicon());
+                //notifyIcon1.Icon = this.Icon; // Icon.FromHandle(Properties.Resources.ico256gray.GetHicon());
             }
             stopKeyListen();
             Logging.ColseLogFile();
@@ -366,7 +397,7 @@ namespace WebsysServer
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            notifyIcon1.Visible = false;
+            //notifyIcon1.Visible = false;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -375,6 +406,7 @@ namespace WebsysServer
             {
                 ShutDownToolStripMenuItem_Click(sender, e);
             }
+            notifyIcon1?.Dispose();
             //notifyIcon1.Visible = false;
         }
 
@@ -401,10 +433,13 @@ namespace WebsysServer
             String osStr = Environment.OSVersion.ToString();
             String netStr = Environment.Version.ToString();
             String installPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            String content = WebsysServer.Properties.Resources.MediwayClientManagementVersion + " : " + version + "{0} \r\n"+ WebsysServer.Properties.Resources.OSVersion +" : " + osStr + "\r\nframework : " + netStr + "\r\n "+ WebsysServer.Properties.Resources.ApplicationInstallationPath + " : " + installPath + "\r\n";
-            if ("".Equals(RestartApplicationNote) ){
-                content += WebsysServer.Properties.Resources.NormalRestart+"\r\n";
-            }else{
+            String content = WebsysServer.Properties.Resources.MediwayClientManagementVersion + " : " + version + "{0} \r\n" + WebsysServer.Properties.Resources.OSVersion + " : " + osStr + "\r\nframework : " + netStr + "\r\n " + WebsysServer.Properties.Resources.ApplicationInstallationPath + " : " + installPath + "\r\n";
+            if ("".Equals(RestartApplicationNote) )
+            {
+                content += WebsysServer.Properties.Resources.NormalRestart + "\r\n";
+            }
+            else
+            {
                 content += RestartApplicationNote+ "\r\n";
             }
             System.Security.Principal.WindowsIdentity current = System.Security.Principal.WindowsIdentity.GetCurrent();
@@ -412,8 +447,8 @@ namespace WebsysServer
             {
                 content = string.Format(content, "(" + WebsysServer.Properties.Resources.Administrators + ")");
             }
-            content = string.Format(content, "("+ WebsysServer.Properties.Resources.Administrators+")");
-          
+            content = string.Format(content, "(" + WebsysServer.Properties.Resources.Administrators + ")");
+
             MessageBox.Show(content, WebsysServer.Properties.Resources.iMedicalPluginManagement, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -453,7 +488,7 @@ namespace WebsysServer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound  + ex.Message);
+                MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound + ex.Message);
             }
         }
 
@@ -467,7 +502,11 @@ namespace WebsysServer
             {
                 MessageBox.Show(WebsysServer.Properties.Resources.Tip, WebsysServer.Properties.Resources.DefaultBrowserNotFound + ex.Message);
             }
-        } 
-        
+        }
+        private void OnApplicationExit(object sender, EventArgs e)
+        {
+            notifyIcon1?.Dispose();
+        }
     }
+
 }

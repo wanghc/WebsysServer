@@ -163,7 +163,7 @@
             this.ExitToolStripMenuItem,
             this.AboutToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 172);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(117, 144);
             // 
             // MgrToolStripMenuItem
             // 
@@ -171,7 +171,7 @@
             this.hTTPSToolStripMenuItem,
             this.hTTP界面ToolStripMenuItem});
             this.MgrToolStripMenuItem.Name = "MgrToolStripMenuItem";
-            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+            this.MgrToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.MgrToolStripMenuItem.Text = "管理";
             this.MgrToolStripMenuItem.Click += new System.EventHandler(this.MgrToolStripMenuItem_Click);
             // 
@@ -192,7 +192,7 @@
             // StartupToolStripMenuItem
             // 
             this.StartupToolStripMenuItem.Name = "StartupToolStripMenuItem";
-            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+            this.StartupToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.StartupToolStripMenuItem.Text = "启用";
             this.StartupToolStripMenuItem.Visible = false;
             this.StartupToolStripMenuItem.Click += new System.EventHandler(this.StartupToolStripMenuItem_Click);
@@ -200,7 +200,7 @@
             // ShutDownToolStripMenuItem
             // 
             this.ShutDownToolStripMenuItem.Name = "ShutDownToolStripMenuItem";
-            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+            this.ShutDownToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.ShutDownToolStripMenuItem.Text = "停止";
             this.ShutDownToolStripMenuItem.Visible = false;
             this.ShutDownToolStripMenuItem.Click += new System.EventHandler(this.ShutDownToolStripMenuItem_Click);
@@ -208,14 +208,14 @@
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.ExitToolStripMenuItem.Text = "退出";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem1
             // 
             this.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1";
-            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(210, 28);
+            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(116, 28);
             this.AboutToolStripMenuItem1.Text = "关于";
             this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
             // 
@@ -250,6 +250,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "医为客户端管理";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
